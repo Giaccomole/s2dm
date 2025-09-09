@@ -1,5 +1,5 @@
 ---
-title:  Simplified Semantic Data Modeling
+title: Simplified Semantic Data Modeling
 lead: An approach for modeling data of multiple domains that enables Subject Matter Experts to contribute to controlled vocabularies with minimal data modeling expertise.
 ---
 
