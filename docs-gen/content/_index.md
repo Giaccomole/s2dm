@@ -17,7 +17,7 @@ Therefore, it does not incorporate advanced reasoning capabilities or comprehens
 {{< /callout >}}
 
 <div class="w-100 my-4">
-  <img src="/images/s2dm_role.png" alt="S2DM Role Overview" class="img-fluid w-100" style="max-width: 100%; height: auto;">
+  <img src="/s2dm/images/s2dm_role.png" alt="S2DM Role Overview" class="img-fluid w-100" style="max-width: 100%; height: auto;">
 </div>
 
 The figure above ilustrates the role of the `S2DM` approach.
