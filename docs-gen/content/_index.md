@@ -27,7 +27,7 @@ the re-use of existing resources (left), the artifacts offered by `S2DM` (center
 ### Getting started
 * Get a basic understanding of the [S2DM approach](/s2dm/docs/approach-overview).
 * Model your domain following the [S2DM data modeling guideline](/s2dm/docs/data-modeling-guideline).
-* Maintain your domain model with the support of the provided [S2DM tools](/s2dm/tools).
+* Maintain your domain model with the support of the provided [S2DM tools](/s2dm/docs/tools).
 
 {{< callout context="tip" >}}
 {{< callout context="tip" >}}
