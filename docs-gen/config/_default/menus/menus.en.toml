@@ -11,12 +11,6 @@
   weight = 20
 
 [[main]]
-  name = "FAQs"
-  identifier = "faqs"
-  url = "faqs/"
-  weight = 30
-
-[[main]]
   name = "Others"
   identifier = "others"
   url = "others/"
