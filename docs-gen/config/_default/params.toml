@@ -4,7 +4,7 @@ description = "S2DM - Signal to Data Model documentation"
 images = ["preview.png"]
 
 # mainSections
-mainSections = ["approach-overview", "data-modeling-guideline", "tools", "examples", "faqs", "others"]
+mainSections = ["approach-overview", "data-modeling-guideline", "tools", "examples", "others"]
 # Doks (@hyas/doks-core)
 [doks]
   # Color mode
