@@ -23,11 +23,6 @@ The figure above ilustrates the role of the `S2DM` approach.
 One can distinghish three areas:
 the re-use of existing resources (left), the artifacts offered by `S2DM` (center), and the resulting domain data model created and maintained with `S2DM` artifacts (right).
 
-### Getting started
-* Get a basic understanding of the [S2DM approach](/docs/approach-overview).
-* Model your domain following the [S2DM data modeling guideline](/docs/data-modeling-guideline).
-* Maintain your domain model with the support of the provided [S2DM tools](/docs/tools).
-
 {{< callout context="tip" >}}
 `S2DM` artifacts are based on the following existing resources. Getting familiar with them is recommended.
 
