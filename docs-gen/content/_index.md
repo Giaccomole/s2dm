@@ -9,7 +9,6 @@ It is **_simple_** in the sense that any _Subject Matter Expert_ (SME) could con
 Likewise, it is **_semantic_** in the sense that it specifies meaningful data structures, their cross-domain relationships, and arbitrary classification schemes.
 
 {{< callout context="note">}}
-{{< callout context="note">}}
 Bear in mind the word _**Simplified**_ in the name.
 This approach aims to foster the adoption of (some) good data modeling practices.
 It does not intend to re-invent or replace long-standing standards, such as those of the [Semantic Web](https://www.w3.org/2001/sw/wiki/Main_Page).
@@ -25,11 +24,10 @@ One can distinghish three areas:
 the re-use of existing resources (left), the artifacts offered by `S2DM` (center), and the resulting domain data model created and maintained with `S2DM` artifacts (right).
 
 ### Getting started
-* Get a basic understanding of the [S2DM approach](/s2dm/docs/approach-overview).
-* Model your domain following the [S2DM data modeling guideline](/s2dm/docs/data-modeling-guideline).
-* Maintain your domain model with the support of the provided [S2DM tools](/s2dm/docs/tools).
+* Get a basic understanding of the [S2DM approach](/docs/approach-overview).
+* Model your domain following the [S2DM data modeling guideline](/docs/data-modeling-guideline).
+* Maintain your domain model with the support of the provided [S2DM tools](/docs/tools).
 
-{{< callout context="tip" >}}
 {{< callout context="tip" >}}
 `S2DM` artifacts are based on the following existing resources. Getting familiar with them is recommended.
 
