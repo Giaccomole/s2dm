@@ -22,6 +22,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>http://localhost:1313/examples/test-voyager/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>http://localhost:1313/docs/data-modeling-guideline/pre-defined-elements/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -51,10 +55,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/examples/version-bump-cli/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/examples/test-voyager/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>

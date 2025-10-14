@@ -12,8 +12,8 @@
 
 <noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/examples/test-voyager/">
   <link rel="canonical" href="http://localhost:1313/examples/test-voyager/">
-<title>  |  S2DM</title>
-<meta name="description" content="S2DM - Signal to Data Model documentation">
+<title>Interactive GraphQL Schema Visualization  |  S2DM</title>
+<meta name="description" content="Explore the seat capabilities domain model through an interactive GraphQL Voyager visualization">
 
     
     <link rel="icon" href="http://localhost:1313/favicon.ico" sizes="32x32">
@@ -40,16 +40,16 @@
       >
 <link rel="manifest" href="http://localhost:1313/manifest.webmanifest">
 
-<meta property="og:title" content="">
-<meta property="og:description" content="">
+<meta property="og:title" content="Interactive GraphQL Schema Visualization">
+<meta property="og:description" content="Explore the seat capabilities domain model through an interactive GraphQL Voyager visualization">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:1313/examples/test-voyager/"><meta property="og:image" content="http://localhost:1313/preview.png"><meta property="article:section" content="examples">
 
 <meta property="og:site_name" content="S2DM">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="">
-<meta name="twitter:description" content="">
+<meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="Interactive GraphQL Schema Visualization">
+<meta name="twitter:description" content="Explore the seat capabilities domain model through an interactive GraphQL Voyager visualization">
 
     
     <script type="application/ld+json">
@@ -71,7 +71,7 @@
      },
      {
        "@type": "ListItem",
-       "name": "",
+       "name": "Interactive Graph Ql Schema Visualization",
        "position": 3
      }
    ]
@@ -169,15 +169,15 @@
       <nav class="section-nav docs-links">
         <ul class="list-unstyled">
           
-            <li>
-              <a href="../../examples/version-bump-cli/">
-                Version Bump CLI Examples
+            <li class="active">
+              <a href="../../examples/test-voyager/" aria-current="page">
+                Interactive GraphQL Schema Visualization
               </a>
             </li>
           
-            <li class="active">
-              <a href="../../examples/test-voyager/" aria-current="page">
-                
+            <li>
+              <a href="../../examples/version-bump-cli/">
+                Version Bump CLI Examples
               </a>
             </li>
           
@@ -308,15 +308,15 @@
       <nav class="section-nav docs-links">
         <ul class="list-unstyled">
           
-            <li>
-              <a href="../../examples/version-bump-cli/">
-                Version Bump CLI Examples
+            <li class="active">
+              <a href="../../examples/test-voyager/" aria-current="page">
+                Interactive GraphQL Schema Visualization
               </a>
             </li>
           
-            <li class="active">
-              <a href="../../examples/test-voyager/" aria-current="page">
-                
+            <li>
+              <a href="../../examples/version-bump-cli/">
+                Version Bump CLI Examples
               </a>
             </li>
           
@@ -331,7 +331,8 @@
 		
 		<nav class="docs-toc docs-toc-offset d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
 			<div class="page-links">
-  
+  <h3>On this page</h3>
+    <nav id="toc"></nav>
 </div>
 
 			<div class="feedback-links">
@@ -350,14 +351,20 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="../../">Home</a></li>
 <li class="breadcrumb-item"><a href="../../examples/">Examples</a></li>
-<li class="breadcrumb-item active" aria-current="page"></li>
+<li class="breadcrumb-item active" aria-current="page">Interactive GraphQL Schema Visualization</li>
 					</ol>
 				</nav>
 			
 				
 			
 			<nav class="toc-mobile d-xl-none" aria-label="Quaternary navigation">
-				
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents"></nav>
+    </div>
+  </details>
+
 				<div class="feedback-links">
   <h3>Contribute</h3>
   <ul class="list-unstyled">
@@ -368,24 +375,198 @@
 </div>
 
 			</nav>
-			
+			<h1 id="interactive-graphql-schema-visualization">Interactive GraphQL Schema Visualization</h1>
+<p>Explore the seat capabilities domain model through an interactive <a href="https://github.com/graphql-kit/graphql-voyager">GraphQL Voyager</a> visualization. This comprehensive schema, derived from the <a href="https://covesa.github.io/vehicle_signal_specification/">Vehicle Signal Specification (VSS)</a> <code>Seat</code> branch, demonstrates how <strong>S2DM</strong> effectively models complex automotive domain relationships including nested components (backrest, headrest, seating), enumerated values, and rich type relationships.</p>
+<div class="callout callout-note d-flex flex-row mt-4 mb-4 pt-4 pe-4 pb-2 ps-3">
+  
+  <div class="callout-content">
+    
+    <div class="callout-body">
+      <p><strong>Usage:</strong> Click and drag to navigate • Click types for details • Use the sidebar to search and explore documentation • Zoom with mouse wheel for different perspectives.</p>
+
+    </div>
+  </div>
+</div>
+
+<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="graphql-voyager-container">
+  
+  <h3 class="graphql-voyager-title">Seat Capabilities Domain Model</h3>
+  
+  <div id="voyager-1" style="height: 1000px;">
+    <div class="graphql-voyager-loading">
+      <div>Loading GraphQL Schema Visualization...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const containerId = 'voyager-1';
+  const schemaPath = '\/examples\/seat-to-vspec\/full_sdl.graphql';
+  const container = document.getElementById(containerId);
+  
+  
+  function showLoading() {
+    container.innerHTML = '<div class="graphql-voyager-loading">Loading GraphQL Schema...</div>';
+  }
+  
+  
+  function showError(message) {
+    container.innerHTML = '<div class="graphql-voyager-error">Error loading schema: ' + message + '</div>';
+  }
+  
+  
+  function waitForVoyager(callback) {
+    if (typeof GraphQLVoyager !== 'undefined') {
+      callback();
+    } else {
+      setTimeout(() => waitForVoyager(callback), 100);
+    }
+  }
+  
+  
+  function loadSchema() {
+    
+    const fullSchemaPath = schemaPath.startsWith('/') ? schemaPath : '/' + schemaPath;
+    
+    fetch(fullSchemaPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then(sdlText => {
+        if (!sdlText.trim()) {
+          throw new Error('Schema file is empty');
+        }
+        
+        console.log('SDL loaded, length:', sdlText.length);
+        console.log('SDL preview:', sdlText.substring(0, 200));
+        
+        waitForVoyager(() => {
+          try {
+            console.log('Converting SDL to schema using GraphQL buildSchema');
+            
+            
+            let introspectionResult;
+            
+            if (typeof GraphQL !== 'undefined' && GraphQL.buildSchema) {
+              console.log('Using GraphQL.buildSchema');
+              const schema = GraphQL.buildSchema(sdlText);
+              introspectionResult = GraphQL.getIntrospectionQuery ? 
+                GraphQL.introspectionFromSchema(schema) : 
+                { data: { __schema: schema } };
+            } else if (typeof GraphQLVoyager.sdlToSchema === 'function') {
+              console.log('Using GraphQLVoyager.sdlToSchema');
+              introspectionResult = GraphQLVoyager.sdlToSchema(sdlText);
+            } else {
+              console.log('No schema conversion available, passing SDL directly');
+              introspectionResult = null;
+            }
+            
+            console.log('Schema conversion result:', introspectionResult);
+            
+            
+            container.innerHTML = '';
+            
+            
+            const voyagerOptions = {};
+            
+            
+            if (introspectionResult) {
+              voyagerOptions.introspection = introspectionResult;
+            } else {
+              
+              voyagerOptions.schemaSDL = sdlText;
+            }
+            
+            
+            const skipRelay = true;
+            const skipDeprecated = true;
+            const sortByAlphabet = false;
+            const showLeafFields = true;
+            const hideRoot = false;
+            const hideDocs = false;
+            const hideSettings = true;
+            const allowToChangeSchema = false;
+            
+            voyagerOptions.displayOptions = {
+              skipRelay: skipRelay,
+              skipDeprecated: skipDeprecated,
+              sortByAlphabet: sortByAlphabet,
+              showLeafFields: showLeafFields,
+              hideRoot: hideRoot
+            };
+            
+            
+            voyagerOptions.hideDocs = hideDocs;
+            voyagerOptions.hideSettings = hideSettings;
+            voyagerOptions.allowToChangeSchema = allowToChangeSchema;
+            
+            console.log('Voyager options:', voyagerOptions);
+            
+            
+            GraphQLVoyager.renderVoyager(container, voyagerOptions);
+            
+            console.log('GraphQL Voyager rendered successfully');
+          } catch (error) {
+            console.error('Error converting SDL to schema:', error);
+            showError('Invalid GraphQL schema: ' + error.message);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('GraphQL Voyager error:', error);
+        showError(error.message);
+      });
+  }
+  
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadSchema);
+  } else {
+    loadSchema();
+  }
+})();
+</script>
+
+
 			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
 				</div>
 			<div class="page-nav d-flex flex-column flex-sm-row">
 	
-	<div class="card w-100">
-			<div class="card-body d-flex">
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="../../examples/version-bump-cli/" class="stretched-link text-reset text-decoration-none">Version Bump CLI Examples</a>
+				</div>
 				<div class="d-flex flex-column justify-content-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
 						<path d="M5 12l14 0"></path>
-						<path d="M5 12l6 6"></path>
-						<path d="M5 12l6 -6"></path>
-				 	</svg>
-				</div>
-				<div class="d-flex flex-column">
-					<div class="text-body-secondary">Prev</div>
-					<a href="../../examples/version-bump-cli/" class="stretched-link text-reset text-decoration-none">Version Bump CLI Examples</a>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
 				</div>
 			</div>
 		</div>
