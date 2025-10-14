@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="http://localhost:1313/js/color-mode.f14b3e296de1d0b69e75af684b62a4a912a2cadab04e36123407cd8388204f1d.js"
+  integrity="sha256-8Us&#43;KW3h0Laeda9oS2KkqRKiytqwTjYSNAfNg4ggTx0=">
+</script>
+
+
+<link rel="stylesheet" href="http://localhost:1313/main.f44d99f784eac3975079d5bb8b6e041c7c768bbac771886a728b99ce4c0f9e9a957573eef60d5db21f1a1e9479e7b5e487f6862d8389dc6b4d46d94a84f479ac.css" integrity="sha512-9E2Z94Tqw5dQedW7i24EHHx2i7rHcYhqcouZzkwPnpqVdXPu9g1dsh8aHpR557Xkh/aGLYOJ3GtNRtlKhPR5rA==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/others/approach_primer/">
+  <link rel="canonical" href="http://localhost:1313/others/approach_primer/">
+<title>Approach primer  |  S2DM</title>
+<meta name="description" content="S2DM - Signal to Data Model documentation">
+
+    
+    <link rel="icon" href="http://localhost:1313/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="http://localhost:1313/favicon.svg" type="image/png">
+    
+      <link
+        rel="apple-touch-icon"
+        href="http://localhost:1313/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="http://localhost:1313/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="http://localhost:1313/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="http://localhost:1313/manifest.webmanifest">
+
+<meta property="og:title" content="Approach primer">
+<meta property="og:description" content="Background Why do we need such an approach? Subject Matter Experts are often NOT data modeling experts Subject Matter Experts (SMEs) are often not familiar with data modeling, nor are they following best practices to formalize their knowledge. This lack in expertise can be problematic when they are in charge of expanding and maintaining a certain controlled vocabulary that will be used in real systems at the enterprise level.
+Vehicle Signal Specification has been an alternative but requires improvements When it comes to vehicle data, the Vehicle Signal Specification (VSS) has been offering an easy-to-follow approach to enable SMEs contribute to a controlled vocabulary of high-level vehicle properties (e.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/others/approach_primer/"><meta property="og:image" content="http://localhost:1313/preview.png"><meta property="article:section" content="others">
+
+<meta property="og:site_name" content="S2DM">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="Approach primer">
+<meta name="twitter:description" content="Background Why do we need such an approach? Subject Matter Experts are often NOT data modeling experts Subject Matter Experts (SMEs) are often not familiar with data modeling, nor are they following best practices to formalize their knowledge. This lack in expertise can be problematic when they are in charge of expanding and maintaining a certain controlled vocabulary that will be used in real systems at the enterprise level.
+Vehicle Signal Specification has been an alternative but requires improvements When it comes to vehicle data, the Vehicle Signal Specification (VSS) has been offering an easy-to-follow approach to enable SMEs contribute to a controlled vocabulary of high-level vehicle properties (e.">
+
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Simplified Semantic Data Modeling",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/others/",
+       "name": "Others",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "name": "Approach Primer",
+       "position": 3
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+/>
+
+
+
+
+<script src="https://unpkg.com/graphql@16/index.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.css" />
+
+
+<script src="https://cdn.jsdelivr.net/npm/graphql-voyager/dist/voyager.standalone.js"></script>
+
+
+<style>
+  .graphql-voyager-container {
+    border: 1px solid #e1e5e9;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1rem 0;
+  }
+  
+  .graphql-voyager-title {
+    background-color: #f6f8fa;
+    padding: 8px 16px;
+    border-bottom: 1px solid #e1e5e9;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .graphql-voyager-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    color: #586069;
+    background-color: #fafbfc;
+  }
+  
+  .graphql-voyager-error {
+    padding: 1rem;
+    background-color: #ffeef0;
+    color: #d1242f;
+    border-left: 3px solid #d1242f;
+  }
+</style>
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N42SFQ45B4"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+
+ gtag('config', 'G-N42SFQ45B4');
+</script>
+
+<script>
+    console.log("\x3C!-- Hacked together with <3 in emacs --->");
+</script>
+
+</head>
+
+  
+  <body class="single section others" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div class="sticky-top">
+<div class="header-bar"></div>
+<header class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="../../">S2DM</a>
+
+    
+    <span class="badge bg-danger text-white fw-bold ms-2" style="font-size: 1.0rem; padding: 0.3rem 0.6rem;">TEST</span>
+    
+    
+    <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="10" cy="10" r="7"></circle>
+        <line x1="21" y1="21" x2="15" y2="15"></line>
+      </svg>
+    </button>
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="header-bar"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Others</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+    
+      <nav class="section-nav docs-links">
+        <ul class="list-unstyled">
+          
+            <li class="active">
+              <a href="../../others/approach_primer/" aria-current="page">
+                Approach primer
+              </a>
+            </li>
+          
+            <li>
+              <a href="../../others/basic_principle/">
+                Basic principle
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="header-bar d-lg-none"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">S2DM</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/docs/">Docs</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/examples/">Examples</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/faqs/">FAQs</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://localhost:1313/others/" aria-current="true">Others</a>
+              </li>
+            </ul>
+
+        
+        
+        <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="10" cy="10" r="7"></circle>
+            <line x1="21" y1="21" x2="15" y2="15"></line>
+          </svg>
+        </button>
+        
+        
+        
+        <button id="buttonColorMode" class="btn btn-link mx-auto nav-link p-0 ms-lg-2 me-lg-1" type="button" aria-label="Toggle theme">
+          <svg data-bs-theme-value="dark" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+          <svg data-bs-theme-value="light" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0m-5 0h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+        </button>
+        
+        <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/covesa/s2dm"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 visually-hidden" id="searchModalLabel">Search</h1>
+        <button type="button" class="btn-close visually-hidden" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="search-input flex-grow-1 d-none">
+          <form id="search-form" class="search-form" action="#" method="post" accept-charset="UTF-8" role="search">
+            <label for="query" class="visually-hidden">Search</label>
+            <div class="d-flex">
+              <input type="search" id="query" name="query" class="search-text form-control form-control-lg" placeholder="Search" aria-label="Search" maxlength="128" autocomplete="off">
+              <button type="button" class="btn btn-link text-decoration-none px-0 ms-3 d-md-none" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="search-loading status message d-none mt-3 text-center">Loading search index…</p>
+        <p class="search-no-recent message d-none mt-3 text-center">No recent searches</p>
+        <p class="search-no-results message d-none mt-3 text-center">No results for "<strong><span class="query-no-results">Query here</span></strong>"</p>
+        <div id="searchResults" class="search-results"></div>
+        <template>
+          <article class="search-result list-view">
+            <div class="card my-3">
+              <div class="card-body">
+                <header>
+                  <h2 class="h5 title title-submitted mb-0"><a class="stretched-link text-decoration-none text-reset" href="#">Title here</a></h2>
+                  <div class="submitted d-none"><time class="created-date">Date here</time></div>
+                </header>
+                <div class="content">Summary here</div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <div class="modal-footer">
+        <ul class="list-inline me-auto d-none d-md-block">
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd><span class="DocSearch-Label">to select</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd><span class="DocSearch-Label">to navigate</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd><span class="DocSearch-Label">to close</span></li>
+        </ul>
+        <p class="d-md-none">Search by <a class="text-decoration-none" href="https://github.com/nextapps-de/flexsearch">FlexSearch</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="wrap container-fluid" role="document">
+      <div class="content">
+      
+        
+<div class="row flex-xl-nowrap" >
+		<div class="col-lg-3 col-xl-3 docs-sidebar docs-sidebar-offset d-none d-lg-block">
+			
+    
+      <nav class="section-nav docs-links">
+        <ul class="list-unstyled">
+          
+            <li class="active">
+              <a href="../../others/approach_primer/" aria-current="page">
+                Approach primer
+              </a>
+            </li>
+          
+            <li>
+              <a href="../../others/basic_principle/">
+                Basic principle
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+    
+  
+
+		</div>
+		
+			<div class="col container-fw d-lg-flex flex-lg-row justify-content-center mx-auto" >
+		
+		<nav class="docs-toc docs-toc-offset d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#background">Background</a>
+      <ul>
+        <li><a href="#why-do-we-need-such-an-approach">Why do we need such an approach?</a></li>
+        <li><a href="#design-principles">Design principles</a></li>
+      </ul>
+    </li>
+    <li><a href="#proposed-solution-approach">Proposed solution approach</a>
+      <ul>
+        <li><a href="#general-workflow">General workflow</a></li>
+        <li><a href="#idea-1-maintain-entity-and-property-sets">Idea (1): Maintain Entity and Property sets</a></li>
+        <li><a href="#idea-2-maintain-a-set-of-reusabel-labels">Idea (2): Maintain a set of reusabel labels</a></li>
+        <li><a href="#idea-3-construct-unique-ids">Idea (3): Construct unique IDs</a></li>
+        <li><a href="#idea-4-allow-arbitrary-hierarchies-for-different-classification-criteria">Idea (4): Allow arbitrary hierarchies for different classification criteria</a></li>
+        <li><a href="#idea-5-specify-possible-interactions">Idea (5): Specify possible interactions</a></li>
+        <li><a href="#other-ideas">Other ideas:</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#special-considerations">Special considerations</a>
+      <ul>
+        <li><a href="#dilemma-property-as-field-or-as-object-type">Dilemma: Property as field or as object type</a></li>
+        <li><a href="#recommendation"><strong>Recommendation</strong></a></li>
+        <li><a href="#enums-datatypes">Enums&rsquo; datatypes</a></li>
+        <li><a href="#special-cross-references">Special cross references</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</div>
+
+			<div class="feedback-links">
+  <h3>Contribute</h3>
+  <ul class="list-unstyled">
+    <li><a href="https://github.com/covesa/s2dm/issues/new/choose">Create an issue</a></li>
+    <li><a href="https://github.com/covesa/s2dm/discussions/new?category=ideas">Share an idea</a></li>
+    <li><a href="https://github.com/covesa/s2dm/discussions/new?category=support">Ask a question</a></li>
+  </ul>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-9 col-xl-9 mx-xl-auto">
+		
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="../../">Home</a></li>
+<li class="breadcrumb-item"><a href="../../others/">Others</a></li>
+<li class="breadcrumb-item active" aria-current="page">Approach primer</li>
+					</ol>
+				</nav>
+			
+				
+			
+			<nav class="toc-mobile d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#background">Background</a>
+      <ul>
+        <li><a href="#why-do-we-need-such-an-approach">Why do we need such an approach?</a></li>
+        <li><a href="#design-principles">Design principles</a></li>
+      </ul>
+    </li>
+    <li><a href="#proposed-solution-approach">Proposed solution approach</a>
+      <ul>
+        <li><a href="#general-workflow">General workflow</a></li>
+        <li><a href="#idea-1-maintain-entity-and-property-sets">Idea (1): Maintain Entity and Property sets</a></li>
+        <li><a href="#idea-2-maintain-a-set-of-reusabel-labels">Idea (2): Maintain a set of reusabel labels</a></li>
+        <li><a href="#idea-3-construct-unique-ids">Idea (3): Construct unique IDs</a></li>
+        <li><a href="#idea-4-allow-arbitrary-hierarchies-for-different-classification-criteria">Idea (4): Allow arbitrary hierarchies for different classification criteria</a></li>
+        <li><a href="#idea-5-specify-possible-interactions">Idea (5): Specify possible interactions</a></li>
+        <li><a href="#other-ideas">Other ideas:</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples">Examples</a></li>
+    <li><a href="#special-considerations">Special considerations</a>
+      <ul>
+        <li><a href="#dilemma-property-as-field-or-as-object-type">Dilemma: Property as field or as object type</a></li>
+        <li><a href="#recommendation"><strong>Recommendation</strong></a></li>
+        <li><a href="#enums-datatypes">Enums&rsquo; datatypes</a></li>
+        <li><a href="#special-cross-references">Special cross references</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+				<div class="feedback-links">
+  <h3>Contribute</h3>
+  <ul class="list-unstyled">
+    <li><a href="https://github.com/covesa/s2dm/issues/new/choose">Create an issue</a></li>
+    <li><a href="https://github.com/covesa/s2dm/discussions/new?category=ideas">Share an idea</a></li>
+    <li><a href="https://github.com/covesa/s2dm/discussions/new?category=support">Ask a question</a></li>
+  </ul>
+</div>
+
+			</nav>
+			<h2 id="background">Background<a href="#background" class="anchor" aria-hidden="true">#</a> </h2>
+<h3 id="why-do-we-need-such-an-approach">Why do we need such an approach?<a href="#why-do-we-need-such-an-approach" class="anchor" aria-hidden="true">#</a> </h3>
+<h4 id="subject-matter-experts-are-often-not-data-modeling-experts">Subject Matter Experts are often NOT data modeling experts<a href="#subject-matter-experts-are-often-not-data-modeling-experts" class="anchor" aria-hidden="true">#</a> </h4>
+<p>Subject Matter Experts (SMEs) are often not familiar with data modeling, nor are they following best practices to formalize their knowledge.
+This lack in expertise can be problematic when they are in charge of expanding and maintaining a certain controlled vocabulary that will be used in real systems at the enterprise level.</p>
+<h4 id="vehicle-signal-specification-has-been-an-alternative-but-requires-improvements">Vehicle Signal Specification has been an alternative but requires improvements<a href="#vehicle-signal-specification-has-been-an-alternative-but-requires-improvements" class="anchor" aria-hidden="true">#</a> </h4>
+<p>When it comes to vehicle data, the Vehicle Signal Specification (VSS) has been offering an easy-to-follow approach to enable SMEs contribute to a controlled vocabulary of high-level vehicle properties (e.g., Speed, Acceleration, etc.).</p>
+<blockquote>
+<p><strong>Vehicle Signal Specification (VSS)</strong> is a controlled vocabulary for the properties of a car organized in a hierarchical tree. To learn more about VSS, please visit the <a href="https://covesa.github.io/vehicle_signal_specification/">official documentation page</a>.</p>
+</blockquote>
+<p>The VSS modeling approach has been well received by SMEs who have been extending the list of properties both publicly at the COVESA alliance and internally at BMW.
+However, this approach has reached its limits on what one can express with it.
+Among the limitations, is the fact that VSS uses a custom file extension <code>.vspec</code> that referes to files written in <code>YAML</code> with a custom syntax.
+The language used in <code>vspec</code>, as of December 2024, does not support cross references.
+Thus, it is not possible to model multiple inter-connected domains.</p>
+<blockquote>
+<p>If you want to learn more about the current limitations of <code>VSS</code>, please visit these resources:</p>
+<ul>
+<li><a href="https://wiki.covesa.global/display/WIK4/Defining&#43;the&#43;COVESA&#43;data&#43;modeling&#43;strategy&#43;and&#43;its&#43;associated&#43;artifacts">Defining the COVESA data modeling strategy and its associated artifacts</a></li>
+<li><a href="https://wiki.covesa.global/download/attachments/98271360/COVESA_Towards%20vehicle%20DATA%20specification_AMM_04.2024.pdf?version=1&amp;modificationDate=1714758174348&amp;api=v2">Towards a Vehicle DATA specification</a></li>
+<li><a href="https://wiki.covesa.global/display/WIK4/Vehicle&#43;DATA&#43;Specification">Vehicle DATA Specification</a></li>
+</ul>
+</blockquote>
+<p>The reference mapping between the Vehicle Signal Specification (VSS) and this S2DM approach is documeted in <code>/docs/s2dm_vss_mapping.md</code>.</p>
+<h3 id="design-principles">Design principles<a href="#design-principles" class="anchor" aria-hidden="true">#</a> </h3>
+<h4 id="problem">Problem<a href="#problem" class="anchor" aria-hidden="true">#</a> </h4>
+<ul>
+<li>Disparate vehicle data models that lack proper semantics.</li>
+</ul>
+<h4 id="requirements">Requirements<a href="#requirements" class="anchor" aria-hidden="true">#</a> </h4>
+<table>
+<thead>
+<tr>
+<th><strong>Criteria</strong></th>
+<th><strong>Requirement</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Simplicity</strong></td>
+<td>Modeling approach is easy to follow. Its representation is not verbose. It is friendly for anyone new to the area. It is easy to add new concepts.</td>
+</tr>
+<tr>
+<td><strong>Technology agnosticism</strong></td>
+<td>Data model can be used with any downstream technology (e.g., by exporting it into multiple schemas).</td>
+</tr>
+<tr>
+<td><strong>Modularity</strong></td>
+<td>Data model can be split into multiple (reusable) small pieces.</td>
+</tr>
+<tr>
+<td><strong>Scalability &amp; Maintainability</strong></td>
+<td>Model can scale up (e.g., concepts are extended). It can be easily maintained (e.g., changes and extensions are possible).</td>
+</tr>
+<tr>
+<td><strong>Metadata resource uniqueness</strong></td>
+<td>Concepts in the data model are uniquely identifiable with future-proof ids (e.g., by the use of International Resource Identifiers (IRIs)).</td>
+</tr>
+<tr>
+<td><strong>Support for multiple classification schemes</strong></td>
+<td>Polyhierarchies are supported to classify the terms in the vocabulary with different classification criteria (i.e., useful for data catalogs).</td>
+</tr>
+<tr>
+<td><strong>Support for cross-domain references</strong></td>
+<td>Multiple cross-referenced domains are supported natively by the language (useful for contextual data).</td>
+</tr>
+<tr>
+<td><strong>Community &amp; Tools</strong></td>
+<td>Data model can be used in multiple up-to-date public tools. Modeling approach is based on a language that is already established in the open community.</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Fig:goal" src="../../images/vss-limits-criteria.jpg"></p>
+<h4 id="goal">Goal<a href="#goal" class="anchor" aria-hidden="true">#</a> </h4>
+<ul>
+<li>To minimize the effort needed to develop, extend, and maintain vehicle-related semantic data models.
+<img alt="Fig:currentvsdesired" src="../../images/current-vs-desired.jpg"></li>
+</ul>
+<h4 id="artifact">Artifact<a href="#artifact" class="anchor" aria-hidden="true">#</a> </h4>
+<ul>
+<li>A guideline on how to model vehicle-related data with proper semantics and good practices.</li>
+</ul>
+<h2 id="proposed-solution-approach">Proposed solution approach<a href="#proposed-solution-approach" class="anchor" aria-hidden="true">#</a> </h2>
+<h3 id="general-workflow">General workflow<a href="#general-workflow" class="anchor" aria-hidden="true">#</a> </h3>
+<p>A simplified approach (see figure&rsquo;s left side) could be the adequate bridge between the ideal enterprise metadata management and the actual use of a domain data model in an application.
+Specially in cases where SMEs are actively extending a set of data structures that are needed in practice.
+Also, when alliances or consortiums consist of multiple external stakeholders.</p>
+<p>Overall, a SME should be able to intuitively search and find the data of interest via a data catalog.
+If the desired data is found, tools must allow the export of it into the structure needed in the application.
+In the case that no existing data matches his needs, simple steps must allow the modeling of the missing concepts.
+To that end, such a process is proposed with the following ideas:</p>
+<p><img alt="Fig:generalflow" src="../../images/general-flow.jpg"></p>
+<h3 id="idea-1-maintain-entity-and-property-sets">Idea (1): Maintain Entity and Property sets<a href="#idea-1-maintain-entity-and-property-sets" class="anchor" aria-hidden="true">#</a> </h3>
+<p>In an application, most of the value is centered around what one can read or write.
+Thus, the most granular structure corresponds always to a certain <code>Property</code> (aka., characteristic, attribute, etc.). For example: the <code>position</code> of the window, the <code>speed</code> of a vehicle, the <code>angle</code> of the steering wheel.
+All of them are assotiated to a particular datatype, such as <code>Integer</code>, <code>String</code>, etc.
+Then actual values of those properties can have dynamic (i.e., data streams) or static behavior.</p>
+<p>Properties belong to some <code>Entity</code> that is of interest for our application. For example:
+<code>Window</code>, <code>Vehicle</code>, <code>SteeringWheel</code>, etc.
+So, an <code>Entity</code> can contain a collection of properties.</p>
+<p>The principal idea here is to maintain a set of entities and their assotiated properties.</p>
+<h3 id="idea-2-maintain-a-set-of-reusabel-labels">Idea (2): Maintain a set of reusabel labels<a href="#idea-2-maintain-a-set-of-reusabel-labels" class="anchor" aria-hidden="true">#</a> </h3>
+<p>In some cases, there are entities that can have multiple instances.
+For example, A vehicle might not have one but multiple <code>doors</code>, <code>windows</code>, <code>seats</code>, <code>batteries</code>, <code>tires</code>, etc.
+Hence, it becomes useful to avoid repetition in the modeling by allowing the specification of reusable labels.
+A list of labels, such as <code>InCabinZone</code>, could contain the options <code>FRONT_LEFT</code>, and <code>FRONT_RIGHT</code>.
+These could be used directly to specify a particular <code>Door</code>, <code>Windows</code>, and <code>Seat</code>.</p>
+<h3 id="idea-3-construct-unique-ids">Idea (3): Construct unique IDs<a href="#idea-3-construct-unique-ids" class="anchor" aria-hidden="true">#</a> </h3>
+<p>To foster reusability and avoid naming conflicts, a rule set must be enforced.
+The minimum constraints must be:</p>
+<ul>
+<li>A <code>namespace</code> (<code>ns</code>) must be unique and future-proof.</li>
+<li>Within a <code>namespace</code> (<code>ns</code>), the name of an <code>Entity</code> must be unique.</li>
+<li>Within a <code>namespace</code> (<code>ns</code>), the name of an <code>Enum</code> must be unique.</li>
+<li>Within an <code>Entity</code>, the name of a <code>Property</code> must be unique.</li>
+</ul>
+<p>In the case of <code>GraphQL</code> schema language these constraints are supported.
+One can concatenate the elements to create International Resource Identifiers (IRIs)</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Turtle" data-lang="Turtle"><span class="line"><span class="cl"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">ns:</span><span class="w"> </span><span class="nv">&lt;mynamespacehere&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">ns:</span><span class="nt">Door</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">ns:</span><span class="nt">Door</span><span class="p">.</span><span class="err">position</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">ns:</span><span class="nt">Door</span><span class="p">.</span><span class="err">isOpen</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>Then, IRIs can be used when defining the schema in the application.
+For example, a <code>json</code> schema could look like:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;object&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;properties&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;door&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;implementedConcept&#34;</span><span class="p">:</span> <span class="s2">&#34;ns:Door&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;object&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;properties&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;position&#34;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;int&#34;</span><span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;isOpen&#34;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;boolean&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<h3 id="idea-4-allow-arbitrary-hierarchies-for-different-classification-criteria">Idea (4): Allow arbitrary hierarchies for different classification criteria<a href="#idea-4-allow-arbitrary-hierarchies-for-different-classification-criteria" class="anchor" aria-hidden="true">#</a> </h3>
+<p>As the <code>Entity</code> and <code>Property</code> sets grow over time, proper information classification becomes essential.
+The most tangible value of this organization is visible in any online shop.
+There, a faceted search is the default tool for filtering the available data with specific criteria.
+The same principle can be applied here.</p>
+<p>For example, the <code>Window</code> entity can be classified by its physical position (<code>Vehicle.Cabin.Door.Window</code>), its principle of movement (<code>MovablePart.UniDimensionalMove.Window</code>), its material (<code>Piece.GlassedPiece.Window</code>), and by other criteria.</p>
+<p>The <a href="https://www.w3.org/2004/02/skos/">Simple Knowledge Organization System (SKOS)</a> is a well-established standard to achieve such classifications.</p>
+<h3 id="idea-5-specify-possible-interactions">Idea (5): Specify possible interactions<a href="#idea-5-specify-possible-interactions" class="anchor" aria-hidden="true">#</a> </h3>
+<p>The entity and property sets (of idea (1)) can be complemented with an specification of the set of possible operations on them (i.e., interactions or actions).
+For example:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Domain</strong></th>
+<th><strong>Operation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Seat</code></td>
+<td>Get the position of all seats.</td>
+</tr>
+<tr>
+<td><code>Seat</code></td>
+<td>Save a seat position to memory.</td>
+</tr>
+<tr>
+<td><code>Seat</code></td>
+<td>Control the heating mode of a seat.</td>
+</tr>
+<tr>
+<td><code>Climate</code></td>
+<td>Turn on/off the AC.</td>
+</tr>
+<tr>
+<td><code>Climate</code></td>
+<td>Set the temperature.</td>
+</tr>
+<tr>
+<td><code>Climate</code></td>
+<td>Get the fan speed per zone.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="other-ideas">Other ideas:<a href="#other-ideas" class="anchor" aria-hidden="true">#</a> </h3>
+<blockquote>
+<p>TODO: Conversational tools, versioning, etc.</p>
+</blockquote>
+<h2 id="examples">Examples<a href="#examples" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Refer to the <a href="../../examples/">examples folder</a>.</p>
+<h2 id="special-considerations">Special considerations<a href="#special-considerations" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The following cases require special treatments.</p>
+<h3 id="dilemma-property-as-field-or-as-object-type">Dilemma: Property as field or as object type<a href="#dilemma-property-as-field-or-as-object-type" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Here’s the markdown summarizing the three cases for your dilemma:</p>
+<hr>
+<h4 id="case-1-scalar-field"><strong>Case 1: Scalar Field</strong><a href="#case-1-scalar-field" class="anchor" aria-hidden="true">#</a> </h4>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Vehicle</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">speed</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Simple and concise representation.</li>
+<li>Easy to read and understand for straightforward use cases.</li>
+<li>Suitable for static properties that do not require additional metadata or complexity.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Limited extensibility: Adding metadata (e.g., units like &ldquo;km/h&rdquo;) or additional attributes (e.g., timestamp) requires refactoring.</li>
+<li>Not future-proof: If the property evolves to include more details, significant schema changes are needed.</li>
+<li>Cannot represent complex relationships or metadata.</li>
+</ul>
+<hr>
+<h4 id="case-2-dedicated-object-type"><strong>Case 2: Dedicated Object Type</strong><a href="#case-2-dedicated-object-type" class="anchor" aria-hidden="true">#</a> </h4>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Vehicle</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">speed</span><span class="p">:</span><span class="w"> </span><span class="nc">VehicleSpeed</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">VehicleSpeed</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">value</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">unit</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">timestamp</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Highly extensible: Allows adding metadata like <code>unit</code> or <code>timestamp</code> without breaking the schema.</li>
+<li>Better suited for complex properties: Can easily accommodate additional fields like ranges or error margins.</li>
+<li>Future-proof: Supports evolving requirements without major schema changes.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>More verbose: Introduces additional layers of nesting, making the schema longer and more complex.</li>
+<li>Overhead for simple properties: Feels excessive for straightforward fields like <code>speed</code>.</li>
+<li>Harder to read and maintain for basic use cases.</li>
+</ul>
+<hr>
+<h4 id="case-3-reusable-property-type"><strong>Case 3: Reusable Property Type</strong><a href="#case-3-reusable-property-type" class="anchor" aria-hidden="true">#</a> </h4>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Vehicle</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">speed</span><span class="p">:</span><span class="w"> </span><span class="nc">IntProperty</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">IntProperty</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">value</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">unit</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">timestamp</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p><strong>Pros:</strong></p>
+<ul>
+<li>Reusability: The <code>IntProperty</code> type can be used across multiple fields (e.g., <code>speed</code>, <code>weight</code>, etc.), ensuring consistency and reducing duplication.</li>
+<li>Extensible: Like Case 2, it supports adding metadata or attributes without schema refactoring.</li>
+<li>Consistent: Standardizes the representation of similar properties across the schema.</li>
+<li>Future-proof: Accommodates evolving requirements while maintaining schema clarity.</li>
+</ul>
+<p><strong>Cons:</strong></p>
+<ul>
+<li>Overhead for simple properties: Adds complexity for fields that don’t require metadata.</li>
+<li>Generic naming: May feel less descriptive compared to dedicated types like <code>VehicleSpeed</code>.</li>
+<li>Potential for overgeneralization: If properties diverge significantly, the reusable type may become too generic.</li>
+</ul>
+<hr>
+<h3 id="recommendation"><strong>Recommendation</strong><a href="#recommendation" class="anchor" aria-hidden="true">#</a> </h3>
+<ul>
+<li>Use <strong>Case 1</strong> for simple, static properties that are unlikely to evolve or require metadata.</li>
+<li>Use <strong>Case 2</strong> for properties that are unique and require specific metadata or complex structures.</li>
+<li>Use <strong>Case 3</strong> for properties that share common metadata or structures across the schema, ensuring reusability and consistency.</li>
+</ul>
+<p>For vehicle-related information, <strong>Case 3</strong> with a reusable type like <code>IntProperty</code> is often the best choice, as it balances extensibility, reusability, and clarity.</p>
+<h3 id="enums-datatypes">Enums&rsquo; datatypes<a href="#enums-datatypes" class="anchor" aria-hidden="true">#</a> </h3>
+<p>In GraphQL, enums are typically used to define a set of allowed values for a field. These values are usually represented as strings, such as <code>[FIRST, SECOND, ...]</code>. However, GraphQL enums are not limited to strings conceptually; they can represent any discrete set of values.</p>
+<p>If your model defines &ldquo;allowed&rdquo; values as integers, like <code>[0, 1, 2, ...]</code>, you can still use GraphQL enums to represent them. Internally, GraphQL will treat these enum values as strings in the schema, but you can map them to integers in your application logic.</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gql" data-lang="gql"><span class="line"><span class="cl"><span class="kd">enum</span><span class="w"> </span><span class="nc">TheAllowedValues</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">ZERO</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">ONE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">TWO</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>In your application, you can map ZERO to 0, ONE to 1, and so on. This approach allows you to enforce a fixed set of values while maintaining flexibility in how they are interpreted in your code.</p>
+<h3 id="special-cross-references">Special cross references<a href="#special-cross-references" class="anchor" aria-hidden="true">#</a> </h3>
+<p>GraphQL schema language excels in defining the structure of data models in a clear and understandable way. It provides robust elements such as types, fields within types, nested objects, and enumerations.
+These features allow for a well-organized and precise representation of data structures.
+However, it has limitations such as restricted cross-references, where linking fields to other fields directly is not possible.</p>
+<p>Let us assume our model has the concepts <code>Window.position</code>, <code>AC.temperature</code>, <code>AC.isOn</code>, <code>Sunroof.position</code>.
+In the <code>GraphQL</code> schema language, it is not possible to say that the <code>Person.perceivedTemperature</code> can be modified by acting on these properties.</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Window</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">position</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">AC</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">temperature</span><span class="p">:</span><span class="w"> </span><span class="nc">Float</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">isOn</span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Sunroof</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">position</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">perceivedTemperature</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">  </span><span class="c"># I want to say that this property might be affected by acting on the others</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">pTemp</span><span class="p">:</span><span class="w"> </span><span class="nc">PTem</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">PTemp</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">affectedByProp</span><span class="p">:</span><span class="w"> </span><span class="nc">Property</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">value</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Property</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">objectName</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">fieldName</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<h4 id="option-1---instance-data-file">Option 1 - Instance data file<a href="#option-1---instance-data-file" class="anchor" aria-hidden="true">#</a> </h4>
+<p>An alternative would be to define the schema as usual, and then write another instance data file with concrete instance data that represents the connections. For example, that the perceived temperature is affected by <code>Window.position</code>, <code>AC.temperature</code>, <code>AC.isOn</code>, <code>Sunroof.position</code>.</p>
+<h4 id="option-2---enums-with-uris">Option 2 - Enums with URIs<a href="#option-2---enums-with-uris" class="anchor" aria-hidden="true">#</a> </h4>
+<p>However, the following is possible and supported by the language out of the box by using nested objects:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">perceivedTemperature</span><span class="p">:</span><span class="w"> </span><span class="nc">PerceivedTemperature</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">PerceivedTemperature</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">temperature</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">modifiableBy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nc">perceivedTemperatureModifiersEnum</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">enum</span><span class="w"> </span><span class="nc">perceivedTemperatureModifiersEnum</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">ns</span><span class="p">:</span><span class="nc">Window</span><span class="err">.</span><span class="py">position</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">ns</span><span class="p">:</span><span class="nc">AC</span><span class="err">.</span><span class="py">temperature</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">ns</span><span class="p">:</span><span class="nc">AC</span><span class="err">.</span><span class="py">isOn</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">ns</span><span class="p">:</span><span class="nc">Sunroof</span><span class="err">.</span><span class="py">position</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>Option 3 - using directives</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gql" data-lang="gql"><span class="line"><span class="cl"><span class="err">```</span><span class="py">graphql</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">directive</span><span class="w"> </span><span class="nd">@affectedBy</span><span class="p">(</span><span class="py">object</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!,</span><span class="w"> </span><span class="py">field</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!)</span><span class="w"> </span><span class="kd">on</span><span class="w"> </span><span class="kc">FIELD_DEFINITION</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">perceivedTemperature</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nd">@affectedBy</span><span class="p">(</span><span class="py">object</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Window&#34;</span><span class="p">,</span><span class="w"> </span><span class="nc">field</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;position&#34;</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nc">type</span><span class="w"> </span><span class="py">Window</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">position</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span></span></span></code></pre></div>
+  </figure>
+</div>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="../../others/basic_principle/" class="stretched-link text-reset text-decoration-none">Basic principle</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+			
+		</main>
+		
+			</div>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 text-center text-lg-start">
+        <ul class="list-inline">
+          
+        </ul>
+      </div>
+      <div class="col-lg-8 text-center text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="https://covesa.global/">Connected Vehicle Systems Alliance</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script async
+  src="http://localhost:1313/js/app.fe3d201846e03468226d368adeb1c41b11828c8660254d27ac1941af6c84472d.js"
+  integrity="sha256-/j0gGEbgNGgibTaK3rHEGxGCjIZgJU0nrBlBr2yERy0=">
+</script>
+
+
+
+
+
+<script async
+  src="../../js/flexsearch.f41f5ca0007df2c47e9e7872158f93feda934e4cc9dbcbc02e471503b49d8087.js"
+  integrity="sha256-9B9coAB98sR&#43;nnhyFY&#43;T/tqTTkzJ28vALkcVA7SdgIc=">
+</script>
+<script async
+  src="http://localhost:1313/js/search-modal.dfcb61942911357346c0a5dc0ac3a532d6e140fd670f57fae342da6466f7f2b4.js"
+  integrity="sha256-38thlCkRNXNGwKXcCsOlMtbhQP1nD1f640LaZGb38rQ=">
+</script>
+
+    
+  </body>
+</html>

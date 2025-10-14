@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Approach overview on S2DM</title>
+    <link>http://localhost:1313/docs/approach-overview/</link>
+    <description>Recent content in Approach overview on S2DM</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/docs/approach-overview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Objects &amp; Fields</title>
+      <link>http://localhost:1313/docs/approach-overview/objects-fields/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/objects-fields/</guid>
+      <description>Under construction&amp;hellip;</description>
+    </item>
+    <item>
+      <title>Concept URIs</title>
+      <link>http://localhost:1313/docs/approach-overview/concept-uris/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/concept-uris/</guid>
+      <description>Under construction&amp;hellip;</description>
+    </item>
+    <item>
+      <title>Multi hierarchies</title>
+      <link>http://localhost:1313/docs/approach-overview/multi-hierarchies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/multi-hierarchies/</guid>
+      <description>Under construction&amp;hellip;</description>
+    </item>
+    <item>
+      <title>Variant IDs</title>
+      <link>http://localhost:1313/docs/approach-overview/variant-ids/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/variant-ids/</guid>
+      <description>Under construction..</description>
+    </item>
+    <item>
+      <title>Specification registry</title>
+      <link>http://localhost:1313/docs/approach-overview/specification-registry/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/specification-registry/</guid>
+      <description>Under construction&amp;hellip;</description>
+    </item>
+    <item>
+      <title>Capabilities</title>
+      <link>http://localhost:1313/docs/approach-overview/capabilities/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/approach-overview/capabilities/</guid>
+      <description>Under construction&amp;hellip;</description>
+    </item>
+  </channel>
+</rss>
