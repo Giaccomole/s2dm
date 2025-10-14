@@ -89,7 +89,9 @@
   {{- $js = $js | js.Build $jsConfig | fingerprint -}}
 {{- end -}}
 
+{{- $filename := path.Base $js.RelPermalink -}}
+{{- $jsPath := printf "/js/%s" $filename | relURL -}}
 <script {{ with $load }}{{ . | safeHTMLAttr }}{{ end }}
-  src="{{- $js.RelPermalink -}}"
+  src="{{- $jsPath -}}"
   integrity="{{- $js.Data.Integrity -}}">
 </script>
