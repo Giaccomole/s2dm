@@ -14,5 +14,12 @@
       <guid>http://localhost:1313/examples/version-bump-cli/</guid>
       <description>This section contains examples demonstrating different scenarios for the s2dm check version-bump command, based on GraphQL Inspector&amp;rsquo;s change detection.&#xA;Overview The version-bump command analyzes GraphQL schema changes and recommends the appropriate semantic version bump:&#xA;No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new optional fields, enum values) Major bump: Breaking changes (removed fields, type changes) Dangerous changes: Potentially problematic but not immediately breaking Examples 1. No Version Bump Needed Command:</description>
     </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/examples/test-voyager/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/examples/test-voyager/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

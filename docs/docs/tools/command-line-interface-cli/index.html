@@ -15,11 +15,11 @@
 <title>Command Line Interface (CLI)  |  S2DM</title>
 <meta name="description" content="S2DM - Signal to Data Model documentation">
 
-
+    
     <link rel="icon" href="http://localhost:1313/favicon.ico" sizes="32x32">
-
+    
       <link rel="icon" href="http://localhost:1313/favicon.svg" type="image/png">
-
+    
       <link
         rel="apple-touch-icon"
         href="http://localhost:1313/apple-touch-icon.png"
@@ -43,10 +43,8 @@
 <meta property="og:title" content="Command Line Interface (CLI)">
 <meta property="og:description" content="Export Commands Naming Configuration All export commands support a global naming configuration feature that allows you to transform element names during the export process using the [--naming-config | -n] flag.
 Apply naming configuration to any export command:
-s2dm export [--naming-config | -n] naming.yaml ...
-Configuration Format The naming configuration is defined in a YAML file with the following structure:
-# Transform type names by type context type: object: PascalCase interface: PascalCase input: PascalCase enum: PascalCase union: PascalCase scalar: PascalCase # Transform field names by type context field: object: camelCase interface: camelCase input: snake_case # Transform enum values (no context needed) enumValue: MACROCASE # Transform instanceTag field names (no context needed) instanceTag: COBOL-CASE # Transform argument names by context argument: field: camelCase
-Supported Case Formats The naming configuration supports the following case conversion formats:">
+s2dm export [--naming-config | -n] naming.yaml ...Configuration Format The naming configuration is defined in a YAML file with the following structure:
+# Transform type names by type context type: object: PascalCase interface: PascalCase input: PascalCase enum: PascalCase union: PascalCase scalar: PascalCase # Transform field names by type context field: object: camelCase interface: camelCase input: snake_case # Transform enum values (no context needed) enumValue: MACROCASE # Transform instanceTag field names (no context needed) instanceTag: COBOL-CASE # Transform argument names by context argument: field: camelCaseSupported Case Formats The naming configuration supports the following case conversion formats:">
 <meta property="og:type" content="article">
 <meta property="og:url" content="http://localhost:1313/docs/tools/command-line-interface-cli/"><meta property="og:image" content="http://localhost:1313/preview.png"><meta property="article:section" content="docs">
 
@@ -56,13 +54,11 @@ Supported Case Formats The naming configuration supports the following case conv
 <meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="Command Line Interface (CLI)">
 <meta name="twitter:description" content="Export Commands Naming Configuration All export commands support a global naming configuration feature that allows you to transform element names during the export process using the [--naming-config | -n] flag.
 Apply naming configuration to any export command:
-s2dm export [--naming-config | -n] naming.yaml ...
-Configuration Format The naming configuration is defined in a YAML file with the following structure:
-# Transform type names by type context type: object: PascalCase interface: PascalCase input: PascalCase enum: PascalCase union: PascalCase scalar: PascalCase # Transform field names by type context field: object: camelCase interface: camelCase input: snake_case # Transform enum values (no context needed) enumValue: MACROCASE # Transform instanceTag field names (no context needed) instanceTag: COBOL-CASE # Transform argument names by context argument: field: camelCase
-Supported Case Formats The naming configuration supports the following case conversion formats:">
+s2dm export [--naming-config | -n] naming.yaml ...Configuration Format The naming configuration is defined in a YAML file with the following structure:
+# Transform type names by type context type: object: PascalCase interface: PascalCase input: PascalCase enum: PascalCase union: PascalCase scalar: PascalCase # Transform field names by type context field: object: camelCase interface: camelCase input: snake_case # Transform enum values (no context needed) enumValue: MACROCASE # Transform instanceTag field names (no context needed) instanceTag: COBOL-CASE # Transform argument names by context argument: field: camelCaseSupported Case Formats The naming configuration supports the following case conversion formats:">
 
-
-
+    
+    
     <script type="application/ld+json">
   {
    "@context": "https://schema.org",
@@ -94,8 +90,8 @@ Supported Case Formats The naming configuration supports the following case conv
    ]
  }
 </script>
-
-
+  
+	
 
 <script type="application/ld+json">
 {
@@ -150,18 +146,18 @@ Supported Case Formats The naming configuration supports the following case conv
 <script>
     console.log("\x3C!-- Hacked together with <3 in emacs --->");
 
-
+    
     window.DOKS_CONFIG = window.DOKS_CONFIG || {};
     window.DOKS_CONFIG.searchIndexUrl = "http:\/\/localhost:1313\/search-index.json";
 
-
+    
     window.searchIndexUrl = "http:\/\/localhost:1313\/search-index.json";
 
-
+    
     const originalFetch = window.fetch;
     window.fetch = function(url, options) {
         if (typeof url === 'string' && url.includes('/search-index.json')) {
-
+            
             url = window.DOKS_CONFIG.searchIndexUrl;
         }
         return originalFetch.call(this, url, options);
@@ -170,19 +166,19 @@ Supported Case Formats The naming configuration supports the following case conv
 
 </head>
 
-
+  
   <body class="single section docs" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
     <div class="sticky-top">
 <div class="header-bar"></div>
 <header class="navbar navbar-expand-lg">
   <div class="container-fluid">
-
+  
     <a class="navbar-brand me-auto me-lg-3" href="../../../">S2DM</a>
 
-
+    
     <span class="badge bg-danger text-white fw-bold ms-2" style="font-size: 1.0rem; padding: 0.3rem 0.6rem;">TEST</span>
-
-
+    
+    
     <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -190,7 +186,7 @@ Supported Case Formats The naming configuration supports the following case conv
         <line x1="21" y1="21" x2="15" y2="15"></line>
       </svg>
     </button>
-
+    
     <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -214,101 +210,101 @@ Supported Case Formats The naming configuration supports the following case conv
       <div class="offcanvas-body">
         <aside class="doks-sidebar mt-n3">
           <nav id="doks-docs-nav" aria-label="Tertiary navigation">
-
-
+            
+    
     <nav class="section-nav docs-links">
       <ul class="list-unstyled">
-
-
-
-
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/approach-overview/">Approach overview</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/actively-developed-sme/">
                         Actively Developed (SME)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/automated-ci-tooling/">
                         Automated (CI Tooling)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/optional-extensions-modelers/">
                         Optional Extensions (Modelers)
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
-
-
-
+          
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/data-modeling-guideline/">Data modeling guideline</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li>
                       <a href="../../../docs/data-modeling-guideline/pre-defined-elements/">
                         Pre-defined elements
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/data-modeling-guideline/how-to.../">
                         How to...?
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
-
-
-
+          
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/tools/">Tools</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li class="active">
                       <a href="../../../docs/tools/command-line-interface-cli/" aria-current="page">
                         Command Line Interface (CLI)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/tools/automation/">
                         Automation
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
+          
+        
       </ul>
     </nav>
-
+  
 
           </nav>
         </aside>
       </div>
     </div>
-
+    
     <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -317,7 +313,7 @@ Supported Case Formats The naming configuration supports the following case conv
       </svg>
     </button>
 
-
+    
     <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
       <div class="header-bar d-lg-none"></div>
       <div class="offcanvas-header">
@@ -330,7 +326,7 @@ Supported Case Formats The naming configuration supports the following case conv
          </svg>
         </button>
       </div>
-
+      
       <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
         <ul class="navbar-nav flex-grow-1"><li class="nav-item">
                 <a class="nav-link active" href="http://localhost:1313/docs/" aria-current="true">Docs</a>
@@ -340,8 +336,8 @@ Supported Case Formats The naming configuration supports the following case conv
               </li>
             </ul>
 
-
-
+        
+        
         <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -349,20 +345,20 @@ Supported Case Formats The naming configuration supports the following case conv
             <line x1="21" y1="21" x2="15" y2="15"></line>
           </svg>
         </button>
-
-
-
-
+        
+        
+        
+        
         <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
           <li class="nav-item">
               <a class="nav-link social-link" href="https://github.com/covesa/s2dm"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
             </li>
           </ul>
-
+        
         </div>
     </div>
 
-
+    
     </div>
 </header>
 </div>
@@ -418,101 +414,101 @@ Supported Case Formats The naming configuration supports the following case conv
     <div class="wrap container-fluid" role="document">
       <div class="content">
       <div class="container p-0">
-
+        
 <div class="row flex-xl-nowrap" >
 		<div class="col-lg-3 col-xl-3 docs-sidebar docs-sidebar-offset d-none d-lg-block">
-
-
+			
+    
     <nav class="section-nav docs-links">
       <ul class="list-unstyled">
-
-
-
-
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/approach-overview/">Approach overview</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/actively-developed-sme/">
                         Actively Developed (SME)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/automated-ci-tooling/">
                         Automated (CI Tooling)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/approach-overview/optional-extensions-modelers/">
                         Optional Extensions (Modelers)
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
-
-
-
+          
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/data-modeling-guideline/">Data modeling guideline</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li>
                       <a href="../../../docs/data-modeling-guideline/pre-defined-elements/">
                         Pre-defined elements
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/data-modeling-guideline/how-to.../">
                         How to...?
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
-
-
-
+          
+        
+          
+          
+          
             <li>
               <strong><a href="../../../docs/tools/">Tools</a></strong>
-
+              
                 <ul class="list-unstyled list-nested">
-
+                  
                     <li class="active">
                       <a href="../../../docs/tools/command-line-interface-cli/" aria-current="page">
                         Command Line Interface (CLI)
                       </a>
                     </li>
-
+                  
                     <li>
                       <a href="../../../docs/tools/automation/">
                         Automation
                       </a>
                     </li>
-
+                  
                 </ul>
-
+              
             </li>
-
-
+          
+        
       </ul>
     </nav>
-
+  
 
 		</div>
-
+		
 		<nav class="docs-toc docs-toc-offset d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
 			<div class="page-links">
   <h3>On this page</h3>
@@ -538,7 +534,7 @@ Supported Case Formats The naming configuration supports the following case conv
 
 		</nav>
 		<main class="docs-content col-lg-9 col-xl-9 mx-xl-auto">
-
+		
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="../../../">Home</a></li>
@@ -547,9 +543,9 @@ Supported Case Formats The naming configuration supports the following case conv
 <li class="breadcrumb-item active" aria-current="page">Command Line Interface (CLI)</li>
 					</ol>
 				</nav>
-
-
-
+			
+				
+			
 			<nav class="toc-mobile d-xl-none" aria-label="Quaternary navigation">
 				<details>
     <summary>On this page</summary>
@@ -724,7 +720,7 @@ Supported Case Formats The naming configuration supports the following case conv
 			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
 				</div>
 			<div class="page-nav d-flex flex-column flex-sm-row">
-
+	
 	<div class="card text-end w-100">
 			<div class="card-body d-flex justify-content-end">
 				<div class="d-flex flex-column">
@@ -743,22 +739,22 @@ Supported Case Formats The naming configuration supports the following case conv
 		</div>
 	</div>
 
-
+			
 		</main>
-
+		
 	</div>
 
       </div>
       </div>
     </div>
-
-
+    
+    
     <footer class="footer text-muted">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8 text-center text-lg-start">
         <ul class="list-inline">
-
+          
         </ul>
       </div>
       <div class="col-lg-8 text-center text-lg-end">
@@ -770,11 +766,11 @@ Supported Case Formats The naming configuration supports the following case conv
   </div>
 </footer>
 
-
+    
 
 <script async
-  src="../../../js/app.87d82df4b28a3aafc6e7887047ac9e6394adaa583bff30e1601d9bab25fc4385.js"
-  integrity="sha256-h9gt9LKKOq/G54hwR6yeY5Stqlg7/zDhYB2bqyX8Q4U=">
+  src="../../../js/app.fe3d201846e03468226d368adeb1c41b11828c8660254d27ac1941af6c84472d.js"
+  integrity="sha256-/j0gGEbgNGgibTaK3rHEGxGCjIZgJU0nrBlBr2yERy0=">
 </script>
 
 
@@ -790,6 +786,6 @@ Supported Case Formats The naming configuration supports the following case conv
   integrity="sha256-38thlCkRNXNGwKXcCsOlMtbhQP1nD1f640LaZGb38rQ=">
 </script>
 
-
+    
   </body>
 </html>

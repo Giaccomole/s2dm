@@ -15,11 +15,11 @@
 <title>404 Page not found  |  S2DM</title>
 <meta name="description" content="S2DM - Signal to Data Model documentation">
 
-
+    
     <link rel="icon" href="http://localhost:1313/favicon.ico" sizes="32x32">
-
+    
       <link rel="icon" href="http://localhost:1313/favicon.svg" type="image/png">
-
+    
       <link
         rel="apple-touch-icon"
         href="http://localhost:1313/apple-touch-icon.png"
@@ -91,18 +91,18 @@
 <script>
     console.log("\x3C!-- Hacked together with <3 in emacs --->");
 
-
+    
     window.DOKS_CONFIG = window.DOKS_CONFIG || {};
     window.DOKS_CONFIG.searchIndexUrl = "http:\/\/localhost:1313\/search-index.json";
 
-
+    
     window.searchIndexUrl = "http:\/\/localhost:1313\/search-index.json";
 
-
+    
     const originalFetch = window.fetch;
     window.fetch = function(url, options) {
         if (typeof url === 'string' && url.includes('/search-index.json')) {
-
+            
             url = window.DOKS_CONFIG.searchIndexUrl;
         }
         return originalFetch.call(this, url, options);
@@ -111,19 +111,19 @@
 
 </head>
 
-
+  
   <body class="single error404" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
     <div class="sticky-top">
 <div class="header-bar"></div>
 <header class="navbar navbar-expand-lg">
   <div class="container-fluid">
-
+  
     <a class="navbar-brand me-auto me-lg-3" href="./">S2DM</a>
 
-
+    
     <span class="badge bg-danger text-white fw-bold ms-2" style="font-size: 1.0rem; padding: 0.3rem 0.6rem;">TEST</span>
-
-
+    
+    
     <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -131,8 +131,8 @@
         <line x1="21" y1="21" x2="15" y2="15"></line>
       </svg>
     </button>
-
-
+    
+    
     <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -141,7 +141,7 @@
       </svg>
     </button>
 
-
+    
     <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
       <div class="header-bar d-lg-none"></div>
       <div class="offcanvas-header">
@@ -154,7 +154,7 @@
          </svg>
         </button>
       </div>
-
+      
       <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
         <ul class="navbar-nav flex-grow-1"><li class="nav-item">
                 <a class="nav-link" href="http://localhost:1313/docs/">Docs</a>
@@ -164,8 +164,8 @@
               </li>
             </ul>
 
-
-
+        
+        
         <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -173,20 +173,20 @@
             <line x1="21" y1="21" x2="15" y2="15"></line>
           </svg>
         </button>
-
-
-
-
+        
+        
+        
+        
         <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
           <li class="nav-item">
               <a class="nav-link social-link" href="https://github.com/covesa/s2dm"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
             </li>
           </ul>
-
+        
         </div>
     </div>
 
-
+    
     </div>
 </header>
 </div>
@@ -242,7 +242,7 @@
     <div class="wrap container-fluid" role="document">
       <div class="content">
       <div class="container p-0">
-
+        
 <div class="row justify-content-center">
   <div class="col-md-12 col-lg-10 col-xl-8">
     <article>
@@ -255,14 +255,14 @@
       </div>
       </div>
     </div>
-
-
+    
+    
     <footer class="footer text-muted">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-8 text-center text-lg-start">
         <ul class="list-inline">
-
+          
         </ul>
       </div>
       <div class="col-lg-8 text-center text-lg-end">
@@ -274,11 +274,11 @@
   </div>
 </footer>
 
-
+    
 
 <script async
-  src="./js/app.87d82df4b28a3aafc6e7887047ac9e6394adaa583bff30e1601d9bab25fc4385.js"
-  integrity="sha256-h9gt9LKKOq/G54hwR6yeY5Stqlg7/zDhYB2bqyX8Q4U=">
+  src="./js/app.fe3d201846e03468226d368adeb1c41b11828c8660254d27ac1941af6c84472d.js"
+  integrity="sha256-/j0gGEbgNGgibTaK3rHEGxGCjIZgJU0nrBlBr2yERy0=">
 </script>
 
 
@@ -294,6 +294,6 @@
   integrity="sha256-38thlCkRNXNGwKXcCsOlMtbhQP1nD1f640LaZGb38rQ=">
 </script>
 
-
+    
   </body>
 </html>
