@@ -14,6 +14,10 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
+    <loc>http://localhost:1313/examples/use-cases/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>http://localhost:1313/docs/approach-overview/actively-developed-sme/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -22,11 +26,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/examples/test-voyager/</loc>
+    <loc>http://localhost:1313/docs/data-modeling-guideline/pre-defined-elements/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
-    <loc>http://localhost:1313/docs/data-modeling-guideline/pre-defined-elements/</loc>
+    <loc>http://localhost:1313/examples/version-bump-cli/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>http://localhost:1313/examples/seat-voyager/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>
@@ -51,10 +59,6 @@
     <priority>0.5</priority>
   </url><url>
     <loc>http://localhost:1313/docs/approach-overview/optional-extensions-modelers/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url><url>
-    <loc>http://localhost:1313/examples/version-bump-cli/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url><url>

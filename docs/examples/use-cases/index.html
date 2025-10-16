@@ -10,9 +10,9 @@
 
 <link rel="stylesheet" href="http://localhost:1313/main.f44d99f784eac3975079d5bb8b6e041c7c768bbac771886a728b99ce4c0f9e9a957573eef60d5db21f1a1e9479e7b5e487f6862d8389dc6b4d46d94a84f479ac.css" integrity="sha512-9E2Z94Tqw5dQedW7i24EHHx2i7rHcYhqcouZzkwPnpqVdXPu9g1dsh8aHpR557Xkh/aGLYOJ3GtNRtlKhPR5rA==" crossorigin="anonymous">
 
-<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/examples/version-bump-cli/">
-  <link rel="canonical" href="http://localhost:1313/examples/version-bump-cli/">
-<title>Version Bump CLI Examples  |  S2DM</title>
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/examples/use-cases/">
+  <link rel="canonical" href="http://localhost:1313/examples/use-cases/">
+<title>Example Use Cases  |  S2DM</title>
 <meta name="description" content="S2DM - Signal to Data Model documentation">
 
     
@@ -40,20 +40,18 @@
       >
 <link rel="manifest" href="http://localhost:1313/manifest.webmanifest">
 
-<meta property="og:title" content="Version Bump CLI Examples">
-<meta property="og:description" content="This section contains examples demonstrating different scenarios for the s2dm check version-bump command, based on GraphQL Inspector&rsquo;s change detection.
-Overview The version-bump command analyzes GraphQL schema changes and recommends the appropriate semantic version bump:
-No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new optional fields, enum values) Major bump: Breaking changes (removed fields, type changes) Dangerous changes: Potentially problematic but not immediately breaking Examples 1. No Version Bump Needed Command:">
+<meta property="og:title" content="Example Use Cases">
+<meta property="og:description" content="Below are some examples of how the Simplified Semantic Data Modeling (S2DM) approach can be applied in different areas or use cases. Each example is linked to its corresponding folder in the repository for further exploration.
+Example Use Cases Seat domain model: Modeling the Seat branch of the Vehicle Signal Specification (VSS). Trailer domain model: Modeling the Trailer of a vehicle. Multiple Classification Schemes: Enabling multiple classification schemes using SKOS. Multiple Domains: Covering cross-references across different domains.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://localhost:1313/examples/version-bump-cli/"><meta property="og:image" content="http://localhost:1313/preview.png"><meta property="article:section" content="examples">
+<meta property="og:url" content="http://localhost:1313/examples/use-cases/"><meta property="og:image" content="http://localhost:1313/preview.png"><meta property="article:section" content="examples">
 
 <meta property="og:site_name" content="S2DM">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="Version Bump CLI Examples">
-<meta name="twitter:description" content="This section contains examples demonstrating different scenarios for the s2dm check version-bump command, based on GraphQL Inspector&rsquo;s change detection.
-Overview The version-bump command analyzes GraphQL schema changes and recommends the appropriate semantic version bump:
-No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new optional fields, enum values) Major bump: Breaking changes (removed fields, type changes) Dangerous changes: Potentially problematic but not immediately breaking Examples 1. No Version Bump Needed Command:">
+<meta name="twitter:image" content="http://localhost:1313/preview.png"><meta name="twitter:title" content="Example Use Cases">
+<meta name="twitter:description" content="Below are some examples of how the Simplified Semantic Data Modeling (S2DM) approach can be applied in different areas or use cases. Each example is linked to its corresponding folder in the repository for further exploration.
+Example Use Cases Seat domain model: Modeling the Seat branch of the Vehicle Signal Specification (VSS). Trailer domain model: Modeling the Trailer of a vehicle. Multiple Classification Schemes: Enabling multiple classification schemes using SKOS. Multiple Domains: Covering cross-references across different domains.">
 
     
     <script type="application/ld+json">
@@ -75,7 +73,7 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
      },
      {
        "@type": "ListItem",
-       "name": "Version Bump CLI Examples",
+       "name": "Example Use Cases",
        "position": 3
      }
    ]
@@ -202,14 +200,14 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
       <nav class="section-nav docs-links">
         <ul class="list-unstyled">
           
-            <li>
-              <a href="../../examples/use-cases/">
+            <li class="active">
+              <a href="../../examples/use-cases/" aria-current="page">
                 Example Use Cases
               </a>
             </li>
           
-            <li class="active">
-              <a href="../../examples/version-bump-cli/" aria-current="page">
+            <li>
+              <a href="../../examples/version-bump-cli/">
                 Version Bump CLI Examples
               </a>
             </li>
@@ -347,14 +345,14 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
       <nav class="section-nav docs-links">
         <ul class="list-unstyled">
           
-            <li>
-              <a href="../../examples/use-cases/">
+            <li class="active">
+              <a href="../../examples/use-cases/" aria-current="page">
                 Example Use Cases
               </a>
             </li>
           
-            <li class="active">
-              <a href="../../examples/version-bump-cli/" aria-current="page">
+            <li>
+              <a href="../../examples/version-bump-cli/">
                 Version Bump CLI Examples
               </a>
             </li>
@@ -379,26 +377,7 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
   <h3>On this page</h3>
     <nav id="toc">
   <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#examples">Examples</a>
-      <ul>
-        <li><a href="#1-no-version-bump-needed">1. No Version Bump Needed</a></li>
-        <li><a href="#2-non-breaking-change-minorpatch-bump">2. Non-Breaking Change (Minor/Patch Bump)</a></li>
-        <li><a href="#3-dangerous-change">3. Dangerous Change</a></li>
-        <li><a href="#4-breaking-change-major-bump">4. Breaking Change (Major Bump)</a></li>
-      </ul>
-    </li>
-    <li><a href="#understanding-change-types">Understanding Change Types</a>
-      <ul>
-        <li><a href="#non-breaking-changes-">Non-Breaking Changes ✅</a></li>
-        <li><a href="#dangerous-changes-">Dangerous Changes ⚠️</a></li>
-        <li><a href="#breaking-changes-">Breaking Changes ❌</a></li>
-      </ul>
-    </li>
-    <li><a href="#running-the-examples">Running the Examples</a></li>
-    <li><a href="#additional-commands">Additional Commands</a></li>
-    <li><a href="#pipeline-usage">Pipeline Usage</a></li>
-    <li><a href="#return-values">Return Values</a></li>
+    <li><a href="#example-use-cases">Example Use Cases</a></li>
   </ul>
 </nav>
 </div>
@@ -419,7 +398,7 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="../../">Home</a></li>
 <li class="breadcrumb-item"><a href="../../examples/">Examples</a></li>
-<li class="breadcrumb-item active" aria-current="page">Version Bump CLI Examples</li>
+<li class="breadcrumb-item active" aria-current="page">Example Use Cases</li>
 					</ol>
 				</nav>
 			
@@ -431,26 +410,7 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
     <div class="page-links">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#overview">Overview</a></li>
-    <li><a href="#examples">Examples</a>
-      <ul>
-        <li><a href="#1-no-version-bump-needed">1. No Version Bump Needed</a></li>
-        <li><a href="#2-non-breaking-change-minorpatch-bump">2. Non-Breaking Change (Minor/Patch Bump)</a></li>
-        <li><a href="#3-dangerous-change">3. Dangerous Change</a></li>
-        <li><a href="#4-breaking-change-major-bump">4. Breaking Change (Major Bump)</a></li>
-      </ul>
-    </li>
-    <li><a href="#understanding-change-types">Understanding Change Types</a>
-      <ul>
-        <li><a href="#non-breaking-changes-">Non-Breaking Changes ✅</a></li>
-        <li><a href="#dangerous-changes-">Dangerous Changes ⚠️</a></li>
-        <li><a href="#breaking-changes-">Breaking Changes ❌</a></li>
-      </ul>
-    </li>
-    <li><a href="#running-the-examples">Running the Examples</a></li>
-    <li><a href="#additional-commands">Additional Commands</a></li>
-    <li><a href="#pipeline-usage">Pipeline Usage</a></li>
-    <li><a href="#return-values">Return Values</a></li>
+    <li><a href="#example-use-cases">Example Use Cases</a></li>
   </ul>
 </nav>
     </div>
@@ -466,254 +426,26 @@ No version bump: Identical schemas Patch/Minor bump: Non-breaking changes (new o
 </div>
 
 			</nav>
-			<p>This section contains examples demonstrating different scenarios for the <code>s2dm check version-bump</code> command, based on GraphQL Inspector&rsquo;s change detection.</p>
-<h2 id="overview">Overview<a href="#overview" class="anchor" aria-hidden="true">#</a> </h2>
-<p>The version-bump command analyzes GraphQL schema changes and recommends the appropriate semantic version bump:</p>
+			<p>Below are some examples of how the Simplified Semantic Data Modeling (<code>S2DM</code>) approach can be applied in different areas or use cases. Each example is linked to its corresponding folder in the repository for further exploration.</p>
+<h2 id="example-use-cases">Example Use Cases<a href="#example-use-cases" class="anchor" aria-hidden="true">#</a> </h2>
 <ul>
-<li><strong>No version bump</strong>: Identical schemas</li>
-<li><strong>Patch/Minor bump</strong>: Non-breaking changes (new optional fields, enum values)</li>
-<li><strong>Major bump</strong>: Breaking changes (removed fields, type changes)</li>
-<li><strong>Dangerous changes</strong>: Potentially problematic but not immediately breaking</li>
-</ul>
-<h2 id="examples">Examples<a href="#examples" class="anchor" aria-hidden="true">#</a> </h2>
-<h3 id="1-no-version-bump-needed">1. No Version Bump Needed<a href="#1-no-version-bump-needed" class="anchor" aria-hidden="true">#</a> </h3>
-<p><strong>Command:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">s2dm check version-bump -s no-change.graphql -p base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Expected Output:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">No version bump needed</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Scenario:</strong> Both schemas are identical, no changes detected.</p>
-<h3 id="2-non-breaking-change-minorpatch-bump">2. Non-Breaking Change (Minor/Patch Bump)<a href="#2-non-breaking-change-minorpatch-bump" class="anchor" aria-hidden="true">#</a> </h3>
-<p><strong>Command:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">s2dm check version-bump -s non-breaking.graphql -p base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Expected Output:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Patch version bump needed</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Changes:</strong></p>
-<ul>
-<li>Added new optional fields: <code>Vehicle.owner</code>, <code>Vehicle.mileage</code>, <code>Engine.fuelEfficiency</code></li>
-</ul>
-<p>These changes are backwards compatible and won&rsquo;t break existing clients.</p>
-<h3 id="3-dangerous-change">3. Dangerous Change<a href="#3-dangerous-change" class="anchor" aria-hidden="true">#</a> </h3>
-<p><strong>Command:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">s2dm check version-bump -s dangerous.graphql -p base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Expected Output:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Minor version bump needed</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Changes:</strong></p>
-<ul>
-<li>Added new enum value: <code>EngineType.HYDROGEN</code></li>
-</ul>
-<p>Note: GraphQL Inspector may classify these as dangerous changes depending on configuration, but they&rsquo;re typically backwards compatible due to default values.</p>
-<h3 id="4-breaking-change-major-bump">4. Breaking Change (Major Bump)<a href="#4-breaking-change-major-bump" class="anchor" aria-hidden="true">#</a> </h3>
-<p><strong>Command:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">s2dm check version-bump -s breaking.graphql -p base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Expected Output:</strong></p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Detected breaking changes, major version bump needed. Please run diff to get more details</span></span></code></pre></div>
-  </figure>
-</div>
-<p><strong>Changes:</strong></p>
-<ul>
-<li>Removed field: <code>Vehicle.color</code></li>
-<li>Changed field type: <code>Vehicle.owner</code> from <code>String</code> to <code>Int</code></li>
-<li>Changed field type: <code>Engine.displacement</code> from <code>Float</code> to <code>Int</code></li>
-<li>Removed enum value: <code>EngineType.HYBRID</code></li>
-</ul>
-<p>These changes will break existing clients that depend on the removed/changed fields.</p>
-<h2 id="understanding-change-types">Understanding Change Types<a href="#understanding-change-types" class="anchor" aria-hidden="true">#</a> </h2>
-<h3 id="non-breaking-changes-">Non-Breaking Changes ✅<a href="#non-breaking-changes-" class="anchor" aria-hidden="true">#</a> </h3>
-<ul>
-<li>Adding new optional fields</li>
-<li>Adding new enum values</li>
-<li>Adding new types</li>
-<li>Adding new queries/mutations</li>
-<li>Adding descriptions/deprecation notices</li>
-</ul>
-<h3 id="dangerous-changes-">Dangerous Changes ⚠️<a href="#dangerous-changes-" class="anchor" aria-hidden="true">#</a> </h3>
-<ul>
-<li>Adding arguments to existing fields (with defaults)</li>
-<li>Changing field descriptions significantly</li>
-<li>Adding interfaces to existing types</li>
-</ul>
-<h3 id="breaking-changes-">Breaking Changes ❌<a href="#breaking-changes-" class="anchor" aria-hidden="true">#</a> </h3>
-<ul>
-<li>Removing fields, types, or enum values</li>
-<li>Changing field types incompatibly</li>
-<li>Making optional fields required</li>
-<li>Removing or changing arguments</li>
-<li>Changing field nullability (nullable to non-nullable)</li>
-</ul>
-<h2 id="running-the-examples">Running the Examples<a href="#running-the-examples" class="anchor" aria-hidden="true">#</a> </h2>
-<p>To test these examples:</p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Navigate to the test data directory</span>
-</span></span><span class="line"><span class="cl"><span class="nb">cd</span> tests/data
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Test each scenario</span>
-</span></span><span class="line"><span class="cl">s2dm check version-bump -s no-change.graphql -p base.graphql
-</span></span><span class="line"><span class="cl">s2dm check version-bump -s non-breaking.graphql -p base.graphql
-</span></span><span class="line"><span class="cl">s2dm check version-bump -s dangerous.graphql -p base.graphql
-</span></span><span class="line"><span class="cl">s2dm check version-bump -s breaking.graphql -p base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<h2 id="additional-commands">Additional Commands<a href="#additional-commands" class="anchor" aria-hidden="true">#</a> </h2>
-<p>For more detailed analysis, use the diff command:</p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">s2dm diff graphql -s breaking.graphql -v base.graphql</span></span></code></pre></div>
-  </figure>
-</div>
-<p>This will provide a comprehensive breakdown of all changes detected between the schemas.</p>
-<h2 id="pipeline-usage">Pipeline Usage<a href="#pipeline-usage" class="anchor" aria-hidden="true">#</a> </h2>
-<p>For pipeline automation, use the <code>--output-type</code> flag to get machine-readable output:</p>
-
-
-
-<div class="expressive-code">
-  <figure class="frame is-terminal not-content">
-  <figcaption class="header">
-    <span class="title"></span>
-  </figcaption>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Returns: none, patch, minor, or major</span>
-</span></span><span class="line"><span class="cl"><span class="nv">VERSION_BUMP</span><span class="o">=</span><span class="k">$(</span>s2dm check version-bump -s new-schema.graphql -p old-schema.graphql --output-type<span class="k">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Example pipeline usage:</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$VERSION_BUMP</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;major&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Breaking changes detected, requires manual review&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$VERSION_BUMP</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;minor&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Minor version bump needed&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># bump-my-version bump minor</span>
-</span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$VERSION_BUMP</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;patch&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Patch version bump needed&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># bump-my-version bump patch</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;No version bump needed&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span></span></span></code></pre></div>
-  </figure>
-</div>
-<h2 id="return-values">Return Values<a href="#return-values" class="anchor" aria-hidden="true">#</a> </h2>
-<ul>
-<li><strong>none</strong>: No changes detected</li>
-<li><strong>patch</strong>: Non-breaking changes only (✔ symbols in diff)</li>
-<li><strong>minor</strong>: Dangerous changes detected (⚠ symbols in diff)</li>
-<li><strong>major</strong>: Breaking changes detected (✖ symbols in diff)</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/seat-to-vspec">Seat domain model</a>: Modeling the <code>Seat</code> branch of the Vehicle Signal Specification (VSS).</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/trailer">Trailer domain model</a>: Modeling the <code>Trailer</code> of a vehicle.</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/multiple-classification-schemes">Multiple Classification Schemes</a>: Enabling multiple classification schemes using SKOS.</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/multiple-domains">Multiple Domains</a>: Covering cross-references across different domains.</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/seat-capabilities">Seat Capabilities</a>: Specifying possible operations linked to seat-related objects or entities.</li>
+<li><a href="https://github.com/COVESA/s2dm/tree/main/examples/spec-history-registry">Specification History Registry</a>: Tracking changes and maintaining a registry of specification history.</li>
 </ul>
 
 			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
 				</div>
 			<div class="page-nav d-flex flex-column flex-sm-row">
 	
-	<div class="card w-100">
-			<div class="card-body d-flex">
-				<div class="d-flex flex-column justify-content-center">
-					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-						<path d="M5 12l14 0"></path>
-						<path d="M5 12l6 6"></path>
-						<path d="M5 12l6 -6"></path>
-				 	</svg>
-				</div>
-				<div class="d-flex flex-column">
-					<div class="text-body-secondary">Prev</div>
-					<a href="../../examples/use-cases/" class="stretched-link text-reset text-decoration-none">Example Use Cases</a>
-				</div>
-			</div>
-		</div>
-	<div class="m-2"></div>
 	<div class="card text-end w-100">
 			<div class="card-body d-flex justify-content-end">
 				<div class="d-flex flex-column">
 					<div class="text-body-secondary">Next</div>
-					<a href="../../examples/seat-voyager/" class="stretched-link text-reset text-decoration-none">Interactive GraphQL Schema Visualization</a>
+					<a href="../../examples/version-bump-cli/" class="stretched-link text-reset text-decoration-none">Version Bump CLI Examples</a>
 				</div>
 				<div class="d-flex flex-column justify-content-center">
 					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">

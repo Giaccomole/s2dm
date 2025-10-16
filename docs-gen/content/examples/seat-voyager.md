@@ -1,8 +1,8 @@
 ---
 title: "Interactive GraphQL Schema Visualization"
 description: "Explore the seat capabilities domain model through an interactive GraphQL Voyager visualization"
-layout: single
-weight: 10
+layout: fullwidth
+weight: 11
 ---
 
 # Interactive GraphQL Schema Visualization
