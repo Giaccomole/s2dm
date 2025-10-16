@@ -1,7 +1,7 @@
 # Overrides for production environment
 # baseURL will be set by GitHub Actions
 relativeURLs = false
-canonifyURLs = true
+canonifyURLs = false
 disableLiveReload = true
 enableRobotsTXT = true
 
