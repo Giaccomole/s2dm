@@ -31,6 +31,49 @@
         {{ end }}
       </ul>
     </nav>
+  {{ else if eq .Section "examples" }}
+    {{- /* Show examples with hierarchical structure similar to docs */ -}}
+    <nav class="section-nav docs-links">
+      <ul class="list-unstyled">
+        {{- /* Get all examples pages */ -}}
+        {{ $allExamplesPages := where .Site.Pages "Section" "examples" }}
+        
+        {{- /* Use Cases Section */ -}}
+        {{ $useCasesPage := .Site.GetPage "/examples/use-cases" }}
+        {{ if $useCasesPage }}
+          <li>
+            <strong><a href="{{ $useCasesPage.RelPermalink }}">{{ $useCasesPage.Title }}</a></strong>
+          </li>
+        {{ end }}
+        
+        {{- /* Version Bump CLI Section */ -}}  
+        {{ $versionBumpPage := .Site.GetPage "/examples/version-bump-cli" }}
+        {{ if $versionBumpPage }}
+          <li>
+            <strong><a href="{{ $versionBumpPage.RelPermalink }}">{{ $versionBumpPage.Title }}</a></strong>
+          </li>
+        {{ end }}
+        
+        {{- /* Voyager Examples Section */ -}}
+        {{ $voyagerSection := .Site.GetPage "/examples/voyager-examples" }}
+        {{ if $voyagerSection }}
+          <li>
+            <strong><a href="{{ $voyagerSection.RelPermalink }}">{{ $voyagerSection.Title }}</a></strong>
+            {{ with $voyagerSection.RegularPages }}
+              <ul class="list-unstyled list-nested">
+                {{ range . }}
+                  <li{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>
+                    <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>
+                      {{ .Title }}
+                    </a>
+                  </li>
+                {{ end }}
+              </ul>
+            {{ end }}
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
   {{ else }}
     {{- /* Original logic for other sections */ -}}
     {{ $section := (.Site.GetPage "section" .Section) }}

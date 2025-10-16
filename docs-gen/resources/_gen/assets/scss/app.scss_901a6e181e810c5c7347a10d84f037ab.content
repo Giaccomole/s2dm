@@ -14945,4 +14945,44 @@ img,
   max-width: 100%;
   height: auto; }
 
+.graphql-voyager-container {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+  .graphql-voyager-container .voyager-modal,
+  .graphql-voyager-container .settings-modal,
+  .graphql-voyager-container [class*="modal"],
+  .graphql-voyager-container [class*="settings"] {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+    max-width: 90vw !important;
+    max-height: 90vh !important; }
+  .graphql-voyager-container .voyager-settings-panel,
+  .graphql-voyager-container .settings-panel {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    z-index: 9999 !important;
+    max-width: 400px !important;
+    max-height: 80vh !important; }
+  .graphql-voyager-container > div {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+
+div[class*="voyager"] .modal,
+div[class*="voyager"] .settings,
+div[class*="voyager"] [role="dialog"] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999 !important; }
+
 /*# sourceMappingURL=main.css.map */

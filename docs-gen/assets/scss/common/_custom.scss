@@ -528,3 +528,58 @@ img,
     max-width: 100%;
     height: auto;
 }
+
+// GraphQL Voyager custom styles
+.graphql-voyager-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    // Fix settings modal positioning
+    .voyager-modal,
+    .settings-modal,
+    [class*="modal"],
+    [class*="settings"] {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 9999 !important;
+        max-width: 90vw !important;
+        max-height: 90vh !important;
+    }
+    
+    // Alternative positioning - bottom right
+    .voyager-settings-panel,
+    .settings-panel {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        z-index: 9999 !important;
+        max-width: 400px !important;
+        max-height: 80vh !important;
+    }
+    
+    // Ensure voyager root has proper positioning context
+    > div {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// Override any conflicting styles from the voyager library
+div[class*="voyager"] {
+    .modal,
+    .settings,
+    [role="dialog"] {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 9999 !important;
+    }
+}

@@ -1,5 +1,5 @@
 ---
-title: "Interactive GraphQL Schema Visualization"
+title: "Seat GraphQL Voyager Visualization"
 description: "Explore the seat capabilities domain model through an interactive GraphQL Voyager visualization"
 layout: fullwidth
 weight: 11
@@ -15,5 +15,5 @@ Explore the seat capabilities domain model through an interactive [GraphQL Voyag
 
 ---
 
-{{< graphql-voyager-builtin schema="/examples/seat-to-vspec/full_sdl.graphql" height="1000px" title="Seat Capabilities Domain Model" hideDocs="false" hideSettings="true" showLeafFields="true" skipRelay="true" skipDeprecated="true" >}}
+{{< graphql-voyager-builtin schema="/examples/seat-to-vspec/full_sdl.graphql" height="1000px" title="Seat Capabilities Domain Model" hideDocs="false" hideSettings="false" hideVoyagerLogo="true" showLeafFields="true" skipRelay="true" skipDeprecated="true" >}}
 

@@ -7,8 +7,10 @@ Below are some examples of how the Simplified Semantic Data Modeling (`S2DM`) ap
 
 ## Example Use Cases
 
-- [Seat domain model](https://github.com/COVESA/s2dm/tree/main/examples/seat-to-vspec): Modeling the `Seat` branch of the Vehicle Signal Specification (VSS).
-- [Trailer domain model](https://github.com/COVESA/s2dm/tree/main/examples/trailer): Modeling the `Trailer` of a vehicle.
+- [Seat domain model](https://github.com/COVESA/s2dm/tree/main/examples/seat-to-vspec): Modeling the `Seat` branch of the Vehicle Signal Specification (VSS). 
+[🔍 Explore Schema ](../voyager-examples/seat-voyager/)
+- [Trailer domain model](https://github.com/COVESA/s2dm/tree/main/examples/trailer): Modeling the `Trailer` of a vehicle. 
+[🔍 Explore Schema](../voyager-examples/trailer-voyager/)
 - [Multiple Classification Schemes](https://github.com/COVESA/s2dm/tree/main/examples/multiple-classification-schemes): Enabling multiple classification schemes using SKOS.
 - [Multiple Domains](https://github.com/COVESA/s2dm/tree/main/examples/multiple-domains): Covering cross-references across different domains.
 - [Seat Capabilities](https://github.com/COVESA/s2dm/tree/main/examples/seat-capabilities): Specifying possible operations linked to seat-related objects or entities.
