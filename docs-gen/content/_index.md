@@ -31,4 +31,5 @@ the re-use of existing resources (left), the artifacts offered by `S2DM` (center
     - [rdflib](https://rdflib.readthedocs.io): For working with RDF data in Python (e.g., `SKOS`).
     - [graphql-core](https://graphql-core-3.readthedocs.io): For working with `GraphQL` schemas in Python (e.g., `SDL`).
     - [Additional dependencies](https://github.com/COVESA/s2dm/blob/main/pyproject.toml)
+    - [Additional dependencies](https://github.com/COVESA/s2dm/blob/main/pyproject.toml)
 {{< /callout >}}

@@ -1,12 +1,12 @@
 {{ define "main" }}
-  <!-- Lucide Icons - Only for Index Page -->
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-  <style>
+<!-- Lucide Icons - Only for Index Page -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
   .lucide-icon {
     display: block;
     margin: 0 auto;
   }
-  </style>
+</style>
 
   <section class="section container-fluid mt-n3 pb-3">
     <div class="row justify-content-center">
@@ -20,65 +20,67 @@
     </div>
   </section>
 
-  <!-- Key Features Section -->
-  <section class="section section-sm border-bottom border-light">
-    <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-lg-8">
-          <h2 class="h3 mb-4">Why S2DM?</h2>
+<!-- Key Features Section -->
+<section class="section section-sm border-bottom border-light">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-8">
+        <h2 class="h3 mb-4">Why S2DM?</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="text-center">
+          <i data-lucide="target" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
+          <h3 class="h5">Simple</h3>
+          <p class="text-muted">Any Subject Matter Expert can contribute to controlled vocabularies with minimal data
+            modeling expertise.</p>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="text-center">
-            <i data-lucide="target" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
-            <h3 class="h5">Simple</h3>
-            <p class="text-muted">Any Subject Matter Expert can contribute to controlled vocabularies with minimal data modeling expertise.</p>
-          </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="text-center">
+          <i data-lucide="network" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
+          <h3 class="h5">Semantic</h3>
+          <p class="text-muted">Specifies meaningful data structures, cross-domain relationships, and arbitrary
+            classification schemes.</p>
         </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="text-center">
-            <i data-lucide="network" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
-            <h3 class="h5">Semantic</h3>
-            <p class="text-muted">Specifies meaningful data structures, cross-domain relationships, and arbitrary classification schemes.</p>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="text-center">
-            <i data-lucide="link" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
-            <h3 class="h5">Interoperable</h3>
-            <p class="text-muted">Built on GraphQL SDL and SKOS standards for maximum compatibility and reusability.</p>
-          </div>
+      </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="text-center">
+          <i data-lucide="link" class="lucide-icon text-primary mb-3" style="width: 3rem; height: 3rem;"></i>
+          <h3 class="h5">Interoperable</h3>
+          <p class="text-muted">Built on GraphQL SDL and SKOS standards for maximum compatibility and reusability.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Content Section -->
-  <section class="section section-sm">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-11 col-xl-10">
-          {{ .Content }}
-        </div>
+<!-- Content Section -->
+<section class="section section-sm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-11 col-xl-10">
+        {{ .Content }}
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Initialize Lucide Icons -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      lucide.createIcons();
-    });
-  </script>
+<!-- Initialize Lucide Icons -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    lucide.createIcons();
+  });
+</script>
 {{ end }}
 
 {{ define "sidebar-prefooter" }}
-  {{ if site.Params.doks.backgroundDots -}}
-    <div class="d-flex justify-content-start">
-      <div class="bg-dots"></div>
-    </div>
-  {{ end -}}
+{{ if site.Params.doks.backgroundDots -}}
+<div class="d-flex justify-content-start">
+  <div class="bg-dots"></div>
+</div>
+{{ end -}}
 
   <section class="section section-md section-features border-bottom border-dark">
     <div class="container py-4">

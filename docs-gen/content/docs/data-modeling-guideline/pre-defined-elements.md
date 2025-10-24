@@ -7,15 +7,16 @@ chapter: false
 {{< img src="images/s2dm_pre_def_elements.png" alt="S2DM Pre-defined Elements" >}}
 
 ### Units
-Units are represented as enum values. For example:
+Units are represented as GraphQL enum values with semantic references to standardized unit definitions. For example:
 ```graphql
-enum VelocityUnitEnum {
-  KILOMETER_PER_HOUR
-  METERS_PER_SECOND
+enum VelocityUnitEnum @reference(uri: "http://qudt.org/vocab/quantitykind/Velocity", versionTag: "3.1.5") {
+  """Kilometer per Hour | UCUM: km/h"""
+  KM_PER_HR @reference(uri: "http://qudt.org/vocab/unit/KM-PER-HR", versionTag: "3.1.5")
+
+  """Meter per Second | UCUM: m/s"""
+  M_PER_SEC @reference(uri: "http://qudt.org/vocab/unit/M-PER-SEC", versionTag: "3.1.5")
 }
 ```
-The name of the enum itself refers to the quantity kind (e.g., `Velocity`).
-A set of commonly used units is provided in the file [`unit_enums.graphql`](https://github.com/COVESA/s2dm/blob/main/src/s2dm/spec/unit_enums.graphql).
 
 {{< callout context="note" >}}
 It is planned to adopt and reuse an existing standard data model for units. See [issue #43](https://github.com/COVESA/s2dm/issues/43) for details.

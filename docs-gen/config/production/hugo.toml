@@ -2,6 +2,7 @@
 # baseURL will be set by GitHub Actions
 relativeURLs = false
 canonifyURLs = false
+canonifyURLs = false
 disableLiveReload = true
 enableRobotsTXT = true
 
