@@ -8,13 +8,11 @@ from graphql import (
     GraphQLEnumType,
     GraphQLNamedType,
     GraphQLObjectType,
-    GraphQLSchema,
 )
 
 from s2dm import log
 from s2dm.exporters.utils.extraction import get_all_named_types
 from s2dm.exporters.utils.graphql_type import is_id_type, is_introspection_or_root_type
-from s2dm.exporters.utils.schema_loader import load_schema
 from s2dm.idgen.idgen import fnv1_32_wrapper
 from s2dm.idgen.models import IDGenerationSpec
 
