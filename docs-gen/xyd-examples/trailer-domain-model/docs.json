@@ -1,0 +1,59 @@
+{
+    "theme": {
+        "name": "picasso",
+        "logo": {
+            "light": "/public/assets/logo.svg",
+            "dark": "/public/assets/logo-dark.svg"
+        },
+        "favicon": "/public/assets/logo.svg",
+        "banner": {
+            "content": "**Trailer Domain Model GraphQL API** - Vehicle trailer management and monitoring system",
+            "label": "S2DM Example"
+        },
+        "icons": {
+            "library": []
+        },
+        "embedding": {
+            "enabled": true,
+            "allowOrigins": ["*"],
+            "frameOptions": "ALLOWALL",
+            "removeNavigation": false
+        }
+    },
+    "navigation": {
+        "tabs": [
+            {
+                "title": "Trailer Domain Model API",
+                "page": "api/trailer-domain-model"
+            }
+        ],
+        "sidebar": [
+            {
+                "route": "api/trailer-domain-model",
+                "pages": [
+                    {
+                        "group": "API Reference",
+                        "order": 0,
+                        "pages": [
+                            "api/trailer-domain-model/introduction"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "api": {
+        "graphql": [
+            {
+                "source": "./full_schema.graphql",
+                "route": "api/trailer-domain-model"
+            }
+        ]
+    },
+    "redirects": [
+        {
+            "source": "index",
+            "destination": "api/trailer-domain-model"
+        }
+    ]
+}

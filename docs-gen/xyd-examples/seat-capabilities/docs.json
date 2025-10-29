@@ -1,0 +1,59 @@
+{
+    "theme": {
+        "name": "picasso",
+        "logo": {
+            "light": "/public/assets/logo.svg",
+            "dark": "/public/assets/logo-dark.svg"
+        },
+        "favicon": "/public/assets/logo.svg",
+        "banner": {
+            "content": "**Seat Capabilities GraphQL API** - Interactive seat control and monitoring system",
+            "label": "S2DM Example"
+        },
+        "icons": {
+            "library": []
+        },
+        "embedding": {
+            "enabled": true,
+            "allowOrigins": ["*"],
+            "frameOptions": "ALLOWALL",
+            "removeNavigation": false
+        }
+    },
+    "navigation": {
+        "tabs": [
+            {
+                "title": "Seat Capabilities API",
+                "page": "api/seat-capabilities"
+            }
+        ],
+        "sidebar": [
+            {
+                "route": "api/seat-capabilities",
+                "pages": [
+                    {
+                        "group": "API Reference",
+                        "order": 0,
+                        "pages": [
+                            "api/seat-capabilities/introduction"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "api": {
+        "graphql": [
+            {
+                "source": "./full_schema.graphql",
+                "route": "api/seat-capabilities"
+            }
+        ]
+    },
+    "redirects": [
+        {
+            "source": "index",
+            "destination": "api/seat-capabilities"
+        }
+    ]
+}

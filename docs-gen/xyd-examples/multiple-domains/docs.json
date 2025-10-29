@@ -1,0 +1,59 @@
+{
+    "theme": {
+        "name": "picasso",
+        "logo": {
+            "light": "/public/assets/logo.svg",
+            "dark": "/public/assets/logo-dark.svg"
+        },
+        "favicon": "/public/assets/logo.svg",
+        "banner": {
+            "content": "**Multiple Domains GraphQL API** - Cross-domain reference patterns and integration",
+            "label": "S2DM Example"
+        },
+        "icons": {
+            "library": []
+        },
+        "embedding": {
+            "enabled": true,
+            "allowOrigins": ["*"],
+            "frameOptions": "ALLOWALL",
+            "removeNavigation": false
+        }
+    },
+    "navigation": {
+        "tabs": [
+            {
+                "title": "Multiple Domains API",
+                "page": "api/multiple-domains"
+            }
+        ],
+        "sidebar": [
+            {
+                "route": "api/multiple-domains",
+                "pages": [
+                    {
+                        "group": "API Reference",
+                        "order": 0,
+                        "pages": [
+                            "api/multiple-domains/introduction"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "api": {
+        "graphql": [
+            {
+                "source": "./full_schema.graphql",
+                "route": "api/multiple-domains"
+            }
+        ]
+    },
+    "redirects": [
+        {
+            "source": "index",
+            "destination": "api/multiple-domains"
+        }
+    ]
+}

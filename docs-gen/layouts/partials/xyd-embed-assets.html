@@ -1,0 +1,5 @@
+{{ $xydCSS := resources.Get "css/xyd-embed.css" | resources.Minify }}
+{{ $xydJS := resources.Get "js/xyd-embed.js" | resources.Minify }}
+
+<link rel="stylesheet" href="{{ $xydCSS.RelPermalink }}">
+<script src="{{ $xydJS.RelPermalink }}" defer></script>
