@@ -82,7 +82,7 @@ These tools are embedded in the spec history generation but can also be called s
 Generate unique identifiers for schema elements:
 
 ```bash
-s2dm export id -s examples/spec-history-registry/sample.graphql -o examples/concept_ids.json
+s2dm registry id -s examples/spec-history-registry/sample.graphql -o examples/concept_ids.json
 ```
 
 This creates `examples/concept_ids.json` with deterministic IDs for each field in the schema.
@@ -92,7 +92,7 @@ This creates `examples/concept_ids.json` with deterministic IDs for each field i
 Generate semantic URIs for all concepts in the schema:
 
 ```bash
-s2dm export concept-uri -s examples/spec-history-registry/sample.graphql -o examples/concept_uri.json --namespace "https://example.org/vss#" --prefix "ns"
+s2dm registry concept-uri -s examples/spec-history-registry/sample.graphql -o examples/concept_uri.json --namespace "https://example.org/vss#" --prefix "ns"
 ```
 
 This creates `examples/concept_uri.json` with JSON-LD formatted concept definitions.
