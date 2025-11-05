@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # XYD Examples Startup Script
-# This script starts all XYD documentation servers for S2DM examples
+# This script starts XYD documentation servers for the two main S2DM examples
 
-echo "🚀 Starting XYD Documentation Servers for S2DM Examples..."
+echo "🚀 Starting XYD Documentation Servers..."
 
 BASE_DIR="/Users/q674786/s2dm/docs-gen/xyd-examples"
 
@@ -24,23 +24,22 @@ start_xyd_server() {
     fi
 }
 
-# Start all XYD servers
+# Start XYD servers (seat-capabilities serves the seat-domain-model page)
 start_xyd_server "seat-capabilities" 5176
 start_xyd_server "trailer-domain-model" 5177  
-start_xyd_server "seat-domain-model" 5178
-start_xyd_server "multiple-domains" 5179
-start_xyd_server "multiple-classification-schemes" 5180
-start_xyd_server "specification-history-registry" 5181
 
 echo ""
-echo "🎯 XYD Servers Status:"
-echo "- Seat Capabilities:           http://localhost:5176/api/seat-capabilities"
-echo "- Trailer Domain Model:       http://localhost:5177/api/trailer-domain-model"
-echo "- Seat Domain Model:          http://localhost:5178/api/seat-domain-model"
-echo "- Multiple Domains:           http://localhost:5179/api/multiple-domains"
-echo "- Classification Schemes:     http://localhost:5180/api/multiple-classification-schemes"
-echo "- Specification History:      http://localhost:5181/api/specification-history-registry"
+echo "🎯 XYD Servers Running:"
+echo "- Seat Domain Model:      http://localhost:5176/api/seat-capabilities"
+echo "- Trailer Domain Model:   http://localhost:5177/api/trailer-domain-model"
 echo ""
-echo "📖 Hugo Documentation: http://localhost:61623/examples/"
+echo "📖 Hugo Documentation Pages:"
+echo "- Seat Domain Model:      http://localhost:1313/examples/seat-domain-model/example-documentation/"
+echo "- Trailer Domain Model:   http://localhost:1313/examples/trailer-domain-model/example-documentation/"
 echo ""
-echo "To stop all servers, run: ./stop-xyd-servers.sh"
+echo "💡 Wait ~10 seconds for servers to fully initialize."
+echo "📋 To stop servers, run: ./stop-xyd-servers.sh"
+echo ""
+echo "View logs:"
+echo "  tail -f /tmp/xyd-seat-capabilities.log"
+echo "  tail -f /tmp/xyd-trailer-domain-model.log"

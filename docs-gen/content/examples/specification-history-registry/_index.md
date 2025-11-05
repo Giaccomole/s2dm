@@ -20,8 +20,3 @@ The specification history registry example showcases:
 
 For implementation details and source files, visit the [spec-history-registry example](https://github.com/COVESA/s2dm/tree/main/examples/spec-history-registry) in the repository.
 
-## Interactive Exploration
-
-Explore the domain model through:
-- [Voyager Visualization](voyager-example/) - Interactive GraphQL schema visualization
-- [Example Documentation](example-documentation/) - Detailed documentation and examples

@@ -1,21 +1,21 @@
 ---
-title: "Seat Capabilities API"
-description: "Comprehensive control and monitoring of vehicle seat systems"
+title: "Seat Domain Model API"
+description: "Comprehensive seat domain model with hierarchical components and capabilities"
 ---
 
-# Seat Capabilities API
+# Seat Domain Model API
 
-The Seat Capabilities API provides comprehensive control and monitoring of vehicle seat systems. This GraphQL API enables real-time interaction with seat positioning, comfort features, and occupancy detection.
+The Seat Domain Model API provides a comprehensive hierarchical structure for vehicle seat systems. This GraphQL API demonstrates the seat domain with nested components including backrest, headrest, seating surface, and complete capability controls.
 
-## Key Features
+## Domain Structure
 
-- **Position Control**: Precise seat positioning on x, y, and z axes
-- **Comfort Features**: Heating, cooling, and massage level control
-- **Occupancy Detection**: Real-time seat occupancy monitoring
-- **Safety Integration**: Airbag status and seatbelt monitoring
-- **Multi-Component Support**: Backrest, headrest, and seating surface controls
+- **Hierarchical Components**: Seat → Backrest → Headrest → Seating Surface
+- **Position Control**: Precise positioning on x, y, and z axes
+- **Comfort Features**: Heating, cooling, and massage systems
+- **Occupancy Detection**: Real-time monitoring and safety integration
+- **VSS Compliance**: Aligned with Vehicle Signal Specification standards
 
-## Capabilities Overview
+## Key Components
 
 ### Seat Positioning
 - Linear position adjustment (front/back)
@@ -35,4 +35,4 @@ The Seat Capabilities API provides comprehensive control and monitoring of vehic
 
 ## Example Operations
 
-Query seat status, control position, and manage comfort features through the GraphQL playground above.
+Query seat domain structure, control positions, and manage comfort features through the GraphQL playground above.

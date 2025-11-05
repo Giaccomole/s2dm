@@ -7,7 +7,7 @@
         },
         "favicon": "/public/assets/logo.svg",
         "banner": {
-            "content": "**Seat Capabilities GraphQL API** - Interactive seat control and monitoring system",
+            "content": "**Seat Domain Model GraphQL API** - Interactive seat control and monitoring system with hierarchical components",
             "label": "S2DM Example"
         },
         "icons": {

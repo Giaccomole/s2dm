@@ -44,7 +44,7 @@
         {{ range $sortedSubsections }}
           <li>
             <strong><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></strong>
-            {{- /* Get sub-pages (voyager-example.md and example-documentation.md) */ -}}
+            {{- /* Get sub-pages (graphql-voyager.md and xyd-documentation.md) */ -}}
             {{ with .RegularPages }}
               <ul class="list-unstyled list-nested">
                 {{ range sort . ".Params.weight" }}
@@ -56,14 +56,6 @@
                 {{ end }}
               </ul>
             {{ end }}
-          </li>
-        {{ end }}
-        
-        {{- /* Version Bump CLI Section (if it exists) */ -}}  
-        {{ $versionBumpPage := .Site.GetPage "/examples/version-bump-cli" }}
-        {{ if $versionBumpPage }}
-          <li>
-            <strong><a href="{{ $versionBumpPage.RelPermalink }}"{{ if eq $.RelPermalink $versionBumpPage.RelPermalink }} class="active"{{ end }}>{{ $versionBumpPage.Title }}</a></strong>
           </li>
         {{ end }}
       </ul>

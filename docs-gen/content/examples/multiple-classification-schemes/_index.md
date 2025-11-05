@@ -19,9 +19,3 @@ The multiple classification schemes example showcases:
 ## Repository Link
 
 For implementation details and source files, visit the [multiple-classification-schemes example](https://github.com/COVESA/s2dm/tree/main/examples/multiple-classification-schemes) in the repository.
-
-## Interactive Exploration
-
-Explore the domain model through:
-- [Voyager Visualization](voyager-example/) - Interactive GraphQL schema visualization
-- [Example Documentation](example-documentation/) - Detailed documentation and examples
