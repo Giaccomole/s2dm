@@ -24,4 +24,4 @@ For implementation details and source files, visit the [seat-to-vspec example](h
 
 Explore the domain model through:
 - [GraphQL Voyager](graphql-voyager/) - Interactive GraphQL schema visualization
-- [XYD Documentation](xyd-documentation/) - Explore the schema with live queries and mutations
+- [Schema Documentation](schema-documentation/) - Comprehensive GraphQL schema documentation

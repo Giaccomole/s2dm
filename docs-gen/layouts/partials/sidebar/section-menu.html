@@ -44,7 +44,7 @@
         {{ range $sortedSubsections }}
           <li>
             <strong><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></strong>
-            {{- /* Get sub-pages (graphql-voyager.md and xyd-documentation.md) */ -}}
+            {{- /* Get sub-pages (graphql-voyager.md and schema-documentation.md) */ -}}
             {{ with .RegularPages }}
               <ul class="list-unstyled list-nested">
                 {{ range sort . ".Params.weight" }}
