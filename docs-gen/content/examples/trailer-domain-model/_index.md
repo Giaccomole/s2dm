@@ -24,4 +24,3 @@ For implementation details and source files, visit the [trailer example](https:/
 
 Explore the domain model through:
 - [GraphQL Voyager](graphql-voyager/) - Interactive GraphQL schema visualization
-- [Schema Documentation](schema-documentation/) - Comprehensive GraphQL schema documentation

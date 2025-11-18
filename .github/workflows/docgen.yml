@@ -63,8 +63,7 @@ jobs:
           TZ: America/Los_Angeles
         run: |
           cd docs-gen
-          npx exec-bin node_modules/.bin/hugo/hugo \
-            --minify \
+          npm run build \
             --cleanDestinationDir \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact

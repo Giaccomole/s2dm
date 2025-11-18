@@ -1,0 +1,1968 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seat Domain Model Schema</title>
+    <style>@import url(https://fonts.googleapis.com/css?family=Barlow:ital,wght@0,400;0,700;1,400;1,700&display=swap);#spectaql{padding:0;margin:0}#spectaql pre{overflow:auto;margin-top:0;margin-bottom:20px}#spectaql pre code{display:block;background:#ccc}#spectaql table{width:100%;table-layout:fixed;text-align:left;border-collapse:collapse}#spectaql table td,#spectaql table th{margin:0;padding:0}#spectaql #introduction .example-section>*,#spectaql .definition-heading,#spectaql .doc-heading,#spectaql .introduction-item-title,#spectaql .operation-heading{overflow:hidden;text-overflow:ellipsis}#spectaql #page{display:flex}#spectaql #page *{box-sizing:border-box}#spectaql #page.drawer-open #sidebar{z-index:1000;transform:translateX(0)}#spectaql #page.drawer-open .drawer-overlay{display:block;background:rgba(0,0,0,.5);z-index:10}#spectaql #sidebar{position:fixed;min-width:250px;max-width:250px;flex-shrink:0;transition:transform .2s ease-out;transform:translateX(-100%);z-index:10;padding-top:20px;background:#fff}@media (min-width:48em){#spectaql #sidebar{position:relative;transform:none}}@media (min-width:64em){#spectaql #sidebar{min-width:300px;max-width:300px}}#spectaql .sidebar-top-container{display:flex;align-items:center;padding:0 20px}#spectaql #mobile-navbar{display:flex;align-items:center;position:sticky;top:0}@media (min-width:48em){#spectaql #mobile-navbar{display:none}}#spectaql .sidebar-open-button{display:flex;align-items:flex-start;margin:0;padding:0;border:none;background:0 0}#spectaql .sidebar-open-button .hamburger{width:16px;height:14px;cursor:pointer}#spectaql .sidebar-open-button .hamburger::after{display:block;content:"";height:2px;background:#222;box-shadow:0 5px 0 #222,0 10px 0 #222}#spectaql .sidebar-open-button .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}#spectaql .close-button{display:block}#spectaql .close-button .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media (min-width:48em){#spectaql .close-button{display:none}}#spectaql .drawer-overlay{display:none;position:absolute;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0)}@media (min-width:48em){#spectaql .drawer-overlay{display:none!important}}#spectaql #nav{display:flex;flex-direction:column;max-height:calc(100vh - 0px);padding:0 20px;padding-bottom:20px;position:sticky;top:0;overflow:auto}#spectaql #logo{margin-right:auto}#spectaql #logo img{display:block;width:100%;max-width:100%}#spectaql .nav-group-items,#spectaql .nav-group-section-items{padding:0;margin:0}#spectaql .nav-group-items>li,#spectaql .nav-group-section-items>li{list-style:none}#spectaql .nav-group-items .nav-group-section-title,#spectaql .nav-group-items>li,#spectaql .nav-group-section-items .nav-group-section-title,#spectaql .nav-group-section-items>li{overflow:hidden;text-overflow:ellipsis}#spectaql .nav-group-section-items{display:none}#spectaql .nav-scroll-expand .nav-group-section-items{display:block}#spectaql #docs{position:relative;margin:0 auto;min-width:100px;max-width:88em;flex-grow:1;flex-shrink:1;padding:20px}@media (min-width:48em){#spectaql .doc-row{display:flex;flex-wrap:wrap}}#spectaql .doc-row .doc-copy,#spectaql .doc-row .doc-examples{width:100%}@media (min-width:48em){#spectaql .doc-row .doc-copy,#spectaql .doc-row .doc-examples{width:50%}}@media (min-width:48em){#spectaql .doc-row .doc-copy{padding-right:20px}}@media (min-width:48em){#spectaql .doc-row .doc-examples{padding-left:20px}}.hljs{display:block;overflow-x:auto;padding:.5em;background:#23241f}.hljs,.hljs-subst,.hljs-tag{color:#f8f8f2}.hljs-emphasis,.hljs-strong{color:#a8a8a2}.hljs-bullet,.hljs-link,.hljs-literal,.hljs-number,.hljs-quote,.hljs-regexp{color:#ae81ff}.hljs-code,.hljs-section,.hljs-selector-class,.hljs-title{color:#a6e22e}.hljs-strong{font-weight:700}.hljs-emphasis{font-style:italic}.hljs-attr,.hljs-keyword,.hljs-name,.hljs-selector-tag{color:#f92672}.hljs-attribute,.hljs-symbol{color:#66d9ef}.hljs-class .hljs-title,.hljs-params{color:#f8f8f2}.hljs-addition,.hljs-built_in,.hljs-builtin-name,.hljs-selector-attr,.hljs-selector-id,.hljs-selector-pseudo,.hljs-string,.hljs-template-variable,.hljs-type,.hljs-variable{color:#e6db74}.hljs-comment,.hljs-deletion,.hljs-meta{color:#75715e}#spectaql{font-family:Barlow,"Open Sans",serif;font-size:14px;line-height:1.6;background:#fff;color:#222}@media (min-width:32em){#spectaql{font-size:16px}}#spectaql a{color:#0298bf;text-decoration:none}#spectaql a:hover{color:#0182a2}#spectaql a:active,#spectaql a:focus{color:#0298bf}#spectaql code{font-size:.875em;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace}#spectaql pre{color:#fff}#spectaql pre code{background:#222}#spectaql pre code,#spectaql pre code.hljs{font-size:.82em;line-height:1.4;padding:15px 20px}#spectaql .doc-heading{line-height:1.2;font-size:2.25em;margin-top:10px}@media (min-width:48em){#spectaql .doc-heading{margin-top:-10px}}#spectaql .close-button{background:0 0;border:none;padding:5px;font-size:16px;font-weight:700;color:#222}#spectaql #introduction{margin-bottom:60px}#spectaql #introduction .example-section:not(.example-section-is-code){margin-bottom:20px}#spectaql #introduction .example-section:not(.example-section-is-code) h5,#spectaql #introduction .example-section:not(.example-section-is-code) p{margin:0;font-size:1em}#spectaql #docs,#spectaql #mobile-navbar,#spectaql #sidebar{padding-top:20px;padding-bottom:20px}@media (min-width:32em){#spectaql #docs,#spectaql #mobile-navbar,#spectaql #sidebar{padding-top:30px;padding-bottom:30px}}@media (min-width:48em){#spectaql #docs,#spectaql #mobile-navbar,#spectaql #sidebar{padding-top:40px;padding-bottom:40px}}#spectaql #docs,#spectaql #mobile-navbar,#spectaql #nav,#spectaql .sidebar-top-container{padding-left:20px;padding-right:20px}@media (min-width:32em){#spectaql #docs,#spectaql #mobile-navbar,#spectaql #nav,#spectaql .sidebar-top-container{padding-left:30px;padding-right:30px}}@media (min-width:48em){#spectaql #docs,#spectaql #mobile-navbar,#spectaql #nav,#spectaql .sidebar-top-container{padding-left:50px;padding-right:50px}}#spectaql #sidebar{padding-bottom:0;background:#fff}#spectaql #sidebar a{color:#222}#spectaql #sidebar a.nav-scroll-active,#spectaql #sidebar a:hover{font-weight:700}#spectaql #sidebar a.nav-scroll-active{color:#222}#spectaql #sidebar a:hover{color:#0182a2}@media (min-width:48em){#spectaql #sidebar{border-right:2px solid #d8d8d8}}#spectaql #mobile-navbar{background:#fff;margin-top:-20px;margin-left:-20px;margin-right:-20px}@media (min-width:32em){#spectaql #mobile-navbar{margin-top:-30px;margin-left:-30px;margin-right:-30px}}#spectaql #mobile-navbar .sidebar-open-button::after{display:block;content:"All Topics";margin-left:10px;color:#222}#spectaql #nav .nav-group{margin-top:20px}#spectaql #nav .nav-group li{margin-bottom:5px}#spectaql #nav .nav-group-title{font-size:.875em;font-weight:400;margin:0 0 6px 0;color:#999}#spectaql #nav .nav-group-section-title{font-size:inherit;margin:0;margin-bottom:5px;font-weight:400}#spectaql #nav .nav-group-section-items{margin-left:.75em}#spectaql .definition,#spectaql .operation{margin-bottom:60px}#spectaql .definition .definition-heading,#spectaql .definition .operation-heading,#spectaql .operation .definition-heading,#spectaql .operation .operation-heading{font-size:1.72em}#spectaql .definition .definition-heading code,#spectaql .definition .operation-heading code,#spectaql .operation .definition-heading code,#spectaql .operation .operation-heading code{font-family:inherit;font-size:inherit;font-weight:inherit}@media (min-width:32em){#spectaql .definition .definition-heading,#spectaql .definition .operation-heading,#spectaql .operation .definition-heading,#spectaql .operation .operation-heading{font-size:2.25em}}#spectaql .definition-group-name,#spectaql .group-heading,#spectaql .operation-group-name{border-top:2px solid #d8d8d8;padding-top:3px;color:#999;font-size:inherit;font-weight:inherit}#spectaql .definition-group-name a,#spectaql .group-heading a,#spectaql .operation-group-name a{color:#999}#spectaql .definition-group-name a:hover,#spectaql .group-heading a:hover,#spectaql .operation-group-name a:hover{font-weight:700}#spectaql .doc-examples{margin-top:20px}#spectaql .doc-examples .example-heading{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}#spectaql .doc-examples .example-section-is-code h5{color:#999;text-transform:uppercase;background:#000;font-size:.75em;font-weight:700;padding:.6em 0 .6em 20px;margin:0;opacity:1}@media (min-width:48em){#spectaql .doc-examples{margin-top:0}}#spectaql .doc-copy p{margin:0 0 20px 0}#spectaql .doc-copy p:last-child{margin-bottom:0}#spectaql .doc-copy table tr th{font-weight:400;border-bottom:2px solid #d8d8d8}#spectaql .doc-copy table tr td{border-bottom:1px solid #e0e0e0}#spectaql .doc-copy table tr.row-has-field-arguments td,#spectaql .doc-copy table tr:last-child td{border-bottom:none}#spectaql .doc-copy table tr td,#spectaql .doc-copy table tr th{padding:5px}#spectaql .doc-copy table tr td:first-child,#spectaql .doc-copy table tr th:first-child{padding-left:0}#spectaql .doc-copy table tr td:last-child,#spectaql .doc-copy table tr th:last-child{padding-right:0}#spectaql .doc-copy .doc-copy-section{margin-bottom:30px}#spectaql .doc-copy .doc-copy-section>h5{margin:0 0 5px 0;font-size:inherit;font-weight:inherit;color:#999}#spectaql .doc-copy .definition-description>h5,#spectaql .doc-copy .definition-properties>h5,#spectaql .doc-copy .operation-description>h5{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}#spectaql .field-arguments{font-size:.875em;background-color:#fafbfc;border:1px solid #e0e0e0;padding:10px;margin-bottom:5px}#spectaql .field-arguments p{margin:10px 0 0 0}#spectaql .field-arguments h5.field-arguments-heading{margin:0;padding:0 0 10px 0;font-weight:inherit;color:#999}#spectaql .field-arguments .field-argument{border-top:1px #e0e0e0 solid;padding:10px 0}#spectaql .field-arguments .field-argument:last-child{padding-bottom:0}#spectaql .field-arguments .field-argument-name{margin:0;font-size:inherit;font-weight:inherit}#spectaql .deprecation-reason{word-break:break-word}#spectaql .deprecation-reason::before{display:inline;content:"Deprecated";padding:2px 5px;margin-right:5px;background:#fed7d8;color:#c60609;font-weight:700;font-size:.875em}</style>
+    <script>function scrollSpy(){var c=5,e=document.querySelector("html"),r=(e&&(e=window.getComputedStyle(e).scrollPaddingTop)&&"string"==typeof e&&"auto"!==e&&e.endsWith("px")&&(c+=parseInt(e.split("px")[0])),"nav-scroll-active"),i="nav-scroll-expand",d=null,s=[];function t(){d=null;var e=document.querySelectorAll("[data-traverse-target]");Array.prototype.forEach.call(e,function(e){s.push({id:e.id,top:e.offsetTop})})}var n=debounce(function(){t(),o()},500),o=debounce(function(){var e,t,n,o,l=(e=>{for(var t=e+c,n=0;n<s.length;n++){var o=s[n+1];if(t>=s[n].top&&(!o||t<o.top))return n}return-1})(document.documentElement.scrollTop||document.body.scrollTop);l!==d&&(l=s[d=l],o=function(e){return e&&e.closest?e.closest(".nav-group-section"):null},e=document.querySelector("."+r),t=o(l=l?document.querySelector("#nav a[href*="+l.id+"]"):null),n=(o=o(e))!==t,o&&n&&o.classList.remove(i),t&&n&&t.classList.add(i),l&&(l.classList.add(r),l.scrollIntoViewIfNeeded?l.scrollIntoViewIfNeeded():!l.scrollIntoView||0<=(o=(o=l).getBoundingClientRect()).top&&0<=o.left&&o.bottom<=(window.innerHeight||document.documentElement.clientHeight)&&o.right<=(window.innerWidth||document.documentElement.clientWidth)||l.scrollIntoView({block:"center",inline:"start"})),e)&&e.classList.remove(r)},100);setTimeout(function(){t(),o(),window.addEventListener("scroll",o),window.addEventListener("resize",n)},300)}function toggleMenu(){var t="drawer-open",e=document.querySelector("#spectaql .sidebar-open-button"),n=document.querySelector("#spectaql #sidebar .close-button"),o=document.querySelector("#spectaql .drawer-overlay");function l(){var e=document.querySelector("#spectaql #page");e.classList.contains(t)?e.classList.remove(t):e.classList.add(t)}e.addEventListener("click",l),n.addEventListener("click",l),o.addEventListener("click",l)}function debounce(e,t){var n=null;return function(){clearTimeout(n),n=setTimeout(function(){e.apply(null)},t)}}window.addEventListener("DOMContentLoaded",e=>{toggleMenu(),scrollSpy()});</script>
+  </head>
+  <body id="spectaql">
+    <div id="page" class="drawer-layout">
+      <div id="sidebar">
+        <div class="sidebar-top-container">
+          <div id="logo"> </div>
+          <button class="close-button" type="button">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close menu</span>
+          </button>
+        </div>
+        <nav id="nav" role="navigation">
+          <div class="nav-group">
+            <h4 class="nav-group-title">Introduction</h4>
+            <ul class="nav-group-items">
+              <li>
+                <a href="#introduction">Welcome</a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-group">
+            <h4 class="nav-group-title">Operations</h4>
+            <ul class="nav-group-items">
+              <li class="nav-group-section">
+                <h5 class="nav-group-section-title">
+                  <a href="#group-Operations-Queries">Queries</a>
+                </h5>
+                <ul class="nav-group-section-items">
+                  <li>
+                    <a href="#query-seat">seat</a>
+                  </li>
+                  <li>
+                    <a href="#query-vehicle">vehicle</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="nav-group">
+            <h4 class="nav-group-title">Types</h4>
+            <ul class="nav-group-items">
+              <li>
+                <a href="#definition-Airbag">Airbag</a>
+              </li>
+              <li>
+                <a href="#definition-Angle_Unit_Enum">Angle_Unit_Enum</a>
+              </li>
+              <li>
+                <a href="#definition-Backrest">Backrest</a>
+              </li>
+              <li>
+                <a href="#definition-Boolean">Boolean</a>
+              </li>
+              <li>
+                <a href="#definition-Cabin">Cabin</a>
+              </li>
+              <li>
+                <a href="#definition-DriverPositionEnum">DriverPositionEnum</a>
+              </li>
+              <li>
+                <a href="#definition-Float">Float</a>
+              </li>
+              <li>
+                <a href="#definition-Headrest">Headrest</a>
+              </li>
+              <li>
+                <a href="#definition-InCabinArea2x2">InCabinArea2x2</a>
+              </li>
+              <li>
+                <a href="#definition-InCabinArea2x2Input">InCabinArea2x2Input</a>
+              </li>
+              <li>
+                <a href="#definition-Int">Int</a>
+              </li>
+              <li>
+                <a href="#definition-Int8">Int8</a>
+              </li>
+              <li>
+                <a href="#definition-Length_Unit_Enum">Length_Unit_Enum</a>
+              </li>
+              <li>
+                <a href="#definition-Relation_Unit_Enum">Relation_Unit_Enum</a>
+              </li>
+              <li>
+                <a href="#definition-Seat">Seat</a>
+              </li>
+              <li>
+                <a href="#definition-Seating">Seating</a>
+              </li>
+              <li>
+                <a href="#definition-String">String</a>
+              </li>
+              <li>
+                <a href="#definition-TwoColumnsInCabinEnum">TwoColumnsInCabinEnum</a>
+              </li>
+              <li>
+                <a href="#definition-TwoRowsInCabinEnum">TwoRowsInCabinEnum</a>
+              </li>
+              <li>
+                <a href="#definition-UInt16">UInt16</a>
+              </li>
+              <li>
+                <a href="#definition-UInt8">UInt8</a>
+              </li>
+              <li>
+                <a href="#definition-Vehicle">Vehicle</a>
+              </li>
+              <li>
+                <a href="#definition-VehicleIdentification">VehicleIdentification</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div id="docs">
+        <div id="mobile-navbar">
+          <button class="sidebar-open-button" type="button">
+            <span class="hamburger"></span>
+            <span class="sr-only">All topics</span>
+          </button>
+        </div>
+        <article id="content">
+          <h1 class="doc-heading">Seat Domain Model Schema</h1>
+          <div id="introduction" data-traverse-target="introduction">
+            <div id="welcome" class="doc-row">
+              <div class="doc-copy">
+                <p>Interactive GraphQL schema documentation for the seat domain model.</p>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section welcome-api-endpoints-section example-section-is-code">
+                  <h5>API Endpoints</h5> <pre><code>https://github.com/COVESA/s2dm/tree/main/examples/seat-to-vspec</code></pre> </div>
+              </div>
+            </div>
+          </div>
+          <h1 id="group-Operations-Queries" class="group-heading" data-traverse-target="group-Operations-Queries">Queries</h1>
+          <section id="query-seat" class="operation operation-query" data-traverse-target="query-seat">
+            <h2 class="operation-heading "> <code>seat</code> </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="operation-response doc-copy-section">
+                  <h5>Response</h5>
+                  <p> Returns a
+                    <a href="#definition-Seat"><code>Seat</code></a>
+                  </p>
+                </div>
+                <div class="operation-arguments doc-copy-section">
+                  <h5>Arguments</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="property-name"><code>instanceTag</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-InCabinArea2x2Input"><code>InCabinArea2x2Input!</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <h4 class="example-heading">Example</h4>
+                <div class="example-section example-section-is-code operation-query-example">
+                  <h5>Query</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> seat<span class="hljs-tag">(<span class="hljs-code">$instanceTag</span>:<span class="hljs-type"> InCabinArea2x2Input!</span>)</span> <span class="hljs-tag">{
+  <span class="hljs-symbol">seat<span class="hljs-tag">(instanceTag: <span class="hljs-code">$instanceTag</span>)</span> <span class="hljs-tag">{
+    <span class="hljs-symbol">heatingCooling</span>
+    <span class="hljs-symbol">height</span>
+    <span class="hljs-symbol">isBackwardSwitchEngaged</span>
+    <span class="hljs-symbol">isBelted</span>
+    <span class="hljs-symbol">isCoolerSwitchEngaged</span>
+    <span class="hljs-symbol">isDecreaseMassageLevelSwitchEngaged</span>
+    <span class="hljs-symbol">isDownSwitchEngaged</span>
+    <span class="hljs-symbol">isForwardSwitchEngaged</span>
+    <span class="hljs-symbol">isIncreaseMassageLevelSwitchEngaged</span>
+    <span class="hljs-symbol">isOccupied</span>
+    <span class="hljs-symbol">isTiltBackwardSwitchEngaged</span>
+    <span class="hljs-symbol">isTiltForwardSwitchEngaged</span>
+    <span class="hljs-symbol">isUpSwitchEngaged</span>
+    <span class="hljs-symbol">isWarmerSwitchEngaged</span>
+    <span class="hljs-symbol">massage</span>
+    <span class="hljs-symbol">massageLevel</span>
+    <span class="hljs-symbol">position</span>
+    <span class="hljs-symbol">seatBeltHeight</span>
+    <span class="hljs-symbol">tilt</span>
+    <span class="hljs-symbol">airbag <span class="hljs-tag">{
+      <span class="hljs-type">...AirbagFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">backrest <span class="hljs-tag">{
+      <span class="hljs-type">...BackrestFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">headrest <span class="hljs-tag">{
+      <span class="hljs-type">...HeadrestFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">seating <span class="hljs-tag">{
+      <span class="hljs-type">...SeatingFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">instanceTag <span class="hljs-tag">{
+      <span class="hljs-type">...InCabinArea2x2Fragment</span>
+    }</span></span>
+  }</span></span>
+}</span></span>
+</code></pre> </body>
+                  </html>
+                </div>
+                <div class="example-section example-section-is-code operation-variables-example">
+                  <h5>Variables</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"instanceTag"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">InCabinArea2x2Input</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+                <div class="example-section example-section-is-code operation-response-example">
+                  <h5>Response</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"seat"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"heatingCooling"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Int8</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"height"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isBelted"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isCoolerSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isDecreaseMassageLevelSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isDownSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isIncreaseMassageLevelSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isOccupied"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isTiltBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isTiltForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isUpSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"isWarmerSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"massage"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"massageLevel"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"position"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"seatBeltHeight"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"tilt"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">987.65</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"airbag"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Airbag</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"backrest"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Backrest</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"headrest"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Headrest</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"seating"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Seating</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"instanceTag"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">InCabinArea2x2</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="query-vehicle" class="operation operation-query" data-traverse-target="query-vehicle">
+            <div class="operation-group-name">
+              <a href="#group-Operations-Queries">Queries</a>
+            </div>
+            <h2 class="operation-heading "> <code>vehicle</code> </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="operation-response doc-copy-section">
+                  <h5>Response</h5>
+                  <p> Returns a
+                    <a href="#definition-Vehicle"><code>Vehicle</code></a>
+                  </p>
+                </div>
+                <div class="operation-arguments doc-copy-section">
+                  <h5>Arguments</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="property-name"><code>vin</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-String"><code>String!</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <h4 class="example-heading">Example</h4>
+                <div class="example-section example-section-is-code operation-query-example">
+                  <h5>Query</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> vehicle<span class="hljs-tag">(<span class="hljs-code">$vin</span>:<span class="hljs-type"> String!</span>)</span> <span class="hljs-tag">{
+  <span class="hljs-symbol">vehicle<span class="hljs-tag">(vin: <span class="hljs-code">$vin</span>)</span> <span class="hljs-tag">{
+    <span class="hljs-symbol">id <span class="hljs-tag">{
+      <span class="hljs-type">...VehicleIdentificationFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">cabin <span class="hljs-tag">{
+      <span class="hljs-type">...CabinFragment</span>
+    }</span></span>
+  }</span></span>
+}</span></span>
+</code></pre> </body>
+                  </html>
+                </div>
+                <div class="example-section example-section-is-code operation-variables-example">
+                  <h5>Variables</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"vin"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"xyz789"</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+                <div class="example-section example-section-is-code operation-response-example">
+                  <h5>Response</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"data"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"vehicle"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">VehicleIdentification</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"cabin"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Cabin</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <h1 id="group-Types" class="group-heading" data-traverse-target="group-Types">Types</h1>
+          <section id="definition-Airbag" class="definition definition-object" data-traverse-target="definition-Airbag">
+            <h2 class="definition-heading">Airbag</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>Airbag signals.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isDeployed</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Airbag deployment status. True = Airbag deployed. False = Airbag not deployed. </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"isDeployed"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Angle_Unit_Enum" class="definition definition-enum" data-traverse-target="definition-Angle_Unit_Enum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Angle_Unit_Enum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>DEGREE</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"DEGREE"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Backrest" class="definition definition-object" data-traverse-target="definition-Backrest">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Backrest</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>Describes signals related to the backrest of the seat.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isLessLumbarSupportSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch for less lumbar support engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isLessSideBolsterSupportSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch for less side bolster support engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isLumbarDownSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Lumbar down switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isLumbarUpSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Lumbar up switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isMoreLumbarSupportSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch for more lumbar support engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isMoreSideBolsterSupportSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch for more side bolster support engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isReclineBackwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Backrest recline backward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isReclineForwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Backrest recline forward switch engaged. </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>lumbarHeight</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt8"><code>UInt8</code></a>
+                          </span>
+                        </td>
+                        <td> Height of lumbar support. Position is relative within available movable range of the lumbar support. 0 = Lowermost position supported. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>lumbarSupport</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Float"><code>Float</code></a>
+                          </span>
+                        </td>
+                        <td> Lumbar support (in/out position). 0 = Innermost position. 100 = Outermost position. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Relation_Unit_Enum"><code>Relation_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>recline</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Float"><code>Float</code></a>
+                          </span>
+                        </td>
+                        <td> Backrest recline compared to seat z-axis (seat vertical axis). 0 degrees = Upright/Vertical backrest. Negative degrees for forward recline.
+                          <br>Positive degrees for backward recline. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Angle_Unit_Enum"><code>Angle_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>sideBolsterSupport</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Float"><code>Float</code></a>
+                          </span>
+                        </td>
+                        <td> Side bolster support. 0 = Minimum support (widest side bolster setting). 100 = Maximum support. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Relation_Unit_Enum"><code>Relation_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"isLessLumbarSupportSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isLessSideBolsterSupportSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isLumbarDownSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isLumbarUpSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isMoreLumbarSupportSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isMoreSideBolsterSupportSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isReclineBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isReclineForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"lumbarHeight"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"lumbarSupport"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">987.65</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"recline"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">123.45</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"sideBolsterSupport"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">987.65</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Boolean" class="definition definition-scalar" data-traverse-target="definition-Boolean">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Boolean</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>The <code>Boolean</code> scalar type represents <code>true</code> or <code>false</code>.</p>
+                </div>
+              </div>
+              <div class="doc-examples"> </div>
+            </div>
+          </section>
+          <section id="definition-Cabin" class="definition definition-object" data-traverse-target="definition-Cabin">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Cabin</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>All in-cabin components, including doors.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>seats</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Seat"><code>[Seat]</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>driverPosition</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-DriverPositionEnum"><code>DriverPositionEnum</code></a>
+                          </span>
+                        </td>
+                        <td> The position of the driver seat in row 1. </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"seats"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">Seat</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"driverPosition"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"LEFT"</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-DriverPositionEnum" class="definition definition-enum" data-traverse-target="definition-DriverPositionEnum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">DriverPositionEnum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>LEFT</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>MIDDLE</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>RIGHT</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"LEFT"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Float" class="definition definition-scalar" data-traverse-target="definition-Float">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Float</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>The <code>Float</code> scalar type represents signed double-precision fractional values as specified by
+                    <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 754</a>.</p>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-number">123.45</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Headrest" class="definition definition-object" data-traverse-target="definition-Headrest">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Headrest</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>Headrest settings.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>angle</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Float"><code>Float</code></a>
+                          </span>
+                        </td>
+                        <td> Headrest angle, relative to backrest, 0 degrees if parallel to backrest, Positive degrees = tilted forward. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Angle_Unit_Enum"><code>Angle_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>height</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt8"><code>UInt8</code></a>
+                          </span>
+                        </td>
+                        <td> Position of headrest relative to movable range of the head rest. 0 = Bottommost position supported. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isBackwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Head rest backward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isDownSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Head rest down switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isForwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Head rest forward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isUpSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Head rest up switch engaged. </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"angle"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">987.65</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"height"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isDownSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isUpSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-InCabinArea2x2" class="definition definition-object" data-traverse-target="definition-InCabinArea2x2">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">InCabinArea2x2</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>row</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-TwoRowsInCabinEnum"><code>TwoRowsInCabinEnum</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>column</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-TwoColumnsInCabinEnum"><code>TwoColumnsInCabinEnum</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"row"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ROW1"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"column"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"DRIVERSIDE"</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-InCabinArea2x2Input" class="definition definition-input-object" data-traverse-target="definition-InCabinArea2x2Input">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">InCabinArea2x2Input</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Input Field</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="property-name"><code>row</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-TwoRowsInCabinEnum"><code>TwoRowsInCabinEnum</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="property-name"><code>column</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-TwoColumnsInCabinEnum"><code>TwoColumnsInCabinEnum</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"row"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"ROW1"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"column"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"DRIVERSIDE"</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Int" class="definition definition-scalar" data-traverse-target="definition-Int">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Int</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>The <code>Int</code> scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.</p>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-number">987</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Int8" class="definition definition-scalar" data-traverse-target="definition-Int8">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Int8</h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">Int8</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Length_Unit_Enum" class="definition definition-enum" data-traverse-target="definition-Length_Unit_Enum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Length_Unit_Enum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>CENTIMETER</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>INCH</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>KILOMETER</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>METER</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>MILLIMETER</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"CENTIMETER"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Relation_Unit_Enum" class="definition definition-enum" data-traverse-target="definition-Relation_Unit_Enum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Relation_Unit_Enum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>DECIBEL</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>DECIBEL_MILLIWATT</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>NANO_METER_PER_KILOMETER</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>PERCENT</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>RATIO</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"DECIBEL"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Seat" class="definition definition-object" data-traverse-target="definition-Seat">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Seat</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>The model of a vehicle&#39;s Seat.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>heatingCooling</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Int8"><code>Int8</code></a>
+                          </span>
+                        </td>
+                        <td> Heating or Cooling requested for the Item. -100 = Maximum cooling, 0 = Heating/cooling deactivated, 100 = Maximum heating. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Relation_Unit_Enum"><code>Relation_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>height</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt16"><code>UInt16</code></a>
+                          </span>
+                        </td>
+                        <td> Seat position on vehicle z-axis. Position is relative within available movable range of the seating. 0 = Lowermost position supported. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isBackwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Seat backward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isBelted</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is the belt engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isCoolerSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Cooler switch for Seat heater. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isDecreaseMassageLevelSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Decrease massage level switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isDownSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Seat down switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isForwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Seat forward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isIncreaseMassageLevelSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Increase massage level switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isOccupied</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Does the seat have a passenger in it. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isTiltBackwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Tilt backward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isTiltForwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Tilt forward switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isUpSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Seat up switch engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isWarmerSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Warmer switch for Seat heater. </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="" class="definition-deprecated">
+                          <span class="property-name"><code>massage</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt8"><code>UInt8</code></a>
+                          </span>
+                        </td>
+                        <td> Seat massage level. 0 = off. 100 = max massage.
+                          <span class="deprecation-reason">v5.0 - refactored to Seat.MassageLevel</span>
+                        </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Relation_Unit_Enum"><code>Relation_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>massageLevel</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt8"><code>UInt8</code></a>
+                          </span>
+                        </td>
+                        <td> Seat massage level. 0 = off. 100 = max massage. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Relation_Unit_Enum"><code>Relation_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>position</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt16"><code>UInt16</code></a>
+                          </span>
+                        </td>
+                        <td> Seat position on vehicle x-axis. Position is relative to the frontmost position supported by the seat. 0 = Frontmost position supported. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>seatBeltHeight</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt16"><code>UInt16</code></a>
+                          </span>
+                        </td>
+                        <td> Seat belt position on vehicle z-axis. Position is relative within available movable range of the seat belt. 0 = Lowermost position supported. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>tilt</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Float"><code>Float</code></a>
+                          </span>
+                        </td>
+                        <td> Tilting of seat (seating and backrest) relative to vehicle x-axis. 0 = seat bottom is flat, seat bottom and vehicle x-axis are parallel. Positive
+                          <br>degrees = seat tilted backwards, seat x-axis tilted upward, seat z-axis is tilted backward. </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Angle_Unit_Enum"><code>Angle_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>airbag</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Airbag"><code>Airbag</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>backrest</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Backrest"><code>Backrest</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>headrest</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Headrest"><code>Headrest</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>seating</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Seating"><code>Seating</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>instanceTag</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-InCabinArea2x2"><code>InCabinArea2x2</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"heatingCooling"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Int8</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"height"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isBelted"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isCoolerSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isDecreaseMassageLevelSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isDownSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isIncreaseMassageLevelSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isOccupied"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isTiltBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isTiltForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isUpSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isWarmerSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"massage"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"massageLevel"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt8</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"position"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"seatBeltHeight"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"tilt"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">987.65</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"airbag"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Airbag</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"backrest"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Backrest</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"headrest"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Headrest</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"seating"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Seating</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"instanceTag"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">InCabinArea2x2</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Seating" class="definition definition-object" data-traverse-target="definition-Seating">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Seating</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>Describes signals related to the seat bottom of the seat.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isBackwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch to decrease seating length engaged. </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>isForwardSwitchEngaged</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Boolean"><code>Boolean</code></a>
+                          </span>
+                        </td>
+                        <td> Is switch to increase seating length engaged. </td>
+                      </tr>
+                      <tr class="row-has-field-arguments">
+                        <td data-property-name="">
+                          <span class="property-name"><code>length</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-UInt16"><code>UInt16</code></a>
+                          </span>
+                        </td>
+                        <td> Length adjustment of seating. 0 = Adjustable part of seating in rearmost position (Shortest length of seating). </td>
+                      </tr>
+                      <tr class="row-field-arguments">
+                        <td colspan="2">
+                          <div class="field-arguments">
+                            <h5 class="field-arguments-heading"> Arguments </h5>
+                            <div class="field-argument-list">
+                              <div class="field-argument">
+                                <h6 class="field-argument-name">
+                                  <span class="property-name"><code>unit</code></span> -
+                                  <span class="property-type">
+                                    <a href="#definition-Length_Unit_Enum"><code>Length_Unit_Enum</code></a>
+                                  </span>
+                                </h6>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"isBackwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"isForwardSwitchEngaged"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"length"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UInt16</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-String" class="definition definition-scalar" data-traverse-target="definition-String">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">String</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>The <code>String</code> scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.</p>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"xyz789"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-TwoColumnsInCabinEnum" class="definition definition-enum" data-traverse-target="definition-TwoColumnsInCabinEnum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">TwoColumnsInCabinEnum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>DRIVERSIDE</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>PASSENGERSIDE</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"DRIVERSIDE"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-TwoRowsInCabinEnum" class="definition definition-enum" data-traverse-target="definition-TwoRowsInCabinEnum">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">TwoRowsInCabinEnum</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-properties doc-copy-section">
+                  <h5>Values</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Enum Value</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <p><code>ROW1</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <p><code>ROW2</code></p>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"ROW1"</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-UInt16" class="definition definition-scalar" data-traverse-target="definition-UInt16">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">UInt16</h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">UInt16</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-UInt8" class="definition definition-scalar" data-traverse-target="definition-UInt8">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">UInt8</h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">UInt8</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-Vehicle" class="definition definition-object" data-traverse-target="definition-Vehicle">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">Vehicle</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>High-level vehicle data.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>id</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-VehicleIdentification"><code>VehicleIdentification!</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>cabin</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-Cabin"><code>Cabin</code></a>
+                          </span>
+                        </td>
+                        <td> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">VehicleIdentification</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"cabin"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Cabin</span>
+<span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="definition-VehicleIdentification" class="definition definition-object" data-traverse-target="definition-VehicleIdentification">
+            <div class="definition-group-name">
+              <a href="#group-Types">Types</a>
+            </div>
+            <h2 class="definition-heading">VehicleIdentification</h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <div class="definition-description doc-copy-section">
+                  <h5>Description</h5>
+                  <p>Attributes that identify a vehicle.</p>
+                </div>
+                <div class="definition-properties doc-copy-section">
+                  <h5>Fields</h5>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Field Name</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td data-property-name="">
+                          <span class="property-name"><code>vin</code></span> -
+                          <span class="property-type">
+                            <a href="#definition-String"><code>String!</code></a>
+                          </span>
+                        </td>
+                        <td> 17-character Vehicle Identification Number (VIN) as defined by ISO 3779. </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="doc-examples">
+                <div class="example-section example-section-is-code">
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json"><span class="hljs-punctuation">{</span><span class="hljs-attr">"vin"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"abc123"</span><span class="hljs-punctuation">}</span>
+</code></pre> </body>
+                  </html>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div class="doc-row no-margin">
+            <div class="doc-copy doc-separator">
+              <a class="powered-by" href="https://github.com/anvilco/spectaql">Documentation by
+                <span>Anvil SpectaQL</span>
+              </a>
+            </div>
+          </div>
+        </article>
+        <div class="drawer-overlay"></div>
+      </div>
+    </div>
+  </body>
+</html>
