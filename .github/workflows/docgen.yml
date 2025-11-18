@@ -43,7 +43,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: '20'
           cache: 'npm'
@@ -65,7 +65,7 @@ jobs:
           cd docs-gen
           npm run build \
             --cleanDestinationDir \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --baseURL "$BASE_URL/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:

@@ -19,10 +19,18 @@
 [
 {{- range $index, $page := $pages -}}
   {{- if gt $index 0 }},{{ end }}
+  {{- $permalink := $page.Permalink -}}
+  {{- if or (eq $permalink $page.RelPermalink) (not (hasPrefix $permalink "http")) -}}
+    {{- if eq hugo.Environment "production" -}}
+      {{- $permalink = printf "https://giaccomole.github.io/s2dm%s" $page.RelPermalink -}}
+    {{- else -}}
+      {{- $permalink = printf "%s%s" .Site.BaseURL $page.RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
   {
     "id": {{ $index }},
     "title": {{ $page.Title | jsonify }},
-    "permalink": {{ $page.RelPermalink | jsonify }},
+    "permalink": {{ $permalink | jsonify }},
     "summary": {{ if $indexSummary }}{{ $page.Summary | plainify | jsonify }}{{ else }}{{ $page.Summary | plainify | jsonify }}{{ end }},
     "content": {{ if $indexSummary }}{{ $page.Summary | plainify | jsonify }}{{ else }}{{ $page.Content | plainify | jsonify }}{{ end }},
     "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
