@@ -13,7 +13,8 @@
     "lint:styles": "stylelint --cache \"assets/scss/**/*.{css,sass,scss}\"",
     "lint:markdown": "markdownlint-cli2 \"*.md\" \"content/**/*.md\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "exec-bin node_modules/.bin/hugo/hugo && exec-bin node_modules/.bin/hugo/hugo --minify",
+    "build": "npm run build:spectaql && exec-bin node_modules/.bin/hugo/hugo && exec-bin node_modules/.bin/hugo/hugo --minify",
+    "build:spectaql": "cp ./static/examples/seat-domain-model/full_schema.graphql ./schema.graphql && npx spectaql --schema-file ./schema.graphql --target-dir ./static/spectaql --one-file spectaql-config.yml && rm -f ./schema.graphql",
     "preview": "http-server --gzip --brotli --ext=html --cors",
     "clean": "npm run clean:build && npm run clean:lint && npm run clean:install",
     "clean:build": "shx rm -rf public resources .hugo_build.lock",
@@ -34,7 +35,9 @@
     "hugo-installer": "^4.0.1"
   },
   "devDependencies": {
-    "shx": "^0.3.4"
+    "shx": "^0.3.4",
+    "spectaql": "^1.5.12",
+    "graphql": "^16.12.0"
   },
   "otherDependencies": {
     "hugo": "0.129.0"
@@ -47,4 +50,5 @@
     "pnpm": ">=8.10.0"
   },
   "packageManager": "pnpm@8.12.0"
+
 }

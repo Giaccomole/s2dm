@@ -3,9 +3,6 @@
 {{- $searchExclTypes := .Site.Params.doks.searchExclTypes | default slice -}}
 {{- $showSearch := .Site.Params.doks.showSearch | default slice -}}
 {{- $indexSummary := .Site.Params.doks.indexSummary | default false -}}
-{{/* DEBUG: Comment to see what values we get */}}
-{{/* BaseURL: {{ .Site.BaseURL }} */}}
-{{/* Title: {{ .Site.Title }} */}}
 
 {{- if gt (len $showSearch) 0 -}}
   {{- $pages = where $pages "Section" "in" $showSearch -}}

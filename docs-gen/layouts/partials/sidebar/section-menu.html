@@ -31,6 +31,35 @@
         {{ end }}
       </ul>
     </nav>
+  {{ else if eq .Section "examples" }}
+    {{- /* Show examples with new hierarchical structure */ -}}
+    <nav class="section-nav docs-links">
+      <ul class="list-unstyled">
+        {{- /* Get all subsections in examples (use cases) sorted by weight */ -}}
+        {{ $examplesSection := .Site.GetPage "section" "examples" }}
+        {{ $subsections := $examplesSection.Sections }}
+        {{ $sortedSubsections := sort $subsections ".Params.weight" }}
+        
+        {{- /* Render each use case as a top-level item with its sub-pages */ -}}
+        {{ range $sortedSubsections }}
+          <li>
+            <strong><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>{{ .Title }}</a></strong>
+            {{- /* Get sub-pages (graphql-voyager.md and schema-documentation.md) */ -}}
+            {{ with .RegularPages }}
+              <ul class="list-unstyled list-nested">
+                {{ range sort . ".Params.weight" }}
+                  <li{{ if eq $.RelPermalink .RelPermalink }} class="active"{{ end }}>
+                    <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>
+                      {{ .Title }}
+                    </a>
+                  </li>
+                {{ end }}
+              </ul>
+            {{ end }}
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
   {{ else }}
     {{- /* Original logic for other sections */ -}}
     {{ $section := (.Site.GetPage "section" .Section) }}

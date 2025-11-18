@@ -1,6 +1,6 @@
 ---
 title: Version Bump CLI Examples
-weight: 60
+weight: 90
 ---
 
 This section contains examples demonstrating different scenarios for the `s2dm check version-bump` command, based on GraphQL Inspector's change detection.

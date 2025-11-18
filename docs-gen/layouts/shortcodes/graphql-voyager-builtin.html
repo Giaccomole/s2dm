@@ -1,0 +1,269 @@
+{{/* GraphQL Voyager Shortcode
+  Parameters:
+  - schema: path to the GraphQL schema file (relative to static directory)
+  - height: height of the container (default: 600px)
+  - title: optional title to display above the visualization
+  - skipRelay: skip relay-related entities (default: true)
+  - skipDeprecated: skip deprecated fields (default: true)
+  - sortByAlphabet: sort fields alphabetically (default: false)
+  - showLeafFields: show scalar and enum fields (default: true)
+  - hideRoot: hide the root type (default: false)
+  - hideDocs: hide the documentation sidebar (default: false)
+  - hideSettings: hide the settings panel (default: false)
+  - hideVoyagerLogo: hide the voyager logo (default: true)
+  - allowToChangeSchema: allow users to change schema (default: false)
+*/}}
+
+{{ $schema := .Get "schema" | default "schema.graphql" }}
+{{ $height := .Get "height" | default "600px" }}
+{{ $title := .Get "title" }}
+{{ $skipRelay := .Get "skipRelay" | default "true" }}
+{{ $skipDeprecated := .Get "skipDeprecated" | default "true" }}
+{{ $sortByAlphabet := .Get "sortByAlphabet" | default "false" }}
+{{ $showLeafFields := .Get "showLeafFields" | default "true" }}
+{{ $hideRoot := .Get "hideRoot" | default "false" }}
+{{ $hideDocs := .Get "hideDocs" | default "false" }}
+{{ $hideSettings := .Get "hideSettings" | default "false" }}
+{{ $hideVoyagerLogo := .Get "hideVoyagerLogo" | default "true" }}
+{{ $allowToChangeSchema := .Get "allowToChangeSchema" | default "false" }}
+{{ $containerClass := .Get "class" | default "graphql-voyager-container" }}
+
+{{ $containerId := printf "voyager-%d" .Ordinal }}
+
+<div class="{{ $containerClass }}" style="height: {{ $height }}; overflow: hidden;">
+  {{ if $title }}
+  <h3 class="graphql-voyager-title" style="margin: 0 0 1rem 0; flex-shrink: 0;">{{ $title }}</h3>
+  {{ end }}
+  <div id="{{ $containerId }}" style="height: {{ if $title }}calc({{ $height }} - 3rem){{ else }}{{ $height }}{{ end }}; overflow: hidden;">
+    <div class="graphql-voyager-loading">
+      <div>Loading GraphQL Schema Visualization...</div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Fix GraphQL Voyager container sizing and modal positioning */
+.{{ $containerClass }} {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#{{ $containerId }} {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#{{ $containerId }} > div {
+  height: 100% !important;
+  overflow: hidden;
+}
+
+/* Fix GraphQL Voyager settings modal positioning */
+#{{ $containerId }} .voyager-modal,
+#{{ $containerId }} [class*="modal"],
+#{{ $containerId }} [role="dialog"] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999 !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+}
+
+/* Alternative: position settings panel at bottom-right */
+#{{ $containerId }} .settings-panel,
+#{{ $containerId }} .voyager-settings {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  z-index: 9999 !important;
+  max-width: 400px !important;
+  max-height: 80vh !important;
+}
+</style>
+
+<script>
+(function() {
+  const containerId = '{{ $containerId }}';
+  const schemaPath = '{{ $schema }}';
+  const container = document.getElementById(containerId);
+  
+  // Show loading state
+  function showLoading() {
+    container.innerHTML = '<div class="graphql-voyager-loading">Loading GraphQL Schema...</div>';
+  }
+  
+  // Show error state
+  function showError(message) {
+    container.innerHTML = '<div class="graphql-voyager-error">Error loading schema: ' + message + '</div>';
+  }
+  
+  // Wait for GraphQL Voyager to be available
+  function waitForVoyager(callback) {
+    if (typeof GraphQLVoyager !== 'undefined') {
+      callback();
+    } else {
+      setTimeout(() => waitForVoyager(callback), 100);
+    }
+  }
+  
+  // Load and render the schema
+  function loadSchema() {
+    // For Hugo, we need to construct the path to the assets
+    const fullSchemaPath = schemaPath.startsWith('/') ? schemaPath : '/' + schemaPath;
+    
+    fetch(fullSchemaPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then(sdlText => {
+        if (!sdlText.trim()) {
+          throw new Error('Schema file is empty');
+        }
+        
+        console.log('SDL loaded, length:', sdlText.length);
+        console.log('SDL preview:', sdlText.substring(0, 200));
+        
+        waitForVoyager(() => {
+          try {
+            console.log('Converting SDL to schema using GraphQL buildSchema');
+            
+            // Use GraphQL's buildSchema to create a proper schema object
+            let introspectionResult;
+            
+            if (typeof GraphQL !== 'undefined' && GraphQL.buildSchema) {
+              console.log('Using GraphQL.buildSchema');
+              const schema = GraphQL.buildSchema(sdlText);
+              introspectionResult = GraphQL.getIntrospectionQuery ? 
+                GraphQL.introspectionFromSchema(schema) : 
+                { data: { __schema: schema } };
+            } else if (typeof GraphQLVoyager.sdlToSchema === 'function') {
+              console.log('Using GraphQLVoyager.sdlToSchema');
+              introspectionResult = GraphQLVoyager.sdlToSchema(sdlText);
+            } else {
+              console.log('No schema conversion available, passing SDL directly');
+              introspectionResult = null;
+            }
+            
+            console.log('Schema conversion result:', introspectionResult);
+            
+            // Clear the container
+            container.innerHTML = '';
+            
+            // Configure Voyager options - enable documentation and full features
+            const voyagerOptions = {};
+            
+            // If we have introspection result, use it; otherwise pass SDL directly
+            if (introspectionResult) {
+              voyagerOptions.introspection = introspectionResult;
+            } else {
+              // Try passing SDL directly - Voyager might handle it internally
+              voyagerOptions.schemaSDL = sdlText;
+            }
+            
+            // Add display options using template variables
+            const skipRelay = {{ if eq $skipRelay "true" }}true{{ else }}false{{ end }};
+            const skipDeprecated = {{ if eq $skipDeprecated "true" }}true{{ else }}false{{ end }};
+            const sortByAlphabet = {{ if eq $sortByAlphabet "true" }}true{{ else }}false{{ end }};
+            const showLeafFields = {{ if eq $showLeafFields "true" }}true{{ else }}false{{ end }};
+            const hideRoot = {{ if eq $hideRoot "true" }}true{{ else }}false{{ end }};
+            const hideDocs = {{ if eq $hideDocs "true" }}true{{ else }}false{{ end }};
+            const hideSettings = {{ if eq $hideSettings "true" }}true{{ else }}false{{ end }};
+            const hideVoyagerLogo = {{ if eq $hideVoyagerLogo "true" }}true{{ else }}false{{ end }};
+            const allowToChangeSchema = {{ if eq $allowToChangeSchema "true" }}true{{ else }}false{{ end }};
+            
+            voyagerOptions.displayOptions = {
+              skipRelay: skipRelay,
+              skipDeprecated: skipDeprecated,
+              sortByAlphabet: sortByAlphabet,
+              showLeafFields: showLeafFields,
+              hideRoot: hideRoot
+            };
+            
+            // Add UI options
+            voyagerOptions.hideDocs = hideDocs;
+            voyagerOptions.hideSettings = hideSettings;
+            voyagerOptions.hideVoyagerLogo = hideVoyagerLogo;
+            voyagerOptions.allowToChangeSchema = allowToChangeSchema;
+            
+            console.log('Voyager options:', voyagerOptions);
+            
+            // Render the voyager
+            GraphQLVoyager.renderVoyager(container, voyagerOptions);
+            
+            console.log('GraphQL Voyager rendered successfully');
+            
+            // Fix modal positioning after render
+            setTimeout(() => {
+              const modals = container.querySelectorAll('[class*="modal"], [role="dialog"], .voyager-modal, .settings-panel');
+              modals.forEach(modal => {
+                if (modal) {
+                  modal.style.position = 'fixed';
+                  modal.style.top = '50%';
+                  modal.style.left = '50%';
+                  modal.style.transform = 'translate(-50%, -50%)';
+                  modal.style.zIndex = '9999';
+                  modal.style.maxWidth = '90vw';
+                  modal.style.maxHeight = '90vh';
+                }
+              });
+              
+              // Also observe for dynamically created modals
+              const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                  mutation.addedNodes.forEach((node) => {
+                    if (node.nodeType === 1) { // Element node
+                      const newModals = node.querySelectorAll ? 
+                        node.querySelectorAll('[class*="modal"], [role="dialog"], .voyager-modal, .settings-panel') : 
+                        [];
+                      if (node.matches && node.matches('[class*="modal"], [role="dialog"], .voyager-modal, .settings-panel')) {
+                        newModals.push(node);
+                      }
+                      newModals.forEach(modal => {
+                        modal.style.position = 'fixed';
+                        modal.style.top = '50%';
+                        modal.style.left = '50%';
+                        modal.style.transform = 'translate(-50%, -50%)';
+                        modal.style.zIndex = '9999';
+                        modal.style.maxWidth = '90vw';
+                        modal.style.maxHeight = '90vh';
+                      });
+                    }
+                  });
+                });
+              });
+              
+              observer.observe(document.body, {
+                childList: true,
+                subtree: true
+              });
+            }, 1000);
+          } catch (error) {
+            console.error('Error converting SDL to schema:', error);
+            showError('Invalid GraphQL schema: ' + error.message);
+          }
+        });
+      })
+      .catch(error => {
+        console.error('GraphQL Voyager error:', error);
+        showError(error.message);
+      });
+  }
+  
+  // Start loading when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadSchema);
+  } else {
+    loadSchema();
+  }
+})();
+</script>

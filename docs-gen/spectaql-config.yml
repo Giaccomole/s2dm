@@ -1,0 +1,21 @@
+spectaql:
+  targetDir: ./static/spectaql
+  oneFile: true
+  logoFile: false
+  faviconFile: false
+
+data:
+  schemaFile: ./schema.graphql
+  hideUnusedTypes: false
+  objectsDocumentedDefault: true
+  inputsDocumentedDefault: true
+  enumsDocumentedDefault: true
+  unionsDocumentedDefault: true
+
+info:
+  title: Seat Domain Model Schema
+  description: Interactive GraphQL schema documentation for the seat domain model.
+
+servers:
+  - url: https://github.com/COVESA/s2dm/tree/main/examples/seat-to-vspec
+    description: Seat to VSS Example Implementation
