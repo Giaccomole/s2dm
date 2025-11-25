@@ -14,4 +14,4 @@ Explore the seat capabilities domain model through an interactive [GraphQL Voyag
 
 ---
 
-{{< graphql-voyager-builtin schema="/examples/seat-to-vspec/full_sdl.graphql" height="1000px" title="Seat Capabilities Domain Model" hideDocs="false" hideSettings="false" hideVoyagerLogo="true" showLeafFields="true" skipRelay="true" skipDeprecated="true" >}}
+{{< graphql-voyager-builtin schema="/examples/seat-to-vspec/full_sdl.graphql" height="1200px" title="Seat Capabilities Domain Model" hideDocs="false" hideSettings="false" hideVoyagerLogo="true" showLeafFields="true" skipRelay="true" skipDeprecated="true" >}}

@@ -1,0 +1,49 @@
+spectaql:
+  targetDir: ./static/examples/seat-to-vspec/graphql
+  
+introspection:
+  schemaFile: ./static/examples/seat-to-vspec/full_sdl.graphql
+  removeTrailingPeriodFromDescriptions: false
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+
+info:
+  title: S2DM GraphQL API Reference
+  description: |
+    Welcome to the S2DM (Schema to Domain Model) GraphQL API documentation.
+    
+    This API provides comprehensive access to vehicle data models including:
+    - **Seat configurations** and capabilities
+    - **Cabin layouts** and positioning systems  
+    - **Vehicle specifications** and identification
+    
+    The schema includes custom directives for data validation and metadata annotations.
+  version: "1.0.0"
+  x-introItems:
+    - title: Getting Started
+      description: |
+        This GraphQL API follows the standard GraphQL specification. You can explore the schema 
+        using the interactive documentation below, or use any GraphQL client to query the API.
+    - title: Custom Directives
+      description: |
+        The schema includes several custom directives:
+        - `@range(min: Float, max: Float)` - Validates numeric field ranges
+        - `@cardinality(min: Int, max: Int)` - Validates array/list sizes
+        - `@noDuplicates` - Ensures unique values in arrays
+        - `@instanceTag` - Marks objects as instances with spatial positioning
+        - `@metadata(comment: String, vssType: String)` - Provides additional field metadata
+
+servers:
+  - url: https://api.s2dm.example.com/graphql
+    description: Production API Endpoint
+    production: true
+    headers:
+      - name: Authorization
+        example: Bearer YOUR_API_TOKEN_HERE
+        comment: API token required for authentication
+  - url: https://staging.s2dm.example.com/graphql
+    description: Staging Environment
+    headers:
+      - name: Authorization
+        example: Bearer YOUR_STAGING_TOKEN_HERE
+        comment: Staging API token
