@@ -234,23 +234,33 @@ def print_schema_with_directives_preserved(schema: GraphQLSchema, source_map: di
 
     Args:
         schema: The GraphQL schema to print
-        source_map: Optional mapping of type names to URIs for @reference directives
+        source_map: Optional mapping of type names to source filenames for @reference directives
 
     Returns:
         Schema string with all directives preserved
     """
     directive_map = build_directive_map(schema)
 
-    if source_map:
-        for type_name, uri in source_map.items():
-            if type_name in schema.type_map:
-                existing_directives = directive_map.get(type_name, [])
+    reference_directive = schema.get_directive("reference")
+    if source_map and reference_directive is not None and "source" in reference_directive.args:
+        log.info(f"Adding @reference directive to the the following locations only: {reference_directive.locations}")
 
-                has_reference = any(d.startswith("@reference") for d in existing_directives)
+        for type_name, source_filename in source_map.items():
+            if type_name not in schema.type_map:
+                continue
 
-                if not has_reference:
-                    existing_directives.append(f'@reference(source: "{uri}")')
-                    directive_map[type_name] = existing_directives
+            graphql_type = schema.type_map[type_name]
+            directive_location = get_type_directive_location(graphql_type)
+
+            if directive_location is None or directive_location not in reference_directive.locations:
+                continue
+
+            existing_directives = directive_map.get(type_name, [])
+            has_reference = any(directive.startswith("@reference") for directive in existing_directives)
+
+            if not has_reference:
+                existing_directives.append(f'@reference(source: "{source_filename}")')
+                directive_map[type_name] = existing_directives
 
     base_schema = print_schema(schema)
     return add_directives_to_schema(base_schema, directive_map)

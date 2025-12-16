@@ -2,6 +2,7 @@ import re
 from typing import Any
 
 from graphql import (
+    DirectiveLocation,
     FloatValueNode,
     GraphQLEnumType,
     GraphQLField,
@@ -10,12 +11,30 @@ from graphql import (
     GraphQLObjectType,
     GraphQLScalarType,
     GraphQLSchema,
+    GraphQLType,
     GraphQLUnionType,
     IntValueNode,
 )
 from graphql.language.ast import StringValueNode
 
 GRAPHQL_TYPE_DEFINITION_PATTERN = r"^(type|interface|input|enum|union|scalar)\s+(\w+)"
+
+
+def get_type_directive_location(graphql_type: GraphQLType) -> DirectiveLocation | None:
+    """Get the directive location for a GraphQL type."""
+    if isinstance(graphql_type, GraphQLObjectType):
+        return DirectiveLocation.OBJECT
+    if isinstance(graphql_type, GraphQLInterfaceType):
+        return DirectiveLocation.INTERFACE
+    if isinstance(graphql_type, GraphQLUnionType):
+        return DirectiveLocation.UNION
+    if isinstance(graphql_type, GraphQLEnumType):
+        return DirectiveLocation.ENUM
+    if isinstance(graphql_type, GraphQLScalarType):
+        return DirectiveLocation.SCALAR
+    if isinstance(graphql_type, GraphQLInputObjectType):
+        return DirectiveLocation.INPUT_OBJECT
+    return None
 
 
 def get_directive_arguments(element: GraphQLField | GraphQLObjectType, directive_name: str) -> dict[str, Any]:

@@ -1,8 +1,15 @@
 from pathlib import Path
 from typing import Any, cast
-
-from graphql import parse
-from graphql.type import GraphQLObjectType
+from graphql import DirectiveLocation, parse
+from graphql.type import (
+    GraphQLEnumType,
+    GraphQLEnumValue,
+    GraphQLInputObjectType,
+    GraphQLInterfaceType,
+    GraphQLObjectType,
+    GraphQLScalarType,
+    GraphQLUnionType,
+)
 
 from s2dm.exporters.utils import directive as directive_utils
 from s2dm.exporters.utils import extraction as extraction_utils
@@ -227,6 +234,26 @@ def test_has_given_directive(schema_path: list[Path]) -> None:
             _ = directive_utils.has_given_directive(field, "range")
             break
         break
+
+
+def test_get_type_directive_location() -> None:
+    object_type = GraphQLObjectType("TestObject", {})
+    assert directive_utils.get_type_directive_location(object_type) == DirectiveLocation.OBJECT
+
+    interface_type = GraphQLInterfaceType("TestInterface", {})
+    assert directive_utils.get_type_directive_location(interface_type) == DirectiveLocation.INTERFACE
+
+    union_type = GraphQLUnionType("TestUnion", [object_type])
+    assert directive_utils.get_type_directive_location(union_type) == DirectiveLocation.UNION
+
+    enum_type = GraphQLEnumType("TestEnum", {"VALUE": GraphQLEnumValue("VALUE")})
+    assert directive_utils.get_type_directive_location(enum_type) == DirectiveLocation.ENUM
+
+    scalar_type = GraphQLScalarType("TestScalar")
+    assert directive_utils.get_type_directive_location(scalar_type) == DirectiveLocation.SCALAR
+
+    input_type = GraphQLInputObjectType("TestInput", {})
+    assert directive_utils.get_type_directive_location(input_type) == DirectiveLocation.INPUT_OBJECT
 
 
 # #########################################################
