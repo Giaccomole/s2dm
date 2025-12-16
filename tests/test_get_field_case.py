@@ -9,10 +9,10 @@ from s2dm.exporters.utils.schema_loader import load_schema
 
 
 @pytest.fixture
-def test_schema():  # type: ignore[no-untyped-def]
+def test_schema(spec_directory):  # type: ignore[no-untyped-def]
     """Load the test schema from test_spec.graphql."""
     schema_path = Path(__file__).parent / "test_type_modifiers" / "test_spec.graphql"
-    return load_schema([schema_path])
+    return load_schema([spec_directory, schema_path])
 
 
 @pytest.mark.parametrize(

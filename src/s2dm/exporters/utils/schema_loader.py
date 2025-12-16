@@ -98,7 +98,6 @@ def build_schema_str_with_optional_source_map(
     """Build a GraphQL schema from a file or folder, returning also a source map."""
     schema_str = ""
     source_map: dict[str, str] = {}
-    S2DM_SPEC_SOURCE = "S2DM Spec"
 
     type_case = get_target_case_for_element("type", "object", naming_config) if naming_config else None
 
@@ -110,18 +109,6 @@ def build_schema_str_with_optional_source_map(
             for type_name in type_names:
                 transformed_name = convert_name(type_name, type_case) if type_case else type_name
                 source_map[transformed_name] = graphql_file.name
-
-    spec_contents = []
-    for spec_file in SPEC_FILES:
-        content = spec_file.read_text()
-        spec_contents.append(content)
-        if with_source_map:
-            type_names = _extract_type_names_from_content(content)
-            for type_name in type_names:
-                transformed_name = convert_name(type_name, type_case) if type_case else type_name
-                source_map[transformed_name] = S2DM_SPEC_SOURCE
-
-    schema_str = "\n".join(spec_contents) + "\n" + schema_str
 
     return schema_str, source_map
 

@@ -18,9 +18,9 @@ class TestProtobufExporter:
     """Test suite for the Protobuf exporter."""
 
     @pytest.fixture
-    def test_schema_path(self) -> list[Path]:
+    def test_schema_path(self, spec_directory: Path) -> list[Path]:
         """Fixture providing path to test schema."""
-        return [Path("tests/test_expanded_instances/test_schema.graphql")]
+        return [spec_directory, Path("tests/test_expanded_instances/test_schema.graphql")]
 
     def test_basic_scalar_types(self) -> None:
         """Test that basic scalar types are correctly mapped to Protobuf types."""

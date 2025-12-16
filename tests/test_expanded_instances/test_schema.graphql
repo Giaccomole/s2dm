@@ -55,7 +55,7 @@ type Cabin {
   temperature: Float @range(min: -100, max: 100)
 }
 
-type Query {
+extend type Query {
   vehicle: Vehicle
   cabin: Cabin
 }

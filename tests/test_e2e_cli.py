@@ -56,13 +56,15 @@ def contains_value(obj: dict[str, Any] | list[Any] | str, target: str) -> bool:
 
 
 # ToDo(DA): please update this test to do proper asserts for the shacl exporter
-def test_export_shacl(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_export_shacl(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "shacl.ttl"
     result = runner.invoke(
         cli,
         [
             "export",
             "shacl",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -85,13 +87,15 @@ def test_export_shacl(runner: CliRunner, tmp_outputs: Path, units_directory: Pat
 
 
 # ToDo(DA): please update this test to do proper asserts for the vspec exporter
-def test_export_vspec(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_export_vspec(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "vspec.yaml"
     result = runner.invoke(
         cli,
         [
             "export",
             "vspec",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -111,13 +115,15 @@ def test_export_vspec(runner: CliRunner, tmp_outputs: Path, units_directory: Pat
     assert "Vehicle_ADAS_ObstacleDetection:" in content
 
 
-def test_export_jsonschema(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_export_jsonschema(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "jsonschema.yaml"
     result = runner.invoke(
         cli,
         [
             "export",
             "jsonschema",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -137,13 +143,15 @@ def test_export_jsonschema(runner: CliRunner, tmp_outputs: Path, units_directory
     assert '"Vehicle_ADAS_ObstacleDetection"' in content
 
 
-def test_export_protobuf(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_export_protobuf(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "schema.proto"
     result = runner.invoke(
         cli,
         [
             "export",
             "protobuf",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -176,13 +184,17 @@ def test_export_protobuf(runner: CliRunner, tmp_outputs: Path, units_directory: 
     assert "optional bool isEngaged = 1;" in content
 
 
-def test_export_protobuf_flattened_naming(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_export_protobuf_flattened_naming(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     out = tmp_outputs / "schema.proto"
     result = runner.invoke(
         cli,
         [
             "export",
             "protobuf",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -216,13 +228,17 @@ def test_export_protobuf_flattened_naming(runner: CliRunner, tmp_outputs: Path, 
     assert 'optional bool Vehicle_adas_abs_isEngaged = 3 [(field_source) = "Vehicle_ADAS_ABS"];' in content
 
 
-def test_generate_skos_skeleton(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_generate_skos_skeleton(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     out = tmp_outputs / "skos_skeleton.ttl"
     result = runner.invoke(
         cli,
         [
             "generate",
             "skos-skeleton",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -263,13 +279,20 @@ def test_generate_skos_skeleton(runner: CliRunner, tmp_outputs: Path, units_dire
     ],
 )
 def test_check_version_bump(
-    runner: CliRunner, schema_file: list[Path], previous_file: list[Path], expected_output: str, units_directory: Path
+    runner: CliRunner,
+    schema_file: list[Path],
+    previous_file: list[Path],
+    expected_output: str,
+    spec_directory: Path,
+    units_directory: Path,
 ) -> None:
     result = runner.invoke(
         cli,
         ["check", "version-bump"]
+        + ["-s", str(spec_directory)]
         + [item for schema in schema_file for item in ["-s", str(schema)]]
         + ["-s", str(units_directory)]
+        + ["--previous", str(spec_directory)]
         + [item for previous in previous_file for item in ["--previous", str(previous)]]
         + ["--previous", str(units_directory)],
     )
@@ -288,10 +311,23 @@ def test_check_version_bump(
     ],
 )
 def test_check_version_bump_output_type(
-    runner: CliRunner, schema_file: Path, previous_file: Path, expected_type: str
+    runner: CliRunner, schema_file: Path, previous_file: Path, expected_type: str, spec_directory: Path
 ) -> None:
     result = runner.invoke(
-        cli, ["check", "version-bump", "-s", str(schema_file), "--previous", str(previous_file), "--output-type"]
+        cli,
+        [
+            "check",
+            "version-bump",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(schema_file),
+            "--previous",
+            str(spec_directory),
+            "--previous",
+            str(previous_file),
+            "--output-type",
+        ],
     )
     assert result.exit_code == 0, result.output
     # The output type should be the last line
@@ -307,22 +343,36 @@ def test_check_version_bump_output_type(
     ],
 )
 def test_check_constraints(
-    runner: CliRunner, input_file: tuple[Path, Path], expected_output: str, units_directory: Path
+    runner: CliRunner, input_file: tuple[Path, Path], expected_output: str, spec_directory: Path, units_directory: Path
 ) -> None:
     result = runner.invoke(
-        cli, ["check", "constraints", "-s", str(input_file[0]), "-s", str(input_file[1]), "-s", str(units_directory)]
+        cli,
+        [
+            "check",
+            "constraints",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(input_file[0]),
+            "-s",
+            str(input_file[1]),
+            "-s",
+            str(units_directory),
+        ],
     )
     assert expected_output.lower() in normalize_whitespace(result.output).lower()
     assert result.exit_code in (0, 1)
 
 
-def test_validate_graphql(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_validate_graphql(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "validate.json"
     result = runner.invoke(
         cli,
         [
             "validate",
             "graphql",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -354,6 +404,7 @@ def test_diff_graphql(
     schemas: tuple[Path, Path],
     val_schemas: tuple[Path, Path],
     expected_output: str,
+    spec_directory: Path,
     units_directory: Path,
 ) -> None:
     out = tmp_outputs / "diff.json"
@@ -363,11 +414,15 @@ def test_diff_graphql(
             "diff",
             "graphql",
             "-s",
+            str(spec_directory),
+            "-s",
             str(schemas[0]),
             "-s",
             str(schemas[1]),
             "-s",
             str(units_directory),
+            "--val-schema",
+            str(spec_directory),
             "--val-schema",
             str(val_schemas[0]),
             "--val-schema",
@@ -384,13 +439,17 @@ def test_diff_graphql(
     assert expected_output in file_content or expected_output in result.output
 
 
-def test_registry_export_concept_uri(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_registry_export_concept_uri(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     out = tmp_outputs / "concept_uris.json"
     result = runner.invoke(
         cli,
         [
             "registry",
             "concept-uri",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -416,13 +475,15 @@ def test_registry_export_concept_uri(runner: CliRunner, tmp_outputs: Path, units
     ), 'Expected value "ns:Person.name" not found in the concept URI output.'
 
 
-def test_registry_export_id(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_registry_export_id(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "ids.json"
     result = runner.invoke(
         cli,
         [
             "registry",
             "id",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -441,13 +502,15 @@ def test_registry_export_id(runner: CliRunner, tmp_outputs: Path, units_director
     assert any("Person.name" in k for k in data), "Expected 'Person.name' not found in the output."
 
 
-def test_registry_init(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_registry_init(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "spec_history.json"
     result = runner.invoke(
         cli,
         [
             "registry",
             "init",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -497,7 +560,7 @@ def test_registry_init(runner: CliRunner, tmp_outputs: Path, units_directory: Pa
     ), f'Expected entry with "@id": "ns:Person.height" and specHistory id "{ExpectedIds.PERSON_HEIGHT_ID}" not found.'
 
 
-def test_registry_update(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_registry_update(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "spec_history_update.json"
     # First, create a spec history file
     init_out = tmp_outputs / "spec_history.json"
@@ -506,6 +569,8 @@ def test_registry_update(runner: CliRunner, tmp_outputs: Path, units_directory: 
         [
             "registry",
             "init",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -521,6 +586,8 @@ def test_registry_update(runner: CliRunner, tmp_outputs: Path, units_directory: 
         [
             "registry",
             "update",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE2_1),
             "-s",
@@ -583,12 +650,16 @@ def test_registry_update(runner: CliRunner, tmp_outputs: Path, units_directory: 
         ("nonExistentField", "No matches found"),
     ],
 )
-def test_search_graphql(runner: CliRunner, search_term: str, expected_output: str, units_directory: Path) -> None:
+def test_search_graphql(
+    runner: CliRunner, search_term: str, expected_output: str, spec_directory: Path, units_directory: Path
+) -> None:
     result = runner.invoke(
         cli,
         [
             "search",
             "graphql",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -604,13 +675,15 @@ def test_search_graphql(runner: CliRunner, search_term: str, expected_output: st
     assert expected_output.lower() in normalize_whitespace(result.output).lower()
 
 
-def test_search_skos(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_search_skos(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     skos_file = tmp_outputs / "test_skos.ttl"
     result = runner.invoke(
         cli,
         [
             "generate",
             "skos-skeleton",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -650,6 +723,7 @@ def test_similar_graphql(
     search_term: str,
     expected_returncode: int,
     expected_output: str,
+    spec_directory: Path,
     units_directory: Path,
 ) -> None:
     out = tmp_outputs / "similar.json"
@@ -658,6 +732,8 @@ def test_similar_graphql(
         [
             "similar",
             "graphql",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -675,10 +751,23 @@ def test_similar_graphql(
     assert out.exists()
 
 
-def test_compose_graphql(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_compose_graphql(runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path) -> None:
     out = tmp_outputs / "composed.graphql"
     result = runner.invoke(
-        cli, ["compose", "-s", str(TSD.SAMPLE1_1), "-s", str(TSD.SAMPLE1_2), "-s", str(units_directory), "-o", str(out)]
+        cli,
+        [
+            "compose",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(TSD.SAMPLE1_1),
+            "-s",
+            str(TSD.SAMPLE1_2),
+            "-s",
+            str(units_directory),
+            "-o",
+            str(out),
+        ],
     )
     assert result.exit_code == 0, result.output
     assert out.exists()
@@ -693,12 +782,16 @@ def test_compose_graphql(runner: CliRunner, tmp_outputs: Path, units_directory: 
     assert "Successfully composed schema" in normalize_whitespace(result.output)
 
 
-def test_compose_graphql_with_root_type(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_compose_graphql_with_root_type(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     out = tmp_outputs / "composed_filtered.graphql"
     result = runner.invoke(
         cli,
         [
             "compose",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -725,13 +818,15 @@ def test_compose_graphql_with_root_type(runner: CliRunner, tmp_outputs: Path, un
 
 
 def test_compose_graphql_with_root_type_nonexistent(
-    runner: CliRunner, tmp_outputs: Path, units_directory: Path
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
 ) -> None:
     out = tmp_outputs / "composed_error.graphql"
     result = runner.invoke(
         cli,
         [
             "compose",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -751,13 +846,15 @@ def test_compose_graphql_with_root_type_nonexistent(
 
 
 def test_compose_graphql_root_type_filters_unreferenced_types(
-    runner: CliRunner, tmp_outputs: Path, units_directory: Path
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
 ) -> None:
     out = tmp_outputs / "composed_filtered.graphql"
     result = runner.invoke(
         cli,
         [
             "compose",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE1_1),
             "-s",
@@ -782,11 +879,26 @@ def test_compose_graphql_root_type_filters_unreferenced_types(
     assert "type InCabinArea2x2" not in composed_content
 
 
-def test_compose_preserves_custom_directives(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_compose_preserves_custom_directives(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     """Test that compose preserves all types of custom directives and formatting."""
     out = tmp_outputs / "directive_preservation_test.graphql"
     result = runner.invoke(
-        cli, ["compose", "-s", str(TSD.SAMPLE1_1), "-s", str(TSD.SAMPLE1_2), "-s", str(units_directory), "-o", str(out)]
+        cli,
+        [
+            "compose",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(TSD.SAMPLE1_1),
+            "-s",
+            str(TSD.SAMPLE1_2),
+            "-s",
+            str(units_directory),
+            "-o",
+            str(out),
+        ],
     )
 
     assert result.exit_code == 0, result.output
@@ -803,11 +915,26 @@ def test_compose_preserves_custom_directives(runner: CliRunner, tmp_outputs: Pat
     assert "type Vehicle_ADAS_ObstacleDetection" in composed_content
 
 
-def test_compose_adds_reference_directives(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_compose_adds_reference_directives(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     """Test that compose adds @reference directives to track source files."""
     out = tmp_outputs / "reference_directives_test.graphql"
     result = runner.invoke(
-        cli, ["compose", "-s", str(TSD.SAMPLE1_1), "-s", str(TSD.SAMPLE1_2), "-s", str(units_directory), "-o", str(out)]
+        cli,
+        [
+            "compose",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(TSD.SAMPLE1_1),
+            "-s",
+            str(TSD.SAMPLE1_2),
+            "-s",
+            str(units_directory),
+            "-o",
+            str(out),
+        ],
     )
 
     assert result.exit_code == 0, result.output
@@ -823,10 +950,12 @@ def test_compose_adds_reference_directives(runner: CliRunner, tmp_outputs: Path,
     assert 'type Vehicle_Occupant @reference(source: "schema1-2.graphql")' in composed_content
     assert 'type Person @reference(uri: "http://example.com")' in composed_content
 
-    assert 'type InCabinArea2x2 @instanceTag @reference(source: "S2DM Spec")' in composed_content
+    assert 'type InCabinArea2x2 @instanceTag @reference(source: "common_types.graphql")' in composed_content
 
 
-def test_compose_reference_directive_placement_after_other_directives(runner: CliRunner, tmp_outputs: Path) -> None:
+def test_compose_reference_directive_placement_after_other_directives(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path
+) -> None:
     """Test that @reference directives are placed correctly after implements clause."""
     # Create test schema with implements clause
     test_schema_dir = tmp_outputs / "test_schemas"
@@ -861,7 +990,7 @@ union Person = User | Admin
 """)
 
     out = tmp_outputs / "implements_test.graphql"
-    result = runner.invoke(cli, ["compose", "-s", str(schema_file), "-o", str(out)])
+    result = runner.invoke(cli, ["compose", "-s", str(spec_directory), "-s", str(schema_file), "-o", str(out)])
 
     assert result.exit_code == 0, result.output
     composed_content = out.read_text()
@@ -875,12 +1004,16 @@ union Person = User | Admin
     assert 'union Person @reference(source: "test.graphql")' in composed_content
 
 
-def test_compose_with_invalid_selection_query(runner: CliRunner, tmp_outputs: Path, units_directory: Path) -> None:
+def test_compose_with_invalid_selection_query(
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
+) -> None:
     out = tmp_outputs / "composed_invalid_query.graphql"
     result = runner.invoke(
         cli,
         [
             "compose",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE2_1),
             "-s",
@@ -897,13 +1030,15 @@ def test_compose_with_invalid_selection_query(runner: CliRunner, tmp_outputs: Pa
 
 
 def test_compose_with_valid_selection_query_prunes_schema(
-    runner: CliRunner, tmp_outputs: Path, units_directory: Path
+    runner: CliRunner, tmp_outputs: Path, spec_directory: Path, units_directory: Path
 ) -> None:
     out = tmp_outputs / "composed_pruned.graphql"
     result = runner.invoke(
         cli,
         [
             "compose",
+            "-s",
+            str(spec_directory),
             "-s",
             str(TSD.SAMPLE2_1),
             "-s",
@@ -941,9 +1076,21 @@ def test_compose_with_valid_selection_query_prunes_schema(
 
 
 # ToDo(DA): needs refactoring after final decision how stats will work
-def test_stats_graphql(runner: CliRunner, units_directory: Path) -> None:
+def test_stats_graphql(runner: CliRunner, spec_directory: Path, units_directory: Path) -> None:
     result = runner.invoke(
-        cli, ["stats", "graphql", "-s", str(TSD.SAMPLE1_1), "-s", str(TSD.SAMPLE1_2), "-s", str(units_directory)]
+        cli,
+        [
+            "stats",
+            "graphql",
+            "-s",
+            str(spec_directory),
+            "-s",
+            str(TSD.SAMPLE1_1),
+            "-s",
+            str(TSD.SAMPLE1_2),
+            "-s",
+            str(units_directory),
+        ],
     )
     print(f"{result.output=}")
     assert result.exit_code == 0, normalize_whitespace(result.output)

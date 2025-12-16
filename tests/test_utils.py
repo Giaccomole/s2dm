@@ -161,8 +161,10 @@ def test_get_instance_tag_object_and_dict(schema_path: list[Path]) -> None:
         break
 
 
-def test_expand_instances_in_schema() -> None:
-    schema = schema_loader_utils.load_schema([Path("tests/test_expanded_instances/test_schema.graphql")])
+def test_expand_instances_in_schema(spec_directory: Path) -> None:
+    schema = schema_loader_utils.load_schema(
+        [spec_directory, Path("tests/test_expanded_instances/test_schema.graphql")]
+    )
 
     expanded_schema, _, _ = instance_tag_utils.expand_instances_in_schema(schema)
 

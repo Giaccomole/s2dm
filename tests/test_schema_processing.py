@@ -11,8 +11,8 @@ from s2dm.exporters.utils.schema_loader import load_and_process_schema
 
 class TestLoadAndProcessSchema:
     @pytest.fixture
-    def expanded_schema_path(self) -> list[Path]:
-        return [Path("tests/test_expanded_instances/test_schema.graphql")]
+    def expanded_schema_path(self, spec_directory: Path) -> list[Path]:
+        return [spec_directory, Path("tests/test_expanded_instances/test_schema.graphql")]
 
     @pytest.fixture
     def valid_query_path(self, tmp_path: Path) -> Path:

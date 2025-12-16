@@ -11,18 +11,18 @@ from tests.conftest import TestSchemaData as TSD
 
 
 @pytest.fixture(scope="module")
-def schema1_tmp() -> Generator[Path, None, None]:
+def schema1_tmp(spec_directory: Path) -> Generator[Path, None, None]:
     assert TSD.SCHEMA1.exists(), f"Missing test file: {TSD.SCHEMA1}"
-    tmp: Path = create_tempfile_to_composed_schema([TSD.SCHEMA1, TSD.UNITS_SCHEMA_PATH])
+    tmp: Path = create_tempfile_to_composed_schema([spec_directory, TSD.SCHEMA1, TSD.UNITS_SCHEMA_PATH])
     yield tmp
     if tmp.exists():
         tmp.unlink()
 
 
 @pytest.fixture(scope="module")
-def schema2_tmp() -> Generator[Path, None, None]:
+def schema2_tmp(spec_directory: Path) -> Generator[Path, None, None]:
     assert TSD.SCHEMA2.exists(), f"Missing test file: {TSD.SCHEMA2}"
-    tmp: Path = create_tempfile_to_composed_schema([TSD.SCHEMA2, TSD.UNITS_SCHEMA_PATH])
+    tmp: Path = create_tempfile_to_composed_schema([spec_directory, TSD.SCHEMA2, TSD.UNITS_SCHEMA_PATH])
     yield tmp
     if tmp.exists():
         tmp.unlink()

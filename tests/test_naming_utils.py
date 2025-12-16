@@ -251,10 +251,10 @@ class TestConvertFieldNames:
 
         assert "TestField" in object_type.fields
 
-    def test_skip_instance_tag_field_conversion(self) -> None:
+    def test_skip_instance_tag_field_conversion(self, spec_directory: Path) -> None:
         """Test that instanceTag fields pointing to @instanceTag types are not converted."""
         schema_path = Path(__file__).parent / "test_expanded_instances" / "test_schema.graphql"
-        schema = load_schema([schema_path])
+        schema = load_schema([spec_directory, schema_path])
 
         door_type = schema.get_type("Door")
         assert isinstance(door_type, GraphQLObjectType)
@@ -317,10 +317,10 @@ class TestConvertEnumValues:
 class TestInstanceTagConversion:
     """Test instance tag expansion with naming conversion."""
 
-    def test_expand_instance_tag_with_naming_config(self) -> None:
+    def test_expand_instance_tag_with_naming_config(self, spec_directory: Path) -> None:
         """Test that instance tag expansion applies naming conversion."""
         schema_path = Path(__file__).parent / "test_expanded_instances" / "test_schema.graphql"
-        schema = load_schema([schema_path])
+        schema = load_schema([spec_directory, schema_path])
         object_types = get_all_object_types(schema)
         instance_tag_objects = get_all_objects_with_directive(object_types, "instanceTag")
 
@@ -334,10 +334,10 @@ class TestInstanceTagConversion:
         expected = ["Row1.Driverside", "Row1.Passengerside", "Row2.Driverside", "Row2.Passengerside"]
         assert set(result) == set(expected)
 
-    def test_expand_instance_tag_without_naming_config(self) -> None:
+    def test_expand_instance_tag_without_naming_config(self, spec_directory: Path) -> None:
         """Test that instance tag expansion works without naming config."""
         schema_path = Path(__file__).parent / "test_expanded_instances" / "test_schema.graphql"
-        schema = load_schema([schema_path])
+        schema = load_schema([spec_directory, schema_path])
         object_types = get_all_object_types(schema)
         instance_tag_objects = get_all_objects_with_directive(object_types, "instanceTag")
 

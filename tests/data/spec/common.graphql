@@ -1,0 +1,81 @@
+directive @range(min: Float, max: Float) on FIELD_DEFINITION
+
+directive @cardinality(min: Int, max: Int) on FIELD_DEFINITION
+
+directive @noDuplicates on FIELD_DEFINITION
+
+directive @instanceTag on OBJECT
+
+directive @metadata(comment: String, vssType: String) on FIELD_DEFINITION | OBJECT
+
+directive @reference(uri: String, source: String, versionTag: String) on OBJECT | INTERFACE | UNION | ENUM | ENUM_VALUE | SCALAR | INPUT_OBJECT | FIELD_DEFINITION
+
+scalar Int8 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#byte")
+
+scalar UInt8 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#unsignedByte")
+
+scalar Int16 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#short")
+
+scalar UInt16 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#unsignedShort")
+
+scalar UInt32 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#unsignedInt")
+
+scalar Int64 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#long")
+
+scalar UInt64 @reference(source: "custom_scalars.graphql") @specifiedBy(url: "http://www.w3.org/2001/XMLSchema#unsignedLong")
+
+enum TwoRowsInCabinEnum @reference(source: "common_types.graphql") {
+  ROW1
+  ROW2
+}
+
+enum ThreeRowsInCabinEnum @reference(source: "common_types.graphql") {
+  ROW1
+  ROW2
+  ROW3
+}
+
+enum TwoColumnsInCabinEnum @reference(source: "common_types.graphql") {
+  DRIVER_SIDE
+  PASSENGER_SIDE
+}
+
+enum ThreeColumnsInCabinEnum @reference(source: "common_types.graphql") {
+  DRIVER_SIDE
+  MIDDLE
+  PASSENGER_SIDE
+}
+
+type InCabinArea2x2 @instanceTag @reference(source: "common_types.graphql") {
+  row: TwoRowsInCabinEnum
+  column: TwoColumnsInCabinEnum
+}
+
+type InCabinArea2x3 @instanceTag @reference(source: "common_types.graphql") {
+  row: TwoRowsInCabinEnum
+  column: ThreeColumnsInCabinEnum
+}
+
+type InCabinArea3x3 @instanceTag @reference(source: "common_types.graphql") {
+  row: ThreeRowsInCabinEnum
+  column: ThreeColumnsInCabinEnum
+}
+
+input InCabinArea2x2Input @reference(source: "common_types.graphql") {
+  row: TwoRowsInCabinEnum
+  column: TwoColumnsInCabinEnum
+}
+
+input InCabinArea2x3Input @reference(source: "common_types.graphql") {
+  row: TwoRowsInCabinEnum
+  column: ThreeColumnsInCabinEnum
+}
+
+input InCabinArea3x3Input @reference(source: "common_types.graphql") {
+  row: ThreeRowsInCabinEnum
+  column: ThreeColumnsInCabinEnum
+}
+
+type Query {
+  ping: String
+}

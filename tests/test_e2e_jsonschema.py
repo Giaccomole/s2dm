@@ -13,9 +13,9 @@ from s2dm.exporters.utils.schema_loader import load_and_process_schema
 
 class TestJsonSchemaE2E:
     @pytest.fixture
-    def test_schema_path(self) -> list[Path]:
+    def test_schema_path(self, spec_directory: Path) -> list[Path]:
         """Path to the test GraphQL schema."""
-        return [Path(__file__).parent / "test_expanded_instances" / "test_schema.graphql"]
+        return [spec_directory, Path(__file__).parent / "test_expanded_instances" / "test_schema.graphql"]
 
     def test_root_node_filters_types(self, tmp_path: Path) -> None:
         """Test that root node filtering only includes reachable types."""
@@ -98,7 +98,9 @@ class TestJsonSchemaE2E:
         assert seats_def["type"] == "array"
         assert "items" in seats_def
 
-    def test_non_instance_tagged_objects_remain_arrays(self, test_schema_path: list[Path]) -> None:
+    def test_non_instance_tagged_objects_remain_arrays(
+        self, spec_directory: Path, test_schema_path: list[Path]
+    ) -> None:
         """Test that objects without instance tags remain as arrays even with expanded_instances=True."""
         # Create a schema with both instance-tagged and regular arrays
         extended_schema = """
@@ -140,7 +142,7 @@ class TestJsonSchemaE2E:
         try:
             root_type = "TestObject"
             annotated_schema, _, _ = load_and_process_schema(
-                schema_paths=[temp_path],
+                schema_paths=[spec_directory, temp_path],
                 naming_config_path=None,
                 selection_query_path=None,
                 root_type=root_type,
@@ -219,13 +221,13 @@ class TestJsonSchemaE2E:
         assert "doors" not in schema_expanded["$defs"]["Cabin"]["properties"]
         assert "seats" not in schema_expanded["$defs"]["Cabin"]["properties"]
 
-    def test_nested_instances_use_refs_not_inline_expansion(self) -> None:
+    def test_nested_instances_use_refs_not_inline_expansion(self, spec_directory: Path) -> None:
         """Test that nested expanded instances use $ref instead of copying object properties inline."""
         nested_schema_path = Path(__file__).parent / "test_expanded_instances" / "test_nested_schema.graphql"
 
         root_type = "Chassis"
         annotated_schema, _, _ = load_and_process_schema(
-            schema_paths=[nested_schema_path],
+            schema_paths=[spec_directory, nested_schema_path],
             naming_config_path=None,
             selection_query_path=None,
             root_type=root_type,

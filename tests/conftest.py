@@ -49,16 +49,22 @@ class TestSchemaData:
     BREAKING_SCHEMA = TESTS_DATA_DIR / "breaking.graphql"
 
 
+@pytest.fixture(scope="session")
+def spec_directory() -> Path:
+    """Return path to S2DM spec files."""
+    return Path(__file__).parent.parent / "tests" / "data" / "spec"
+
+
 def parsed_console_output() -> str:
     """Parse console output (placeholder function)."""
     return ""
 
 
 @pytest.fixture(scope="module")
-def schema_path() -> list[Path]:
+def schema_path(spec_directory: Path) -> list[Path]:
     assert TestSchemaData.SCHEMA1.exists(), f"Missing test file: {TestSchemaData.SCHEMA1}"
     assert TestSchemaData.UNITS_SCHEMA_PATH.exists(), f"Missing units folder: {TestSchemaData.UNITS_SCHEMA_PATH}"
-    return [TestSchemaData.SCHEMA1, TestSchemaData.UNITS_SCHEMA_PATH]
+    return [spec_directory, TestSchemaData.SCHEMA1, TestSchemaData.UNITS_SCHEMA_PATH]
 
 
 @dataclass
