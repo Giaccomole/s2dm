@@ -2,7 +2,9 @@ import re
 import tempfile
 from pathlib import Path
 from typing import Any, cast
+from urllib.parse import urlparse
 
+import requests
 from ariadne import load_schema_from_path
 from graphql import (
     DocumentNode,
@@ -44,6 +46,7 @@ from s2dm.exporters.utils.directive import (
     GRAPHQL_TYPE_DEFINITION_PATTERN,
     add_directives_to_schema,
     build_directive_map,
+    get_type_directive_location,
     has_given_directive,
 )
 from s2dm.exporters.utils.graphql_type import is_introspection_or_root_type
@@ -55,12 +58,59 @@ from s2dm.exporters.utils.naming import (
     load_naming_config,
 )
 
-SPEC_DIR_PATH = Path(__file__).parent.parent.parent / "spec"
-SPEC_FILES = [
-    SPEC_DIR_PATH / "custom_directives.graphql",
-    SPEC_DIR_PATH / "common_types.graphql",
-    SPEC_DIR_PATH / "custom_scalars.graphql",
-]
+
+def is_url(value: str) -> bool:
+    """Check if value is a valid HTTP/HTTPS URL.
+
+    Args:
+        value: String to check
+
+    Returns:
+        True if value is a valid HTTP/HTTPS URL, False otherwise
+    """
+    try:
+        parsed = urlparse(value)
+        return parsed.scheme in ("http", "https") and bool(parsed.netloc)
+    except Exception:
+        return False
+
+
+def download_schema_to_temp(url: str, max_size_mb: int = 10) -> Path:
+    """Download schema from URL to a temporary file.
+
+    Args:
+        url: Schema URL to download
+        max_size_mb: Maximum file size in megabytes
+
+    Returns:
+        Path to temporary file containing schema
+
+    Raises:
+        RuntimeError: If download fails or file exceeds size limit
+    """
+    max_size_bytes = max_size_mb * 1024 * 1024
+
+    try:
+        log.info(f"Downloading schema from {url}")
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+
+        content_length = response.headers.get("content-length")
+        if content_length and int(content_length) > max_size_bytes:
+            raise RuntimeError(
+                f"Schema file too large: {int(content_length) / 1024 / 1024:.1f} MB (max {max_size_mb} MB)"
+            )
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".graphql", delete=False, encoding="utf-8") as temp_file:
+            temp_file.write(response.text)
+            temp_file.flush()
+            temp_path = Path(temp_file.name)
+
+        log.debug(f"Schema downloaded to temporary file: {temp_path}")
+        return temp_path
+
+    except requests.RequestException as e:
+        raise RuntimeError(f"Failed to download schema from {url}: {e}") from e
 
 
 def _extract_type_names_from_content(content: str) -> list[str]:

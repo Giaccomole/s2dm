@@ -23,6 +23,8 @@ from s2dm.exporters.utils.schema import search_schema
 from s2dm.exporters.utils.schema_loader import (
     check_correct_schema,
     create_tempfile_to_composed_schema,
+    download_schema_to_temp,
+    is_url,
     load_and_process_schema,
     load_schema,
     load_schema_with_source_map,
@@ -47,24 +49,41 @@ S2DM_HOME = Path.home() / ".s2dm"
 DEFAULT_QUDT_UNITS_DIR = S2DM_HOME / "units" / "qudt"
 
 
-class PathResolverOption(click.Option):
+class SchemaResolverOption(click.Option):
     def process_value(self, ctx: click.Context, value: Any) -> list[Path] | None:
         value = super().process_value(ctx, value)
         if not value:
             return None
-        paths = set(value)
-        return resolve_graphql_files(list(paths))
+
+        resolved_paths = []
+
+        for item in value:
+            item_str = str(item)
+
+            if is_url(item_str):
+                try:
+                    temp_path = download_schema_to_temp(item_str)
+                    resolved_paths.append(temp_path)
+                except RuntimeError as e:
+                    raise click.BadParameter(str(e), ctx=ctx, param=self) from e
+            else:
+                path = Path(item_str)
+                if not path.exists():
+                    raise click.BadParameter(f"Path '{path}' does not exist.", ctx=ctx, param=self)
+                resolved_paths.append(path)
+
+        return resolve_graphql_files(resolved_paths)
 
 
 schema_option = click.option(
     "--schema",
     "-s",
     "schemas",
-    type=click.Path(exists=True, path_type=Path),
-    cls=PathResolverOption,
+    type=str,
+    cls=SchemaResolverOption,
     required=True,
     multiple=True,
-    help="The GraphQL schema file or directory containing schema files. Can be specified multiple times.",
+    help="GraphQL schema file, directory, or URL. Can be specified multiple times.",
 )
 
 
@@ -635,14 +654,11 @@ def skos_skeleton(
 @click.option(
     "--previous",
     "-p",
-    type=click.Path(exists=True, path_type=Path),
-    cls=PathResolverOption,
+    type=str,
+    cls=SchemaResolverOption,
     required=True,
     multiple=True,
-    help=(
-        "The previous GraphQL schema file or directory containing schema files "
-        "to validate against. Can be specified multiple times."
-    ),
+    help=("Previous GraphQL schema file, directory, or URL to validate against. " "Can be specified multiple times."),
 )
 @click.option(
     "--output-type",
@@ -751,14 +767,11 @@ def validate_graphql(schemas: list[Path], output: Path) -> None:
     "--val-schema",
     "-v",
     "val_schemas",
-    type=click.Path(exists=True, path_type=Path),
-    cls=PathResolverOption,
+    type=str,
+    cls=SchemaResolverOption,
     required=True,
     multiple=True,
-    help=(
-        "The GraphQL schema file or directory containing schema files "
-        "to validate against. Can be specified multiple times."
-    ),
+    help=("GraphQL schema file, directory, or URL to validate against. " "Can be specified multiple times."),
 )
 def diff_graphql(schemas: list[Path], val_schemas: list[Path], output: Path | None) -> None:
     """Diff for two GraphQL schemas."""
