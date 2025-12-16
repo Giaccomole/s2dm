@@ -86,7 +86,7 @@ jobs:
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
 | `repository-path` | Path to the git repository root | Yes | - |
-| `spec-path` | Path to the spec directory | No | `./spec` |
+| `spec-path` | Path to the spec directory relative to the root of the repository | No | `./spec` |
 | `github-token` | GitHub token for creating releases | Yes | - |
 | `s2dm-path` | Path where S2DM repository will be checked out | No | `s2dm` |
 | `concept-namespace` | Concept namespace for registry | No | `''` |
@@ -180,10 +180,12 @@ Your repository must have:
 
 ## How It Works
 
-1. **Setup**: Installs Python 3.13, uv, and S2DM dependencies
-2. **Version Check**: Downloads previous release and compares current spec to determine version bump type
-3. **Units Sync**: Synchronizes units definitions
-4. **Registry Management**: Initializes registry for first release or updates it for subsequent releases
-5. **Artifact Generation**: Generates all required artifacts (GraphQL, JSON Schema, SHACL, SKOS, VSpec)
-6. **Version Bump**: Updates version using bump-my-version and creates git tag
-7. **Release Creation**: Creates GitHub release with all generated artifacts in a tarball
+1. **Validation**: Validates that the spec directory exists and contains at least one .graphql file
+2. **Setup**: Checks out S2DM repository, installs Python 3.13, uv, and S2DM dependencies
+3. **Download Previous Release**: Downloads previous release artifacts (if available)
+4. **Version Check**: Compares current spec with previous schema to determine version bump type
+5. **Units Sync**: Synchronizes units definitions
+6. **Registry Management**: Initializes registry for first release or updates it for subsequent releases
+7. **Artifact Generation**: Generates all required artifacts (GraphQL, JSON Schema, SHACL, SKOS, VSpec) to temporary location outside repository
+8. **Version Bump**: Updates version using bump-my-version and creates git tag
+9. **Release Creation**: Creates GitHub release with all generated artifacts in a tarball

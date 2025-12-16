@@ -8,7 +8,7 @@ inputs:
     required: true
 
   spec-path:
-    description: 'Path to the spec directory'
+    description: 'Path to the spec directory relative to the root of the repository'
     required: false
     default: './spec'
 
@@ -87,6 +87,22 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Validate spec directory
+      working-directory: ${{ inputs.repository-path }}
+      shell: bash
+      run: |
+        if [ ! -d "${{ inputs.spec-path }}" ]; then
+          echo "ERROR: Spec directory '${{ inputs.spec-path }}' not found"
+          exit 1
+        fi
+
+        if ! find "${{ inputs.spec-path }}" -type f -name "*.graphql" | grep -q .; then
+          echo "ERROR: No .graphql files found in spec directory '${{ inputs.spec-path }}'"
+          exit 1
+        fi
+
+        echo "Spec directory validated successfully"
+
     - name: Checkout S2DM repository
       uses: actions/checkout@v4
       with:
@@ -120,7 +136,6 @@ runs:
         s2dm --help
 
     - name: Download latest release
-      working-directory: ${{ inputs.repository-path }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
       shell: bash
@@ -148,17 +163,18 @@ runs:
 
     - name: Check spec version bump
       id: version-check
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         VERSION_BUMP=major
-        if [ -d "${{ github.workspace }}/.previous-release" ] && [ "$(ls -A ${{ github.workspace }}/.previous-release)" ]; then
-          echo "Previous release found"
+        if [ -f "${{ github.workspace }}/.previous-release/graphql/schema.graphql" ]; then
+          echo "Previous schema found"
           VERSION_BUMP=$(s2dm check version-bump -s ${{ inputs.spec-path }} -p ${{ github.workspace }}/.previous-release/graphql/schema.graphql --output-type | tail -n 1)
           if [[ "$VERSION_BUMP" != "none" ]]; then
             echo "CONTINUE=true" >> "$GITHUB_OUTPUT"
           fi
         else
-          echo "No previous release found"
+          echo "No previous schema found"
           echo "IS_INITIAL_RELEASE=true" >> "$GITHUB_OUTPUT"
           echo "CONTINUE=true" >> "$GITHUB_OUTPUT"
         fi
@@ -166,12 +182,14 @@ runs:
 
     - name: Sync units
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         s2dm units sync
 
     - name: Initialize registry
       if: steps.version-check.outputs.CONTINUE == 'true' && steps.version-check.outputs.IS_INITIAL_RELEASE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         CMD="s2dm registry init -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/registry/registry.json"
@@ -181,8 +199,15 @@ runs:
 
     - name: Update registry
       if: steps.version-check.outputs.CONTINUE == 'true' && steps.version-check.outputs.IS_INITIAL_RELEASE != 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
+        if [ ! -f "${{ github.workspace }}/.previous-release/registry/registry.json" ]; then
+          echo "ERROR: Previous registry file not found at ${{ github.workspace }}/.previous-release/registry/registry.json"
+          echo "Cannot update registry without previous version. This indicates an inconsistent release state."
+          exit 1
+        fi
+
         CMD="s2dm registry update -s ${{ inputs.spec-path }} -sh ${{ github.workspace }}/.previous-release/registry/registry.json -o ${{ github.workspace }}/.artifacts/registry/registry.json"
         [ -n "${{ inputs.concept-namespace }}" ] && CMD="$CMD --concept-namespace '${{ inputs.concept-namespace }}'"
         [ -n "${{ inputs.concept-prefix }}" ] && CMD="$CMD --concept-prefix '${{ inputs.concept-prefix }}'"
@@ -190,18 +215,21 @@ runs:
 
     - name: Compose GraphQL schema
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         s2dm compose -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/graphql/schema.graphql
 
     - name: Generate JSON schema
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         s2dm export jsonschema -S -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/jsonschema/schema.json
 
     - name: Generate SHACL
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         CMD="s2dm export shacl -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/shacl/schema.ttl"
@@ -214,6 +242,7 @@ runs:
 
     - name: Generate SKOS RDF
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         CMD="s2dm generate skos-skeleton -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/skos/schema.ttl"
@@ -224,6 +253,7 @@ runs:
 
     - name: Generate VSpec
       if: steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
       shell: bash
       run: |
         s2dm export vspec -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.artifacts/vspec/schema.vspec
