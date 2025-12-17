@@ -1,0 +1,169 @@
+name: 'S2DM Compose'
+description: 'Compose GraphQL schema files and optionally create a release'
+author: 'COVESA'
+
+inputs:
+  repository-path:
+    description: 'Path to the git repository root'
+    required: true
+
+  spec-path:
+    description: 'Path to the spec directory relative to the root of the repository'
+    required: false
+    default: 'spec'
+
+  create-release:
+    description: 'Whether to create a GitHub release with the composed schema'
+    required: false
+    default: 'false'
+
+  github-token:
+    description: 'GitHub token for creating releases (required if create-release is true)'
+    required: false
+    default: ''
+
+  s2dm-path:
+    description: 'Path where S2DM repository will be checked out'
+    required: false
+    default: 's2dm'
+
+outputs:
+  composed-schema-path:
+    description: 'Path to the composed schema file'
+    value: ${{ steps.compose.outputs.SCHEMA_PATH }}
+
+  version-bump:
+    description: 'Type of version bump (major, minor, patch, none)'
+    value: ${{ steps.version-check.outputs.VERSION_BUMP }}
+
+  latest-tag:
+    description: 'The latest git tag after release'
+    value: ${{ steps.get-latest-tag.outputs.LATEST_TAG }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout S2DM repository
+      uses: actions/checkout@v4
+      with:
+        repository: COVESA/s2dm
+        path: ${{ inputs.s2dm-path }}
+
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      with:
+        version: "latest"
+
+    - name: Install S2DM dependencies
+      working-directory: ${{ inputs.s2dm-path }}
+      shell: bash
+      run: |
+        uv sync --frozen
+
+    - name: Activate venv
+      shell: bash
+      run: |
+        echo "${{ github.workspace }}/${{ inputs.s2dm-path }}/.venv/bin" >> $GITHUB_PATH
+
+    - name: Verify S2DM installation
+      shell: bash
+      run: |
+        s2dm --help
+
+    - name: Prepare temp directory
+      shell: bash
+      run: |
+        mkdir -p ${{ github.workspace }}/.s2dm-compose
+
+    - name: Compose GraphQL schema
+      id: compose
+      working-directory: ${{ inputs.repository-path }}
+      shell: bash
+      run: |
+        s2dm compose -s ${{ inputs.spec-path }} -o ${{ github.workspace }}/.s2dm-compose/schema.graphql
+        echo "SCHEMA_PATH=${{ github.workspace }}/.s2dm-compose/schema.graphql" >> "$GITHUB_OUTPUT"
+
+    - name: Validate release prerequisites
+      if: inputs.create-release == 'true'
+      working-directory: ${{ inputs.repository-path }}
+      shell: bash
+      run: |
+        if [ ! -f ".bumpversion.toml" ]; then
+          echo "ERROR: .bumpversion.toml not found but create-release is true"
+          exit 1
+        fi
+        if [ -z "${{ inputs.github-token }}" ]; then
+          echo "ERROR: github-token is required when create-release is true"
+          exit 1
+        fi
+
+    - name: Download latest release
+      if: inputs.create-release == 'true'
+      working-directory: ${{ inputs.repository-path }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      shell: bash
+      run: |
+        mkdir -p ${{ github.workspace }}/.previous-release
+        gh release download --pattern "${{ inputs.output-path }}" --dir ${{ github.workspace }}/.previous-release || echo "No previous release found"
+
+    - name: Check version bump
+      if: inputs.create-release == 'true'
+      id: version-check
+      shell: bash
+      run: |
+        VERSION_BUMP=major
+        CONTINUE=false
+        if [ -f "${{ github.workspace }}/.previous-release/${{ inputs.output-path }}" ]; then
+          echo "Previous release found, checking for changes"
+          VERSION_BUMP=$(s2dm check version-bump -s ${{ inputs.spec-path }} -p ${{ github.workspace }}/.previous-release/${{ inputs.output-path }} --output-type | tail -n 1)
+          if [[ "$VERSION_BUMP" != "none" ]]; then
+            echo "Changes detected: $VERSION_BUMP"
+            CONTINUE=true
+          else
+            echo "No changes detected, skipping release"
+          fi
+        else
+          echo "No previous release found, creating initial release"
+          CONTINUE=true
+        fi
+        echo "VERSION_BUMP=$VERSION_BUMP" >> "$GITHUB_OUTPUT"
+        echo "CONTINUE=$CONTINUE" >> "$GITHUB_OUTPUT"
+
+    - name: Bump version and push tags
+      if: inputs.create-release == 'true' && steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
+      shell: bash
+      run: |
+        git config --local user.email "s2dm-automation-action@covesa.global"
+        git config --local user.name "S2DM Automation Action"
+        bump-my-version bump ${{ steps.version-check.outputs.VERSION_BUMP }} --config-file ./.bumpversion.toml
+        git push origin ${{ github.ref_name }}
+        git push origin --tags
+
+    - name: Get latest tag
+      if: inputs.create-release == 'true' && steps.version-check.outputs.CONTINUE == 'true'
+      id: get-latest-tag
+      working-directory: ${{ inputs.repository-path }}
+      shell: bash
+      run: |
+        LATEST_TAG=$(git describe --tags --abbrev=0)
+        echo "LATEST_TAG=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+
+    - name: Create release
+      if: inputs.create-release == 'true' && steps.version-check.outputs.CONTINUE == 'true'
+      working-directory: ${{ inputs.repository-path }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      shell: bash
+      run: |
+        LATEST_TAG="${{ steps.get-latest-tag.outputs.LATEST_TAG }}"
+        gh release create "${LATEST_TAG}" \
+          --title "Release ${LATEST_TAG}" \
+          --notes "This release contains the composed GraphQL schema." \
+          ${{ github.workspace }}/.s2dm-compose/schema.graphql

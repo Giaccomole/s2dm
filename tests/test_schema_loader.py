@@ -41,10 +41,10 @@ def test_reference_directive_only_applied_to_supported_locations(spec_directory:
     assert 'type TestObject @reference(source: "test.graphql")' in result
     assert 'enum TestEnum @reference(source: "test.graphql")' in result
 
-    assert 'scalar TestScalar @reference' not in result
-    assert 'interface TestInterface @reference' not in result
-    assert 'input TestInput @reference' not in result
-    assert 'union TestUnion @reference' not in result
+    assert "scalar TestScalar @reference" not in result
+    assert "interface TestInterface @reference" not in result
+    assert "input TestInput @reference" not in result
+    assert "union TestUnion @reference" not in result
 
 
 def test_reference_directive_not_applied_when_source_argument_missing() -> None:
@@ -66,8 +66,8 @@ def test_reference_directive_not_applied_when_source_argument_missing() -> None:
 
     result = print_schema_with_directives_preserved(schema, source_map)
 
-    assert 'type TestObject @reference' not in result
-    assert 'enum TestEnum @reference' not in result
+    assert "type TestObject @reference" not in result
+    assert "enum TestEnum @reference" not in result
 
 
 def test_reference_directive_not_applied_when_directive_missing() -> None:
@@ -87,9 +87,9 @@ def test_reference_directive_not_applied_when_directive_missing() -> None:
 
     result = print_schema_with_directives_preserved(schema, source_map)
 
-    assert '@reference' not in result
-    assert 'type TestObject' in result
-    assert 'enum TestEnum' in result
+    assert "@reference" not in result
+    assert "type TestObject" in result
+    assert "enum TestEnum" in result
 
 
 def test_reference_directive_not_duplicated_when_already_present() -> None:
@@ -120,7 +120,8 @@ def test_reference_directive_not_duplicated_when_already_present() -> None:
 def test_reference_directive_with_all_standard_locations(spec_directory: Path) -> None:
     """Test @reference with all standard type locations from spec."""
     schema_str = """
-    directive @reference(uri: String, source: String, versionTag: String) on OBJECT | INTERFACE | UNION | ENUM | ENUM_VALUE | SCALAR | INPUT_OBJECT | FIELD_DEFINITION
+    directive @reference(uri: String, source: String, versionTag: String)
+        on OBJECT | INTERFACE | UNION | ENUM | ENUM_VALUE | SCALAR | INPUT_OBJECT | FIELD_DEFINITION
 
     type TestObject { field: String }
     interface TestInterface { field: String }
