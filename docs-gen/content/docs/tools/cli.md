@@ -1300,10 +1300,10 @@ The naming configuration system enforces several validation rules to ensure cons
 - **Valid case formats**: `camelCase`, `PascalCase`, `snake_case`, `kebab-case`, `MACROCASE`, `COBOL-CASE`, `flatcase`, `TitleCase`
 - **Format enforcement**: Only recognized case formats are accepted; invalid formats will cause validation errors
 
-**Special Rules:**
+**Context-specific Rules:**
 
-- **EnumValue-InstanceTag pairing**: If `enumValue` is present in the configuration, `instanceTag` must also be present
-- **InstanceTag preservation**: The literal field name `instanceTag` is never transformed, regardless of naming configuration, to preserve its semantic meaning
+- **EnumValue-InstanceTag pairing**: If `enumValue` is present in the configuration for transformation commands, `instanceTag` must also be present.
+- **InstanceTag preservation**: The literal field name `instanceTag` is never transformed or validated, regardless of naming configuration, to preserve its semantic meaning.
 
 #### Notes
 
