@@ -1180,26 +1180,25 @@ When used with `--selection-query`, root type filtering is applied after the sel
 
 ### Naming Configuration
 
-All export commands and the compose command support a naming configuration feature that allows you to transform element names using the `--naming-config` flag.
+The naming configuration defines naming conventions for GraphQL schema elements using a YAML file. This configuration can be used for:
 
-Apply naming configuration to any export command:
+- **Transformation**: Converting element names to match desired conventions
+- **Validation**: Checking that element names follow specified conventions
 
-```bash
-s2dm export <format> --naming-config naming.yaml ...
-```
+Commands that support `--naming-config`:
 
-Or to the compose command:
-
-```bash
-s2dm compose --naming-config naming.yaml ...
-```
+- `check constraints` - naming validation
+- `compose` - naming transformation
+- `export jsonschema` - naming transformation
+- `export protobuf` - naming transformation
+- `export shacl` - naming transformation
+- `export vspec` - naming transformation
 
 #### Configuration Format
 
 The naming configuration is defined in a YAML file with the following structure:
 
 ```yaml
-# Transform type names by type context
 type:
   object: PascalCase
   interface: PascalCase
@@ -1208,19 +1207,15 @@ type:
   union: PascalCase
   scalar: PascalCase
 
-# Transform field names by type context
 field:
   object: camelCase
   interface: camelCase
   input: snake_case
 
-# Transform enum values (no context needed)
 enumValue: MACROCASE
 
-# Transform instanceTag field names (no context needed)
 instanceTag: COBOL-CASE
 
-# Transform argument names by context
 argument:
   field: camelCase
 ```
@@ -1229,16 +1224,16 @@ argument:
 
 The naming configuration supports the following case conversion formats:
 
-- **camelCase**: `myVariableName`
-- **PascalCase**: `MyVariableName`
-- **snake_case**: `my_variable_name`
-- **kebab-case**: `my-variable-name`
-- **MACROCASE**: `MY_VARIABLE_NAME`
-- **COBOL-CASE**: `MY-VARIABLE-NAME`
-- **flatcase**: `myvariablename`
-- **TitleCase**: `My Variable Name`
+- **camelCase**: `somePropertyName`
+- **PascalCase**: `SomePropertyName`
+- **snake_case**: `some_property_name`
+- **kebab-case**: `some-property-name`
+- **MACROCASE**: `SOME_PROPERTY_NAME`
+- **COBOL-CASE**: `SOME-PROPERTY-NAME`
+- **flatcase**: `somepropertyname`
+- **TitleCase**: `Some Property Name`
 
-#### Example Conversion
+#### Example
 
 Given this GraphQL schema:
 
@@ -1263,15 +1258,24 @@ type:
 field:
   object: camelCase
 enumValue: PascalCase
+instanceTag: PascalCase   # Required for transformation if `enumValue` is defined.
 ```
 
-The exported schema will transform names as follows:
+For transformation, names are converted to match the configuration:
 
 - Type: `vehicle_info` → `VehicleInfo`
 - Field: `avg_speed` → `avgSpeed`
 - Field: `fuel_type` → `fuelType`
 - Enum type: `fuel_type_enum` → `FuelTypeEnum`
 - Enum values: `GASOLINE_TYPE` → `GasolineType`, `DIESEL_TYPE` → `DieselType`
+
+For validation, the schema is checked against the configuration:
+
+- `vehicle_info` fails (expected PascalCase)
+- `avg_speed` fails (expected camelCase)
+- `fuel_type` fails (expected camelCase)
+- `fuel_type_enum` fails (expected PascalCase)
+- `GASOLINE_TYPE` fails (expected PascalCase)
 
 #### Validation Rules
 
@@ -1303,9 +1307,8 @@ The naming configuration system enforces several validation rules to ensure cons
 
 #### Notes
 
-- Built-in GraphQL types (`String`, `Int`, `Float`, `Boolean`, `ID`, `Query`, `Mutation`, `Subscription`) are never transformed
-- If a configuration is not provided for an element type, the original names are preserved
-- Configuration is loaded once at the command level and applied consistently across the entire export or composition process
+- Built-in GraphQL types (`String`, `Int`, `Float`, `Boolean`, `ID`, `Query`, `Mutation`, `Subscription`) are never transformed.
+- When an element type is not configured, it is neither transformed or nor validated.
 
 ### Expanded Instances
 
