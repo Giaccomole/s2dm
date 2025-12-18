@@ -4,6 +4,52 @@ weight: 100
 chapter: false
 ---
 
+## Check Commands
+
+### Constraints
+
+The `check constraints` command validates your GraphQL schema to ensure correct usage of custom directives and naming conventions. This helps maintain consistency and catch errors early in the development process.
+
+#### Usage
+
+```bash
+s2dm check constraints -s <schema_path>
+```
+
+#### Options
+
+- `-s, --schema PATH`: GraphQL schema file or directory containing schema files (required, can be specified multiple times)
+- `--naming-config PATH`: YAML file containing naming configuration to validate against (optional)
+
+#### Validation Checks
+
+The command performs the following validations:
+
+1. **instanceTag Field and Object Rules**: Validates proper usage of `@instanceTag` directive and `instanceTag` fields
+2. **@range Directive**: Ensures `min` value is less than or equal to `max` value
+3. **@cardinality Directive**: Ensures `min` value is less than or equal to `max` value
+4. **Naming Conventions** (optional): When `--naming-config` is provided, validates that type names, field names, enum values, and other elements follow the specified naming conventions
+
+#### Examples
+
+##### Basic Validation
+
+Check a single schema file for directive constraint violations:
+
+```bash
+s2dm check constraints -s schema.graphql
+```
+
+##### Validate with Naming Configuration
+
+Ensure your schema follows naming conventions defined in a YAML config file:
+
+```bash
+s2dm check constraints -s schema.graphql --naming-config naming.yaml
+```
+
+See [Naming Configuration](#naming-configuration) for details on the naming configuration format.
+
 ## Compose Command
 
 The `compose` command merges multiple GraphQL schema files into a single unified schema file. It automatically adds `@reference` directives to track which file each type was obtained from.
@@ -457,7 +503,7 @@ enum VehicleCategory {
 ##### Nullability Rules
 
 | GraphQL Type | Strict Mode JSON Schema |
-|-------------|------------------------|
+| ------------- | ------------------------ |
 | `String` | `{"type": ["string", "null"]}` |
 | `String!` | `{"type": "string"}` |
 | `VehicleType` (enum) | `{"oneOf": [{"$ref": "#/$defs/VehicleType"}, {"type": "null"}]}` |
