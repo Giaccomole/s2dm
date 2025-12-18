@@ -1,5 +1,4 @@
 import inflect
-
 from graphql import (
     GraphQLEnumType,
     GraphQLInputObjectType,
@@ -11,7 +10,13 @@ from graphql import (
 from s2dm.exporters.utils.field import FieldCase, get_field_case
 from s2dm.exporters.utils.graphql_type import is_introspection_type
 from s2dm.exporters.utils.naming import TYPE_CONTEXTS, convert_name, is_instance_tag_field
-from s2dm.exporters.utils.naming_config import CaseFormat, ContextType, ElementType, NamingConventionConfig, get_case_for_element
+from s2dm.exporters.utils.naming_config import (
+    CaseFormat,
+    ContextType,
+    ElementType,
+    NamingConventionConfig,
+    get_case_for_element,
+)
 
 _inflect_engine = inflect.engine()
 
@@ -92,11 +97,11 @@ def check_naming_conventions(
                             f"(suggestion: '{suggestion}')"
                         )
 
-        if isinstance(object_type, (GraphQLObjectType, GraphQLInterfaceType, GraphQLInputObjectType)):
+        if isinstance(object_type, GraphQLObjectType | GraphQLInterfaceType | GraphQLInputObjectType):
             field_case = get_case_for_element(ElementType.FIELD, context, config)
             argument_case = (
                 get_case_for_element(ElementType.ARGUMENT, ContextType.FIELD, config)
-                if isinstance(object_type, (GraphQLObjectType, GraphQLInterfaceType))
+                if isinstance(object_type, GraphQLObjectType | GraphQLInterfaceType)
                 else None
             )
 
@@ -110,10 +115,15 @@ def check_naming_conventions(
                         )
 
                 field_case_value = get_field_case(field)
-                if isinstance(object_type, (GraphQLObjectType, GraphQLInterfaceType)) and field_case_value not in (
-                    FieldCase.DEFAULT,
-                    FieldCase.NON_NULL,
-                ) and not _is_plural(field_name):
+                if (
+                    isinstance(object_type, GraphQLObjectType | GraphQLInterfaceType)
+                    and field_case_value
+                    not in (
+                        FieldCase.DEFAULT,
+                        FieldCase.NON_NULL,
+                    )
+                    and not _is_plural(field_name)
+                ):
                     suggestion = _inflect_engine.plural(field_name)
                     plural_errors.append(
                         f"[naming] List field '{object_type.name}.{field_name}' should be plural "
