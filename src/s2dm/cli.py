@@ -19,6 +19,7 @@ from s2dm.exporters.spec_history import SpecHistoryExporter
 from s2dm.exporters.utils.extraction import get_all_named_types, get_all_object_types, get_root_level_types_from_query
 from s2dm.exporters.utils.graphql_type import is_builtin_scalar_type, is_introspection_type
 from s2dm.exporters.utils.naming import load_naming_config
+from s2dm.exporters.utils.naming_config import ValidationMode, load_naming_convention_config
 from s2dm.exporters.utils.schema import search_schema
 from s2dm.exporters.utils.schema_loader import (
     check_correct_schema,
@@ -720,18 +721,20 @@ def version_bump(schemas: list[Path], previous: list[Path], output_type: bool) -
 
 @check.command(name="constraints")
 @schema_option
-def check_constraints(schemas: list[Path]) -> None:
+@naming_config_option
+def check_constraints(schemas: list[Path], naming_config: Path | None) -> None:
     """
     Enforce intended use of custom directives and naming conventions.
     Checks:
     - instanceTag field and object rules
     - @range and @cardinality min/max
-    - Naming conventions (TBD)
+    - Naming conventions (optional, if --naming-config provided)
     """
     gql_schema = load_schema(schemas)
     objects = get_all_object_types(gql_schema)
+    naming_convention_config = load_naming_convention_config(naming_config, ValidationMode.CHECK)
 
-    constraint_checker = ConstraintChecker(gql_schema)
+    constraint_checker = ConstraintChecker(gql_schema, naming_convention_config)
     errors = constraint_checker.run(objects)
 
     if errors:

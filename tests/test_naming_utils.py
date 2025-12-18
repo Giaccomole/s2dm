@@ -21,7 +21,16 @@ from s2dm.exporters.utils.naming import (
     convert_enum_values,
     convert_field_names,
     convert_name,
-    get_target_case_for_element,
+)
+from s2dm.exporters.utils.naming_config import (
+    ArgumentNamingConfig,
+    CaseFormat,
+    ContextType,
+    ElementType,
+    FieldNamingConfig,
+    NamingConventionConfig,
+    TypeNamingConfig,
+    get_case_for_element,
 )
 from s2dm.exporters.utils.schema_loader import load_schema
 
@@ -32,64 +41,64 @@ class TestConvertName:
     @pytest.mark.parametrize(
         "input_name,target_case,expected",
         [
-            ("HelloWorld", "camelCase", "helloWorld"),
-            ("hello_world", "PascalCase", "HelloWorld"),
-            ("HelloWorld", "snake_case", "hello_world"),
-            ("hello world", "kebab-case", "hello-world"),
-            ("HelloWorld", "MACROCASE", "HELLO_WORLD"),
-            ("hello-world", "COBOL-CASE", "HELLO-WORLD"),
-            ("Hello World", "flatcase", "helloworld"),
-            ("hello_world", "TitleCase", "Hello World"),
+            ("HelloWorld", CaseFormat.CAMEL_CASE, "helloWorld"),
+            ("hello_world", CaseFormat.PASCAL_CASE, "HelloWorld"),
+            ("HelloWorld", CaseFormat.SNAKE_CASE, "hello_world"),
+            ("hello world", CaseFormat.KEBAB_CASE, "hello-world"),
+            ("HelloWorld", CaseFormat.MACRO_CASE, "HELLO_WORLD"),
+            ("hello-world", CaseFormat.COBOL_CASE, "HELLO-WORLD"),
+            ("Hello World", CaseFormat.FLAT_CASE, "helloworld"),
+            ("hello_world", CaseFormat.TITLE_CASE, "Hello World"),
         ],
     )
-    def test_convert_name_supported_cases(self, input_name: str, target_case: str, expected: str) -> None:
+    def test_convert_name_supported_cases(self, input_name: str, target_case: CaseFormat, expected: str) -> None:
         """Test conversion for all supported case formats."""
         result = convert_name(input_name, target_case)
         assert result == expected
 
-    def test_convert_name_unsupported_case(self) -> None:
-        """Test that unsupported cases return the original name."""
-        original = "HelloWorld"
-        result = convert_name(original, "unsupported_case")
-        assert result == original
-
     def test_convert_name_empty_string(self) -> None:
         """Test conversion with empty string input."""
-        result = convert_name("", "camelCase")
+        result = convert_name("", CaseFormat.CAMEL_CASE)
         assert result == ""
 
 
-class TestGetTargetCaseForElement:
+class TestGetCaseForElement:
     """Test getting target case configuration for different element types."""
 
     def test_hierarchical_config(self) -> None:
         """Test hierarchical configuration lookup."""
-        config = {"field": {"object": "camelCase", "interface": "snake_case"}, "enumValue": "macrocase"}
+        config = NamingConventionConfig(
+            field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE, interface=CaseFormat.SNAKE_CASE),
+            enum_value=CaseFormat.MACRO_CASE,
+            instance_tag=CaseFormat.FLAT_CASE,
+        )
 
-        # Test hierarchical lookup
-        assert get_target_case_for_element("field", "object", config) == "camelCase"
-        assert get_target_case_for_element("field", "interface", config) == "snake_case"
+        result_object = get_case_for_element(ElementType.FIELD, ContextType.OBJECT, config)
+        assert result_object == CaseFormat.CAMEL_CASE
 
-        # Test direct lookup
-        assert get_target_case_for_element("enumValue", "", config) == "macrocase"
+        result_interface = get_case_for_element(ElementType.FIELD, ContextType.INTERFACE, config)
+        assert result_interface == CaseFormat.SNAKE_CASE
+
+        result_enum = get_case_for_element(ElementType.ENUM_VALUE, None, config)
+        assert result_enum == CaseFormat.MACRO_CASE
 
     def test_missing_element_type(self) -> None:
         """Test behavior when element type is not in config."""
-        config = {"field": {"object": "camelCase"}}
-        result = get_target_case_for_element("missing", "context", config)
+        config = NamingConventionConfig(field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE))
+        result = get_case_for_element(ElementType.TYPE, ContextType.ENUM, config)
         assert result is None
 
     def test_missing_context(self) -> None:
         """Test behavior when context is missing from hierarchical config."""
-        config = {"field": {"object": "camelCase"}}
-        result = get_target_case_for_element("field", "missing_context", config)
+        config = NamingConventionConfig(field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE))
+        result = get_case_for_element(ElementType.FIELD, ContextType.INPUT, config)
         assert result is None
 
     def test_string_config_value(self) -> None:
-        """Test when config value is a string instead of dict."""
-        config = {"enumValue": "camelCase"}
-        result = get_target_case_for_element("enumValue", "", config)
-        assert result == "camelCase"
+        """Test when config value is a CaseFormat enum."""
+        config = NamingConventionConfig(enum_value=CaseFormat.CAMEL_CASE, instance_tag=CaseFormat.FLAT_CASE)
+        result = get_case_for_element(ElementType.ENUM_VALUE, None, config)
+        assert result == CaseFormat.CAMEL_CASE
 
 
 class TestApplyNamingToSchema:
@@ -103,7 +112,9 @@ class TestApplyNamingToSchema:
         query_type = GraphQLObjectType(name="Query", fields={"test": GraphQLField(object_type)})
         schema = GraphQLSchema(query=query_type, types=[object_type, enum_type])
 
-        naming_config = {"type": {"object": "PascalCase", "enum": "PascalCase"}}
+        naming_config = NamingConventionConfig(
+            type=TypeNamingConfig(object=CaseFormat.PASCAL_CASE, enum=CaseFormat.PASCAL_CASE)
+        )
 
         apply_naming_to_schema(schema, naming_config)
 
@@ -121,7 +132,7 @@ class TestApplyNamingToSchema:
         query_type = GraphQLObjectType(name="Query", fields={"test": GraphQLField(object_type)})
         schema = GraphQLSchema(query=query_type, types=[object_type])
 
-        naming_config = {"type": {"object": "snake_case"}}
+        naming_config = NamingConventionConfig(type=TypeNamingConfig(object=CaseFormat.SNAKE_CASE))
         apply_naming_to_schema(schema, naming_config)
 
         # Built-in types should remain unchanged
@@ -142,11 +153,12 @@ class TestApplyNamingToSchema:
         query_type = GraphQLObjectType(name="Query", fields={"test": GraphQLField(object_type)})
         schema = GraphQLSchema(query=query_type, types=[object_type, enum_type])
 
-        naming_config = {
-            "type": {"object": "PascalCase", "enum": "PascalCase"},
-            "field": {"object": "camelCase"},
-            "enumValue": "PascalCase",
-        }
+        naming_config = NamingConventionConfig(
+            type=TypeNamingConfig(object=CaseFormat.PASCAL_CASE, enum=CaseFormat.PASCAL_CASE),
+            field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE),
+            enum_value=CaseFormat.PASCAL_CASE,
+            instance_tag=CaseFormat.PASCAL_CASE,
+        )
 
         apply_naming_to_schema(schema, naming_config)
 
@@ -171,7 +183,7 @@ class TestApplyNamingToSchema:
         query_type = GraphQLObjectType(name="Query", fields={"test": GraphQLField(object_type)})
         original_schema = GraphQLSchema(query=query_type, types=[object_type])
 
-        apply_naming_to_schema(original_schema, {})
+        apply_naming_to_schema(original_schema, NamingConventionConfig())
 
         assert "TestObject" in original_schema.type_map
         test_object_type = original_schema.type_map["TestObject"]
@@ -189,7 +201,7 @@ class TestConvertFieldNames:
             fields={"TestField": GraphQLField(GraphQLString), "AnotherTestField": GraphQLField(GraphQLString)},
         )
 
-        naming_config = {"field": {"object": "camelCase"}}
+        naming_config = NamingConventionConfig(field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE))
         schema = GraphQLSchema(query=object_type)
         convert_field_names(object_type, naming_config, schema)
 
@@ -202,7 +214,7 @@ class TestConvertFieldNames:
         """Test field conversion works for interface types."""
         interface_type = GraphQLInterfaceType(name="TestInterface", fields={"TestField": GraphQLField(GraphQLString)})
 
-        naming_config = {"field": {"interface": "snake_case"}}
+        naming_config = NamingConventionConfig(field=FieldNamingConfig(interface=CaseFormat.SNAKE_CASE))
         schema = GraphQLSchema(query=GraphQLObjectType(name="Query", fields={}))
         convert_field_names(interface_type, naming_config, schema)
 
@@ -213,7 +225,7 @@ class TestConvertFieldNames:
         """Test field conversion works for input types."""
         input_type = GraphQLInputObjectType(name="TestInput", fields={"TestField": GraphQLInputField(GraphQLString)})
 
-        naming_config = {"field": {"input": "kebab-case"}}
+        naming_config = NamingConventionConfig(field=FieldNamingConfig(input=CaseFormat.KEBAB_CASE))
         schema = GraphQLSchema(query=GraphQLObjectType(name="Query", fields={}))
         convert_field_names(input_type, naming_config, schema)
 
@@ -232,7 +244,7 @@ class TestConvertFieldNames:
             },
         )
 
-        naming_config = {"argument": {"field": "MACROCASE"}}
+        naming_config = NamingConventionConfig(argument=ArgumentNamingConfig(field=CaseFormat.MACRO_CASE))
         schema = GraphQLSchema(query=object_type)
         convert_field_names(object_type, naming_config, schema)
 
@@ -247,7 +259,7 @@ class TestConvertFieldNames:
         object_type = GraphQLObjectType(name="TestObject", fields={"TestField": GraphQLField(GraphQLString)})
 
         schema = GraphQLSchema(query=object_type)
-        convert_field_names(object_type, {}, schema)
+        convert_field_names(object_type, NamingConventionConfig(), schema)
 
         assert "TestField" in object_type.fields
 
@@ -261,7 +273,7 @@ class TestConvertFieldNames:
 
         door_type.fields["regularField"] = GraphQLField(GraphQLString)
 
-        naming_config = {"field": {"object": "camelCase"}}
+        naming_config = NamingConventionConfig(field=FieldNamingConfig(object=CaseFormat.CAMEL_CASE))
         convert_field_names(door_type, naming_config, schema)
 
         assert "instanceTag" in door_type.fields
@@ -286,7 +298,7 @@ class TestConvertEnumValues:
             },
         )
 
-        naming_config = {"enumValue": "PascalCase"}
+        naming_config = NamingConventionConfig(enum_value=CaseFormat.PASCAL_CASE, instance_tag=CaseFormat.PASCAL_CASE)
         convert_enum_values(enum_type, naming_config)
 
         assert "OldValue" in enum_type.values
@@ -299,7 +311,7 @@ class TestConvertEnumValues:
         enum_value = GraphQLEnumValue("OLD_VALUE", description="Test description")
         enum_type = GraphQLEnumType(name="TestEnum", values={"OLD_VALUE": enum_value})
 
-        naming_config = {"enumValue": "camelCase"}
+        naming_config = NamingConventionConfig(enum_value=CaseFormat.CAMEL_CASE, instance_tag=CaseFormat.CAMEL_CASE)
         convert_enum_values(enum_type, naming_config)
 
         converted_value = enum_type.values["oldValue"]
@@ -309,7 +321,7 @@ class TestConvertEnumValues:
         """Test that enum values remain unchanged when no config is provided."""
         enum_type = GraphQLEnumType(name="TestEnum", values={"OLD_VALUE": GraphQLEnumValue("OLD_VALUE")})
 
-        convert_enum_values(enum_type, {})
+        convert_enum_values(enum_type, NamingConventionConfig())
 
         assert "OLD_VALUE" in enum_type.values
 
@@ -328,7 +340,7 @@ class TestInstanceTagConversion:
         door_position = next((obj for obj in instance_tag_objects if obj.name == "DoorPosition"), None)
         assert door_position is not None
 
-        naming_config = {"instanceTag": "PascalCase"}
+        naming_config = NamingConventionConfig(instance_tag=CaseFormat.PASCAL_CASE)
         result = expand_instance_tag(door_position, naming_config)
 
         expected = ["Row1.Driverside", "Row1.Passengerside", "Row2.Driverside", "Row2.Passengerside"]

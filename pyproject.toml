@@ -20,6 +20,7 @@ dependencies = [
     "ariadne>=0.24.0",
     "langcodes>=3.5.0",
     "case-converter>=1.2.0",
+    "inflect>=7.0.0",
     "requests>=2.32.0",
 ]
 requires-python = ">=3.11"
@@ -58,11 +59,17 @@ dev = [
 ]
 
 [tool.mypy]
-files = ["src/s2dm"]
+files = ["src/s2dm", "tests"]
 show_error_codes = true
 strict = true
 enable_error_code = ["redundant-expr", "truthy-bool"]
 disable_error_code = ["import-untyped"]
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

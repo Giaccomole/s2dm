@@ -1,11 +1,13 @@
 """Integration tests for load_and_process_schema."""
 
+import json
 from pathlib import Path
 from typing import cast
 
 import pytest
 from graphql import GraphQLObjectType
 
+from s2dm.exporters.utils.naming_config import CaseFormat
 from s2dm.exporters.utils.schema_loader import load_and_process_schema
 
 
@@ -35,7 +37,11 @@ class TestLoadAndProcessSchema:
     @pytest.fixture
     def naming_config_path(self, tmp_path: Path) -> Path:
         config_file = tmp_path / "naming_config.json"
-        config_file.write_text('{"type": "MACROCASE", "field": "snake_case"}')
+        config_file.write_text(
+            json.dumps(
+                {"type": {"object": CaseFormat.MACRO_CASE.value}, "field": {"object": CaseFormat.SNAKE_CASE.value}}
+            )
+        )
         return config_file
 
     def test_load_with_selection_query(self, schema_path: list[Path], valid_query_path: Path) -> None:

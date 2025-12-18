@@ -16,7 +16,8 @@ from s2dm import log
 from s2dm.exporters.utils.annotated_schema import FieldMetadata, TypeMetadata
 from s2dm.exporters.utils.directive import has_given_directive
 from s2dm.exporters.utils.extraction import get_all_object_types, get_all_objects_with_directive
-from s2dm.exporters.utils.naming import apply_naming_to_instance_values, convert_name, get_target_case_for_element
+from s2dm.exporters.utils.naming import apply_naming_to_instance_values, convert_name
+from s2dm.exporters.utils.naming_config import ContextType, ElementType, NamingConventionConfig, get_case_for_element
 
 
 def is_instance_tag_field(field_name: str) -> bool:
@@ -25,7 +26,7 @@ def is_instance_tag_field(field_name: str) -> bool:
 
 def get_all_expanded_instance_tags(
     schema: GraphQLSchema,
-    naming_config: dict[str, Any] | None = None,
+    naming_config: NamingConventionConfig | None = None,
 ) -> dict[GraphQLObjectType, list[str]]:
     all_expanded_instance_tags: dict[GraphQLObjectType, list[str]] = {}
     for object in get_all_objects_with_directive(get_all_object_types(schema), "instanceTag"):
@@ -36,7 +37,7 @@ def get_all_expanded_instance_tags(
     return all_expanded_instance_tags
 
 
-def expand_instance_tag(object: GraphQLObjectType, naming_config: dict[str, Any] | None = None) -> list[str]:
+def expand_instance_tag(object: GraphQLObjectType, naming_config: NamingConventionConfig | None = None) -> list[str]:
     log.debug(f"Expanding instanceTag for object: {object.name}")
     expanded_tags = []
     if not has_given_directive(object, "instanceTag"):
@@ -240,7 +241,7 @@ def _create_intermediate_types(
 
 def expand_instances_in_schema(
     schema: GraphQLSchema,
-    naming_config: dict[str, Any] | None = None,
+    naming_config: NamingConventionConfig | None = None,
 ) -> tuple[GraphQLSchema, dict[str, "TypeMetadata"], dict[tuple[str, str], "FieldMetadata"]]:
     """
     Expand instance-tagged fields in a GraphQL schema into nested object structures.
@@ -293,8 +294,10 @@ def expand_instances_in_schema(
         intermediate_types = _create_intermediate_types(base_type, instance_tag_dict, list_item_nullable)
         first_intermediate_type = intermediate_types[-1]
 
-        type_case = get_target_case_for_element("type", "object", naming_config) if naming_config else None
-        field_case = get_target_case_for_element("field", "object", naming_config) if naming_config else None
+        type_case = get_case_for_element(ElementType.TYPE, ContextType.OBJECT, naming_config) if naming_config else None
+        field_case = (
+            get_case_for_element(ElementType.FIELD, ContextType.OBJECT, naming_config) if naming_config else None
+        )
 
         for intermediate_type in intermediate_types:
             type_name = convert_name(intermediate_type.name, type_case) if type_case else intermediate_type.name

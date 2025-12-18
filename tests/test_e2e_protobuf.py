@@ -9,6 +9,7 @@ import pytest
 from graphql import DocumentNode
 
 from s2dm.exporters.protobuf import translate_to_protobuf
+from s2dm.exporters.utils.naming_config import CaseFormat
 from s2dm.exporters.utils.schema_loader import load_and_process_schema
 
 
@@ -231,7 +232,7 @@ class TestProtobufE2E:
 
     def test_expanded_instances_with_naming_config(self, test_schema_path: list[Path], tmp_path: Path) -> None:
         """Test that naming config is applied to expanded instance field names in non-flatten mode."""
-        naming_config = {"field": {"object": "MACROCASE"}}
+        naming_config = {"field": {"object": CaseFormat.MACRO_CASE.value}}
         naming_config_file = tmp_path / "naming_config.json"
         naming_config_file.write_text(json.dumps(naming_config))
 
@@ -315,7 +316,11 @@ class TestProtobufE2E:
         self, test_schema_path: list[Path], tmp_path: Path
     ) -> None:
         """Test that naming config is applied to type name in flattened prefix with expanded instances."""
-        naming_config = {"field": {"object": "snake_case"}, "enumValue": "PascalCase", "instanceTag": "PascalCase"}
+        naming_config = {
+            "field": {"object": CaseFormat.SNAKE_CASE.value},
+            "enumValue": CaseFormat.PASCAL_CASE.value,
+            "instanceTag": CaseFormat.PASCAL_CASE.value,
+        }
         naming_config_file = tmp_path / "naming_config.json"
         naming_config_file.write_text(json.dumps(naming_config))
 

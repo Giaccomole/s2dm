@@ -1,11 +1,14 @@
 from graphql import GraphQLEnumType, GraphQLObjectType, GraphQLSchema, get_named_type
 
 from s2dm.exporters.utils.directive import get_directive_arguments, has_given_directive
+from s2dm.exporters.utils.naming_config import NamingConventionConfig
+from s2dm.tools.naming_checker import check_naming_conventions
 
 
 class ConstraintChecker:
-    def __init__(self, schema: GraphQLSchema):
+    def __init__(self, schema: GraphQLSchema, naming_config: NamingConventionConfig | None = None):
         self.schema = schema
+        self.naming_config = naming_config
 
     def check_min_leq_max(self, objects: list[GraphQLObjectType], directive: str) -> list[str]:
         errors = []
@@ -42,17 +45,10 @@ class ConstraintChecker:
                     if not isinstance(field.type, GraphQLEnumType):
                         errors.append(f"[instanceTag] {obj.name}.{fname} must be an enum (in @instanceTag object)")
 
-        # generic min/max checks
         errors += self.check_min_leq_max(objects, "range")
         errors += self.check_min_leq_max(objects, "cardinality")
 
-        # ToDo: NAMING: (Placeholder for naming convention checks)
-        # Example: Enforce PascalCase for type names, camelCase for field names
-        # for obj in objects:
-        #     if not obj.name[0].isupper():
-        #         errors.append(f"[naming] Type {obj.name} should be PascalCase")
-        #     for fname in obj.fields:
-        #         if not fname[0].islower():
-        #             errors.append(f"[naming] Field {obj.name}.{fname} should be camelCase")
+        if self.naming_config:
+            errors += check_naming_conventions(self.schema, self.naming_config)
 
         return errors

@@ -51,12 +51,8 @@ from s2dm.exporters.utils.directive import (
 )
 from s2dm.exporters.utils.graphql_type import is_introspection_or_root_type
 from s2dm.exporters.utils.instance_tag import expand_instances_in_schema
-from s2dm.exporters.utils.naming import (
-    apply_naming_to_schema,
-    convert_name,
-    get_target_case_for_element,
-    load_naming_config,
-)
+from s2dm.exporters.utils.naming import apply_naming_to_schema, convert_name, load_naming_config
+from s2dm.exporters.utils.naming_config import ContextType, ElementType, NamingConventionConfig, get_case_for_element
 
 
 def is_url(value: str) -> bool:
@@ -143,13 +139,13 @@ def resolve_graphql_files(paths: list[Path]) -> list[Path]:
 
 
 def build_schema_str_with_optional_source_map(
-    graphql_schema_paths: list[Path], with_source_map: bool, naming_config: dict[str, Any] | None = None
+    graphql_schema_paths: list[Path], with_source_map: bool, naming_config: NamingConventionConfig | None = None
 ) -> tuple[str, dict[str, str]]:
     """Build a GraphQL schema from a file or folder, returning also a source map."""
     schema_str = ""
     source_map: dict[str, str] = {}
 
-    type_case = get_target_case_for_element("type", "object", naming_config) if naming_config else None
+    type_case = get_case_for_element(ElementType.TYPE, ContextType.OBJECT, naming_config) if naming_config else None
 
     for graphql_file in graphql_schema_paths:
         content = load_schema_from_path(graphql_file)
@@ -188,7 +184,7 @@ def load_schema(graphql_schema_paths: Path | list[Path]) -> GraphQLSchema:
 
 
 def load_schema_with_source_map(
-    graphql_schema_paths: list[Path], naming_config: dict[str, Any] | None = None
+    graphql_schema_paths: list[Path], naming_config: NamingConventionConfig | None = None
 ) -> tuple[GraphQLSchema, dict[str, str]]:
     """Load and build a GraphQL schema from files or folders, returning schema and source map."""
     schema_str, source_map = build_schema_str_with_optional_source_map(
@@ -198,7 +194,9 @@ def load_schema_with_source_map(
     return schema, source_map
 
 
-def load_schema_with_naming(schema_paths: list[Path], naming_config: dict[str, Any] | None = None) -> GraphQLSchema:
+def load_schema_with_naming(
+    schema_paths: list[Path], naming_config: NamingConventionConfig | None = None
+) -> GraphQLSchema:
     """Load schema and apply naming conversion."""
     schema = load_schema(schema_paths)
     if naming_config:
@@ -773,7 +771,7 @@ def build_annotated_schema(
 def process_schema(
     schema: GraphQLSchema,
     source_map: dict[str, str],
-    naming_config: dict[str, Any] | None = None,
+    naming_config: NamingConventionConfig | None = None,
     query_document: DocumentNode | None = None,
     root_type: str | None = None,
     expanded_instances: bool = False,
@@ -783,7 +781,7 @@ def process_schema(
     Args:
         schema: The GraphQL schema to process
         source_map: Mapping of type names to their source files
-        naming_config: Optional naming configuration dict
+        naming_config: Optional naming configuration
         query_document: Optional parsed GraphQL query document for filtering
         root_type: Optional root type name to filter the schema
         expanded_instances: Whether to expand instance tags into nested structures
@@ -815,7 +813,7 @@ def load_and_process_schema(
     selection_query_path: Path | None = None,
     root_type: str | None = None,
     expanded_instances: bool = False,
-) -> tuple[AnnotatedSchema, dict[str, Any] | None, DocumentNode | None]:
+) -> tuple[AnnotatedSchema, NamingConventionConfig | None, DocumentNode | None]:
     """Load schema with naming config and apply filtering based on selection query and root type.
 
     Args:
