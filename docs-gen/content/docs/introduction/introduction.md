@@ -7,6 +7,9 @@ toc: true
 
 {{< img src="s2dm/images/s2dm_overview.png" alt="S2DM Role Overview" >}}
 
+![S2DM General Flow](images/generalflow.jpg)
+
+
 Welcome to the complete documentation for the **Simplified Semantic Data Modeling** (S2DM) approach. This documentation is organized into three main sections:
 
 ## Documentation Sections
